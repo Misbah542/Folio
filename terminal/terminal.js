@@ -1,6 +1,6 @@
 /**
  * Interactive Terminal Module - Enhanced
- * Main terminal site - misbahwebsite.com
+ * Main terminal site - buildwithmisbah.cc
  */
 
 export class InteractiveTerminal {
@@ -104,27 +104,27 @@ export class InteractiveTerminal {
             },
             portfolio: {
                 output: `<span class="success-message">🚀 Opening portfolio...</span>
-<span class="info-message">Redirecting to portfolio.misbahwebsite.com in 3... 2... 1...</span>`,
+<span class="info-message">Redirecting to portfolio.buildwithmisbah.cc in 3... 2... 1...</span>`,
                 animation: 'redirect',
                 action: () => {
                     this.logAnalytics('navigate_portfolio');
                     this.createPortal('portfolio');
                     setTimeout(() => {
-                        window.location.href = 'https://portfolio.misbahwebsite.com';
+                        window.location.href = 'https://portfolio.buildwithmisbah.cc';
                     }, 2000);
                 },
                 description: 'Visit portfolio site'
             },
             games: {
                 output: `<span class="success-message">🎮 Launching retro games arcade...</span>
-<span class="info-message">Get ready to play! Loading games.misbahwebsite.com...</span>`,
+<span class="info-message">Get ready to play! Loading games.buildwithmisbah.cc..</span>`,
                 animation: 'icons',
                 icons: ['🎮', '🕹️', '👾', '🎯', '🏆'],
                 action: () => {
                     this.logAnalytics('navigate_games');
                     this.createPortal('games');
                     setTimeout(() => {
-                        window.location.href = 'https://games.misbahwebsite.com';
+                        window.location.href = 'https://games.buildwithmisbah.cc';
                     }, 2000);
                 },
                 description: 'Play retro games'
@@ -169,7 +169,7 @@ export class InteractiveTerminal {
 <span class="info-message">🔗 LinkedIn:</span> linkedin.com/in/misbahhaque
 <span class="info-message">💻 GitHub:</span> github.com/Misbah542
 <span class="info-message">📍 Location:</span> Bengaluru, India
-<span class="info-message">🌐 Website:</span> misbahwebsite.com`,
+<span class="info-message">🌐 Website:</span> buildwithmisbah.cc`,
                 animation: 'icons',
                 icons: ['📧', '📱', '🔗', '💻', '📍'],
                 action: () => this.logAnalytics('command_contact'),
@@ -430,7 +430,7 @@ Type 'portfolio' to see detailed project information!`,
                 icons: ['📄', '⬇️', '📑'],
                 action: () => {
                     this.logAnalytics('download_resume');
-                    window.open('https://portfolio.misbahwebsite.com/resume/Misbah_ul_Haque_Resume.pdf', '_blank');
+                    window.open('https://portfolio.buildwithmisbah.cc/resume/Misbah_ul_Haque_Resume.pdf', '_blank');
                 },
                 description: 'Download resume'
             },

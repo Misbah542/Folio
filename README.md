@@ -4,9 +4,9 @@ A multi-site portfolio project featuring an interactive terminal, 3D portfolio s
 
 ## 🌐 Live Sites
 
-- **Terminal**: [misbahwebsite.com](https://misbahwebsite.com)
-- **Portfolio**: [portfolio.misbahwebsite.com](https://portfolio.misbahwebsite.com)
-- **Games**: [games.misbahwebsite.com](https://games.misbahwebsite.com)
+- **Terminal**: [buildwithmisbah.cc](https://buildwithmisbah.cc)
+- **Portfolio**: [portfolio.buildwithmisbah.cc](https://portfolio.buildwithmisbah.cc
+- **Games**: [games.buildwithmisbah.cc](https://games.buildwithmisbah.cc)
 
 ## 🚀 Features
 

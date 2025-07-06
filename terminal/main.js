@@ -1,6 +1,6 @@
 /**
  * Main JavaScript for Terminal Site - Enhanced
- * misbahwebsite.com
+ * buildwithmisbah.cc
  */
 
 import { InteractiveTerminal } from './terminal.js';

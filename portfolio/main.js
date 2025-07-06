@@ -1,6 +1,6 @@
 /**
  * Main JavaScript for Portfolio Site
- * portfolio.misbahwebsite.com
+ * portfolio.buildwithmisbah.cc
  */
 
 // Initialize on DOM load
