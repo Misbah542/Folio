@@ -1,0 +1,131 @@
+/* Snake Game Styles */
+.snake-game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    background: #000;
+  }
+  
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 0;
+    margin-bottom: 20px;
+  }
+  
+  .score-display {
+    font-family: var(--pixel-font);
+    font-size: 1.25rem;
+    color: var(--accent-warning);
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .game-status {
+    font-family: var(--pixel-font);
+    font-size: 1rem;
+    color: var(--accent-primary);
+    text-shadow: 0 0 10px currentColor;
+  }
+  
+  .snake-canvas {
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    background: #000;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+  
+  /* Overlays */
+  .game-over-overlay,
+  .pause-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  
+  .game-over-content {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-secondary);
+    border: 3px solid var(--accent-danger);
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .game-over-content h3 {
+    font-size: 2rem;
+    color: var(--accent-danger);
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px currentColor;
+  }
+  
+  .game-over-content p {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    font-family: var(--pixel-font);
+  }
+  
+  .restart-button {
+    padding: 15px 40px;
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--pixel-font);
+  }
+  
+  .restart-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--accent-primary);
+  }
+  
+  .pause-overlay {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .pause-overlay p {
+    font-size: 1.5rem;
+    color: var(--accent-warning);
+    text-shadow: 0 0 20px currentColor;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  
+  .pause-overlay p:last-child {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
+    .snake-canvas {
+      width: 300px !important;
+      height: 300px !important;
+    }
+  
+    .game-header {
+      max-width: 300px;
+    }
+  
+    .score-display,
+    .game-status {
+      font-size: 1rem;
+    }
+  }

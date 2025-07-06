@@ -373,17 +373,21 @@ Type 'portfolio' to see detailed project information!`,
                 action: () => this.logAnalytics('command_clear'),
                 description: 'Clear terminal screen'
             },
+            // Replace the "secret" command inside initializeCommands() with this version:
             secret: {
-                output: `<span class="success-message">🎉 You found the secret command!</span>
-<span class="info-message">Here's a cookie for you: 🍪</span>
-<span class="system-message">Fun fact: This terminal has ${Object.keys(this.commands).length} commands!</span>
-<span class="info-message">Try the Konami code: ↑↑↓↓←→←→BA</span>
-<span class="warning-message">Easter eggs hidden: 5/10 found</span>`,
-                animation: 'icons',
-                icons: ['🎉', '🎊', '✨', '🍪', '🏆', '🗝️'],
-                action: () => this.logAnalytics('command_secret'),
-                description: '???'
-            },
+                output: () => {
+                    const commandCount = Object.keys(this.commands || {}).length;
+                return `<span class="success-message">🎉 You found the secret command!</span>
+        <span class="info-message">Here's a cookie for you: 🍪</span>
+        <span class="system-message">Fun fact: This terminal has ${commandCount} commands!</span>
+        <span class="info-message">Try the Konami code: ↑↑↓↓←→←→BA</span>
+        <span class="warning-message">Easter eggs hidden: 5/10 found</span>`;
+         },
+         animation: 'icons',
+         icons: ['🎉', '🎊', '✨', '🍪', '🏆', '🗝️'],
+           action: () => this.logAnalytics('command_secret'),
+         description: '???'
+              },
             linkedin: {
                 output: `<span class="success-message">🔗 Opening LinkedIn profile...</span>`,
                 animation: 'icons',
