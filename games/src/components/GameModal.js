@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './GameModal.css';
-import Snake from '../games/Snake.js';
-import Tetris from '../games/Tetris';
+import React, { useEffect, useRef, useState } from "react";
+import "./GameModal.css";
+import Snake from "../games/Snake.js";
+import Tetris from "../games/Tetris";
+import Pong from "../games/Pong";
+import SpaceInvaders from "../games/SpaceInvaders";
+import Breakout from "../games/Breakout";
+import PacMan from "../games/PacMan";
 
 const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,8 +15,8 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
 
   useEffect(() => {
     // Prevent body scroll when modal is open
-    document.body.style.overflow = 'hidden';
-    
+    document.body.style.overflow = "hidden";
+
     // Load game after a brief delay
     const loadTimer = setTimeout(() => {
       setIsLoading(false);
@@ -21,16 +25,16 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
 
     // Handle escape key
     const handleEscape = (e) => {
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         onClose();
       }
     };
-    window.addEventListener('keydown', handleEscape);
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
       clearTimeout(loadTimer);
-      window.removeEventListener('keydown', handleEscape);
+      window.removeEventListener("keydown", handleEscape);
     };
   }, [onClose]);
 
@@ -38,12 +42,12 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
     // Initialize the selected game
     // This would normally load the actual game component
     console.log(`Loading ${game.name}...`);
-    
+
     // Track game start
     if (window.firebaseAnalytics && window.firebaseAnalytics.trackEvent) {
-      window.firebaseAnalytics.trackEvent('game_start', {
+      window.firebaseAnalytics.trackEvent("game_start", {
         game_id: game.id,
-        game_name: game.name
+        game_name: game.name,
       });
     }
   };
@@ -52,14 +56,14 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
     setGameScore(score);
     const newHighScore = onHighScore(score);
     setIsNewHighScore(newHighScore);
-    
+
     // Track game end
     if (window.firebaseAnalytics && window.firebaseAnalytics.trackEvent) {
-      window.firebaseAnalytics.trackEvent('game_end', {
+      window.firebaseAnalytics.trackEvent("game_end", {
         game_id: game.id,
         game_name: game.name,
         score: score,
-        is_high_score: newHighScore
+        is_high_score: newHighScore,
       });
     }
   };
@@ -80,21 +84,23 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
         <div className="game-modal-header">
           <h2 className="game-modal-title pixel-text">{game.name}</h2>
           <div className="game-modal-controls">
-            <button 
+            <button
               className="control-btn"
               onClick={handleRestart}
               title="Restart Game"
             >
               🔄
             </button>
-            <button 
+            <button
               className="control-btn"
-              onClick={() => {/* Toggle fullscreen */}}
+              onClick={() => {
+                /* Toggle fullscreen */
+              }}
               title="Fullscreen"
             >
               ⛶
             </button>
-            <button 
+            <button
               className="control-btn close-btn"
               onClick={onClose}
               title="Close Game"
@@ -117,7 +123,7 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
           </div>
           <div className="info-item">
             <span className="info-label">Sound:</span>
-            <span className="info-value">{soundEnabled ? '🔊' : '🔇'}</span>
+            <span className="info-value">{soundEnabled ? "🔊" : "🔇"}</span>
           </div>
         </div>
 
@@ -134,14 +140,51 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
             <div className="game-placeholder">
               {/* This is where the actual game component would be rendered */}
               <div className="placeholder-content">
-              {game.id === 'snake' && (
-            <Snake onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
-                )},
-                {game.id === 'tetris' && (
-            <Tetris onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
+                {game.id === "snake" && (
+                  <Snake
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
                 )}
+                ,
+                {game.id === "tetris" && (
+                  <Tetris
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
+                )}
+                ,
+                {game.id === "pong" && (
+                  <Pong
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
+                )}
+                ,
+                {game.id === "space-invaders" && (
+                  <SpaceInvaders
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
+                )}
+                ,
+                {game.id === "breakout" && (
+                  <Breakout
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
+                )}
+                ,
+                {game.id === "pacman" && (
+                  <PacMan
+                    onGameEnd={handleGameEnd}
+                    soundEnabled={soundEnabled}
+                  />
+                )}
+
+
                 <p className="controls-hint">
-                  Use {game.controls || 'arrow keys'} to play
+                  Use {game.controls || "arrow keys"} to play
                 </p>
               </div>
             </div>
@@ -160,22 +203,25 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
           )}
         </div>
 
-
-        
-        {isLoading && ( <div className="game-instructions">
-          <h4>How to Play:</h4>
-          <p>{game.instructions}</p>
-          <div className="controls">
-            <span className="control-key">↑↓←→</span>
-            <span className="control-desc">Move</span>
-            {game.additionalControls && (
-              <>
-                <span className="control-key">{game.additionalControls.key}</span>
-                <span className="control-desc">{game.additionalControls.desc}</span>
-              </>
-            )}
+        {isLoading && (
+          <div className="game-instructions">
+            <h4>How to Play:</h4>
+            <p>{game.instructions}</p>
+            <div className="controls">
+              <span className="control-key">↑↓←→</span>
+              <span className="control-desc">Move</span>
+              {game.additionalControls && (
+                <>
+                  <span className="control-key">
+                    {game.additionalControls.key}
+                  </span>
+                  <span className="control-desc">
+                    {game.additionalControls.desc}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-        </div>
         )}
       </div>
     </div>

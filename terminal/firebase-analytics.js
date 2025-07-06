@@ -9,13 +9,13 @@ import { getAnalytics, logEvent, setUserProperties } from 'https://www.gstatic.c
 // Firebase configuration
 // IMPORTANT: Replace these with your actual Firebase config values
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+    apiKey: "AIzaSyBDCRdMrJtYwUzSCqAd3iIWbgxZhNjMBbw",
+    authDomain: "folio-499bf.firebaseapp.com",
+    projectId: "folio-499bf",
+    storageBucket: "folio-499bf.firebasestorage.app",
+    messagingSenderId: "878317167409",
+    appId: "1:878317167409:web:52596b81ee0d870b96c610",
+    measurementId: "G-4VCLZMH6RC"
 };
 
 // Initialize Firebase

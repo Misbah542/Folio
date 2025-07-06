@@ -1,0 +1,165 @@
+/* Space Invaders Game Styles */
+.space-invaders-game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    background: #000;
+  }
+  
+  .space-invaders-canvas {
+    border: 3px solid var(--accent-primary);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    background: #000;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+  }
+  
+  /* Game Overlays */
+  .game-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(5px);
+  }
+  
+  .menu-content,
+  .pause-content,
+  .gameover-content {
+    text-align: center;
+    padding: 40px;
+    background: var(--bg-secondary);
+    border: 3px solid var(--accent-primary);
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+    animation: fadeIn 0.5s ease-out;
+    max-width: 500px;
+  }
+  
+  .menu-content h2,
+  .pause-content h2,
+  .gameover-content h2 {
+    font-size: 2.5rem;
+    color: var(--accent-primary);
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px currentColor;
+    letter-spacing: 2px;
+  }
+  
+  .menu-content p,
+  .pause-content p,
+  .gameover-content p {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-family: var(--pixel-font);
+    line-height: 1.6;
+  }
+  
+  .controls-info {
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid var(--accent-primary);
+  }
+  
+  .controls-info p {
+    font-size: 0.875rem;
+    margin: 8px 0;
+    color: var(--text-secondary);
+    font-family: var(--pixel-font);
+  }
+  
+  .final-score {
+    font-size: 1.5rem !important;
+    color: var(--accent-warning) !important;
+    text-shadow: 0 0 20px currentColor;
+    margin: 20px 0 !important;
+  }
+  
+  .start-button,
+  .restart-button {
+    padding: 15px 40px;
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--pixel-font);
+    margin-top: 20px;
+  }
+  
+  .start-button:hover,
+  .restart-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--accent-primary);
+    background: var(--accent-secondary);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .space-invaders-canvas {
+      width: 100%;
+      height: auto;
+    }
+    
+    .menu-content h2,
+    .pause-content h2,
+    .gameover-content h2 {
+      font-size: 2rem;
+    }
+    
+    .menu-content,
+    .pause-content,
+    .gameover-content {
+      padding: 30px;
+      margin: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .menu-content,
+    .pause-content,
+    .gameover-content {
+      padding: 20px;
+    }
+    
+    .menu-content h2,
+    .pause-content h2,
+    .gameover-content h2 {
+      font-size: 1.5rem;
+    }
+    
+    .controls-info {
+      padding: 15px;
+    }
+    
+    .controls-info p {
+      font-size: 0.75rem;
+    }
+  }
