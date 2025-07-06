@@ -7,7 +7,7 @@
     height: 100%;
     width: 100%;
     position: relative;
-    background: #000;
+    background: transparent; /* Remove black background */
     padding: 10px;
     box-sizing: border-box;
     overflow: hidden;
@@ -15,7 +15,7 @@
   
   .tetris-container {
     display: flex;
-    gap: 20px;
+    gap: 30px; /* Increased gap for better spacing */
     align-items: flex-start;
     justify-content: center;
     max-width: 100%;
@@ -45,28 +45,29 @@
   .game-info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    min-width: 180px;
-    max-width: 220px;
+    gap: 20px; /* Increased gap */
+    min-width: 280px; /* Increased min-width */
+    max-width: 320px; /* Increased max-width */
     flex-shrink: 0;
   }
   
   .score-controls-row {
     display: flex;
-    gap: 10px;
+    flex-direction: row; /* Keep horizontal layout */
+    gap: 15px; /* Spacing between score and controls */
     width: 100%;
   }
   
   .score-controls-row .info-panel {
     flex: 1;
-    min-width: 0;
+    min-width: 120px; /* Ensure minimum width for each panel */
   }
   
   .info-panel {
     background: var(--bg-secondary);
     border: 2px solid var(--accent-primary);
     border-radius: 8px;
-    padding: 12px;
+    padding: 20px; /* Increased padding */
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
     box-sizing: border-box;
     width: 100%;
@@ -76,9 +77,9 @@
   .info-panel h3,
   .info-panel h4 {
     font-family: var(--pixel-font);
-    font-size: 1rem;
+    font-size: 1.2rem; /* Increased font size */
     color: var(--accent-primary);
-    margin: 0 0 8px 0;
+    margin: 0 0 15px 0; /* Increased margin */
     text-shadow: 0 0 8px currentColor;
     text-align: center;
   }
@@ -86,7 +87,7 @@
   .score-info {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; /* Increased gap */
   }
   
   .score-item {
@@ -94,8 +95,9 @@
     justify-content: space-between;
     align-items: center;
     font-family: var(--pixel-font);
-    font-size: 0.9rem;
+    font-size: 1.1rem; /* Increased font size */
     color: var(--text-primary);
+    padding: 5px 0; /* Added padding */
   }
   
   .score-value {
@@ -110,8 +112,8 @@
     display: block;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    width: 100px;
-    height: 70px;
+    width: 100px; /* Reduced from 120px to fit better */
+    height: 70px; /* Reduced from 90px to fit better */
   }
   
   .game-controls {
@@ -122,8 +124,8 @@
   .controls-grid {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    font-size: 0.8rem;
+    gap: 8px; /* Increased gap */
+    font-size: 1rem; /* Increased font size */
     color: var(--text-secondary);
     width: 100%;
   }
@@ -132,11 +134,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 3px 6px;
+    padding: 8px 12px; /* Increased padding */
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     font-family: var(--pixel-font);
-    min-height: 18px;
+    min-height: 24px; /* Increased min-height */
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -148,7 +150,7 @@
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 0.75rem;
+    font-size: 0.95rem; /* Increased font size */
   }
   
   .control-key {
@@ -157,8 +159,8 @@
     font-weight: bold;
     text-shadow: 0 0 5px currentColor;
     flex-shrink: 0;
-    margin-left: 4px;
-    font-size: 0.8rem;
+    margin-left: 8px; /* Increased margin */
+    font-size: 1rem; /* Increased font size */
   }
   
   /* Game Status */
@@ -287,7 +289,7 @@
   @media (max-width: 768px) {
     .tetris-container {
       flex-direction: column;
-      gap: 15px;
+      gap: 20px; /* Increased gap */
       align-items: center;
     }
     
@@ -297,27 +299,27 @@
     }
     
     .game-info {
-      min-width: 250px;
-      max-width: 250px;
+      min-width: 300px; /* Increased min-width */
+      max-width: 350px; /* Increased max-width */
     }
     
     .info-panel {
-      padding: 12px;
+      padding: 18px; /* Increased padding */
     }
     
     .controls-grid {
-      gap: 5px;
-      font-size: 0.8rem;
+      gap: 8px; /* Increased gap */
+      font-size: 0.95rem; /* Increased font size */
     }
     
     .control-item {
-      padding: 3px 6px;
-      min-height: 18px;
+      padding: 8px 10px; /* Increased padding */
+      min-height: 22px; /* Increased min-height */
     }
     
     .next-piece-canvas {
-      width: 80px;
-      height: 60px;
+      width: 100px;
+      height: 80px;
     }
   }
   
@@ -332,34 +334,34 @@
     }
     
     .game-info {
-      min-width: 220px;
-      max-width: 220px;
+      min-width: 280px; /* Increased min-width */
+      max-width: 320px; /* Increased max-width */
     }
     
     .info-panel {
-      padding: 10px;
+      padding: 15px; /* Increased padding */
     }
     
     .info-panel h3,
     .info-panel h4 {
-      font-size: 1rem;
+      font-size: 1.1rem; /* Increased font size */
     }
     
     .score-item {
-      font-size: 0.8rem;
+      font-size: 1rem; /* Increased font size */
     }
     
     .controls-grid {
-      gap: 4px;
-      font-size: 0.75rem;
+      gap: 6px; /* Increased gap */
+      font-size: 0.9rem; /* Increased font size */
     }
     
     .control-item {
-      padding: 2px 5px;
-      min-height: 16px;
+      padding: 6px 8px; /* Increased padding */
+      min-height: 20px; /* Increased min-height */
     }
     
     .control-key {
-      font-size: 0.75rem;
+      font-size: 0.9rem; /* Increased font size */
     }
   }
