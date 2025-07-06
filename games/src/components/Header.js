@@ -24,11 +24,11 @@ const Header = ({ soundEnabled, onToggleSound }) => {
         </div>
 
         <nav className="header-nav">
-          <a href="https://buildwithmisbah.cc" className="nav-link">
+          <a href="https://misbah-terminal.onrender.com/" className="nav-link">
             <span className="nav-icon">💻</span>
             <span className="nav-text">Terminal</span>
           </a>
-          <a href="https://portfolio.buildwithmisbah.cc" className="nav-link">
+          <a href="https://misbah-portfolio.onrender.com" className="nav-link">
             <span className="nav-icon">💼</span>
             <span className="nav-text">Portfolio</span>
           </a>

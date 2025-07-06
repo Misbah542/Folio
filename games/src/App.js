@@ -111,9 +111,9 @@ function App() {
         <div className="footer-content">
           <p>Built with <span className="heart">♥</span> by Misbah</p>
           <div className="footer-links">
-            <a href="https://buildwithmisbah.cc">Terminal</a>
+            <a href="https://misbah-terminal.onrender.com/">Terminal</a>
             <span className="separator">|</span>
-            <a href="https://portfolio.buildwithmisbah.cc">Portfolio</a>
+            <a href="https://misbah-portfolio.onrender.com">Portfolio</a>
           </div>
         </div>
       </footer>

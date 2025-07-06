@@ -104,7 +104,7 @@
         "description": "Interactive portfolio with 3D graphics, terminal interface, and retro games.",
         "icon": "🌐",
         "technologies": ["Three.js", "React", "JavaScript"],
-        "link": "https://buildwithmisbah.cc"
+        "link": "https://misbah-terminal.onrender.com/"
       }
     ],
     "achievements": [
