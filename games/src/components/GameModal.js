@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './GameModal.css';
 import Snake from '../games/Snake.js';
+import Tetris from '../games/Tetris';
 
 const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -134,8 +135,11 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
               {/* This is where the actual game component would be rendered */}
               <div className="placeholder-content">
               {game.id === 'snake' && (
-  <Snake onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
-)}
+            <Snake onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
+                )},
+                {game.id === 'tetris' && (
+            <Tetris onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
+                )}
                 <p className="controls-hint">
                   Use {game.controls || 'arrow keys'} to play
                 </p>
