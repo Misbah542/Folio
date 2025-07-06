@@ -863,17 +863,37 @@ Type 'portfolio' to see detailed project information!`,
     
     startPartyMode() {
         const partyEmojis = ['🎉', '🎊', '🎈', '🎆', '🎇', '✨', '🌟', '💫', '🥳', '🍾'];
-        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
-        
-        // Disco lights effect
+    
+        // Get theme-based colors
+        const computedStyle = getComputedStyle(document.documentElement);
+        const primary = computedStyle.getPropertyValue('--primary-green').trim() || '#00ff00';
+        const accent = computedStyle.getPropertyValue('--accent-color').trim() || '#4f46e5';
+        const text = computedStyle.getPropertyValue('--text-primary').trim() || '#ffffff';
+    
+        // Add vibrant colors
+        const vibrantColors = [
+            primary, accent, text,
+            '#ff69b4', // hot pink
+            '#00ffff', // aqua
+            '#ffcc00', // gold
+            '#ff4500', // orange red
+            '#7fff00', // chartreuse
+            '#8a2be2', // blue violet
+            '#00fa9a'  // medium spring green
+        ];
+    
+        // Shuffle colors for disco effect
+        const shuffledColors = vibrantColors.sort(() => 0.5 - Math.random());
+    
+        // Start disco lighting
         let colorIndex = 0;
         const disco = setInterval(() => {
-            document.documentElement.style.setProperty('--primary-green', colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.length;
-        }, 200);
-        
-        // Party emojis
-        for (let i = 0; i < 50; i++) {
+            document.documentElement.style.setProperty('--primary-green', shuffledColors[colorIndex]);
+            colorIndex = (colorIndex + 1) % shuffledColors.length;
+        }, 150);
+    
+        // Emoji explosion
+        for (let i = 0; i < 60; i++) {
             setTimeout(() => {
                 const emoji = document.createElement('div');
                 emoji.className = 'terminal-icon';
@@ -884,15 +904,17 @@ Type 'portfolio' to see detailed project information!`,
                 emoji.style.animationDuration = (2 + Math.random() * 3) + 's';
                 this.animContainer.appendChild(emoji);
                 setTimeout(() => emoji.remove(), 5000);
-            }, i * 100);
+            }, i * 80);
         }
-        
-        // Stop disco after 5 seconds
+    
+        // Reset to original primary color
         setTimeout(() => {
             clearInterval(disco);
-            document.documentElement.style.setProperty('--primary-green', '#00ff00');
+            document.documentElement.style.setProperty('--primary-green', primary);
         }, 5000);
     }
+    
+    
     
     triggerAnimation(type, command) {
         if (!this.animContainer) return;
