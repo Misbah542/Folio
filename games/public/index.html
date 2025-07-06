@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Misbah's Retro Games Collection - Classic pixel games including Snake, Tetris, Pong, Space Invaders, and Breakout" />
+    <meta name="keywords" content="retro games, pixel games, snake, tetris, pong, space invaders, breakout, misbah" />
+    <meta name="author" content="Misbah ul Haque" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://games.misbahwebsite.com/" />
+    <meta property="og:title" content="Misbah's Retro Games Collection" />
+    <meta property="og:description" content="Classic pixel games including Snake, Tetris, Pong, Space Invaders, and Breakout" />
+    <meta property="og:image" content="%PUBLIC_URL%/games-preview.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://games.misbahwebsite.com/" />
+    <meta property="twitter:title" content="Misbah's Retro Games Collection" />
+    <meta property="twitter:description" content="Classic pixel games including Snake, Tetris, Pong, Space Invaders, and Breakout" />
+    <meta property="twitter:image" content="%PUBLIC_URL%/games-preview.png" />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <title>Misbah's Retro Games</title>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .pixel-loader {
+            width: 50px;
+            height: 50px;
+            background: #00ff00;
+            animation: pixelPulse 1s infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes pixelPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .loading-text {
+            font-family: 'Press Start 2P', cursive;
+            color: #00ff00;
+            font-size: 16px;
+            text-align: center;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        #root {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        #root.loaded {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    
+    <div class="loading-screen" id="loading-screen">
+        <div class="pixel-loader"></div>
+        <div class="loading-text">LOADING GAMES...</div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <script>
+        // Hide loading screen when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading-screen').classList.add('hidden');
+                document.getElementById('root').classList.add('loaded');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
