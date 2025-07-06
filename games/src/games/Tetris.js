@@ -431,20 +431,44 @@ const Tetris = ({ onGameEnd, soundEnabled }) => {
         </div>
         
         <div className="game-info">
-          <div className="info-panel">
-            <h3>Score</h3>
-            <div className="score-info">
-              <div className="score-item">
-                <span>Points:</span>
-                <span className="score-value">{score}</span>
+          <div className="score-controls-row">
+            <div className="info-panel">
+              <h3>Score</h3>
+              <div className="score-info">
+                <div className="score-item">
+                  <span>Points:</span>
+                  <span className="score-value">{score}</span>
+                </div>
+                <div className="score-item">
+                  <span>Lines:</span>
+                  <span className="score-value">{lines}</span>
+                </div>
+                <div className="score-item">
+                  <span>Level:</span>
+                  <span className="score-value">{level}</span>
+                </div>
               </div>
-              <div className="score-item">
-                <span>Lines:</span>
-                <span className="score-value">{lines}</span>
-              </div>
-              <div className="score-item">
-                <span>Level:</span>
-                <span className="score-value">{level}</span>
+            </div>
+            
+            <div className="info-panel">
+              <h4>Controls</h4>
+              <div className="controls-grid">
+                <div className="control-item">
+                  <span>Move:</span>
+                  <span className="control-key">←→</span>
+                </div>
+                <div className="control-item">
+                  <span>Rotate:</span>
+                  <span className="control-key">↑</span>
+                </div>
+                <div className="control-item">
+                  <span>Drop:</span>
+                  <span className="control-key">↓</span>
+                </div>
+                <div className="control-item">
+                  <span>Pause:</span>
+                  <span className="control-key">Space</span>
+                </div>
               </div>
             </div>
           </div>
@@ -455,28 +479,6 @@ const Tetris = ({ onGameEnd, soundEnabled }) => {
               ref={nextPieceCanvasRef}
               className="next-piece-canvas"
             />
-          </div>
-          
-          <div className="info-panel">
-            <h4>Controls</h4>
-            <div className="controls-grid">
-              <div className="control-item">
-                <span>Move:</span>
-                <span className="control-key">←→</span>
-              </div>
-              <div className="control-item">
-                <span>Rotate:</span>
-                <span className="control-key">↑</span>
-              </div>
-              <div className="control-item">
-                <span>Drop:</span>
-                <span className="control-key">↓</span>
-              </div>
-              <div className="control-item">
-                <span>Pause:</span>
-                <span className="control-key">Space</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
