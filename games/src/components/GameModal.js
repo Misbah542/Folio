@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './GameModal.css';
+import Snake from '../games/Snake.js';
 
 const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -132,17 +133,12 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
             <div className="game-placeholder">
               {/* This is where the actual game component would be rendered */}
               <div className="placeholder-content">
-                <h3 className="pixel-text">Game Area</h3>
-                <p>{game.name} would be rendered here</p>
+              {game.id === 'snake' && (
+  <Snake onGameEnd={handleGameEnd} soundEnabled={soundEnabled} />
+)}
                 <p className="controls-hint">
                   Use {game.controls || 'arrow keys'} to play
                 </p>
-                <button 
-                  className="demo-button"
-                  onClick={() => handleGameEnd(Math.floor(Math.random() * 10000))}
-                >
-                  Simulate Game End (Demo)
-                </button>
               </div>
             </div>
           )}
@@ -160,7 +156,9 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
           )}
         </div>
 
-        <div className="game-instructions">
+
+        
+        {isLoading && ( <div className="game-instructions">
           <h4>How to Play:</h4>
           <p>{game.instructions}</p>
           <div className="controls">
@@ -174,6 +172,7 @@ const GameModal = ({ game, highScore, onClose, onHighScore, soundEnabled }) => {
             )}
           </div>
         </div>
+        )}
       </div>
     </div>
   );

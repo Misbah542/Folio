@@ -51,37 +51,41 @@ export class InteractiveTerminal {
     initializeCommands() {
         return {
             help: {
-                output: `<span class="success-message">📚 Available Commands:</span>
-<span class="info-message">• help</span> - Show this help menu
-<span class="info-message">• about</span> - Learn about Misbah
-<span class="info-message">• portfolio</span> - Visit portfolio site
-<span class="info-message">• games</span> - Play retro games
-<span class="info-message">• skills</span> - View technical skills
-<span class="info-message">• experience</span> - View work experience
-<span class="info-message">• contact</span> - Get contact information
-<span class="info-message">• projects</span> - See featured projects
-<span class="info-message">• android</span> - Show Android animation
-<span class="info-message">• matrix</span> - Enter the Matrix
-<span class="info-message">• hack</span> - Initiate hacking sequence
-<span class="info-message">• glitch</span> - Cause a glitch
-<span class="info-message">• party</span> - Start a party! 🎉
-<span class="info-message">• coffee</span> - Brew some coffee
-<span class="info-message">• joke</span> - Tell a developer joke
-<span class="info-message">• fortune</span> - Get your fortune
-<span class="info-message">• weather</span> - Check the weather
-<span class="info-message">• date</span> - Show current date
-<span class="info-message">• calculator</span> - Quick math calculations
-<span class="info-message">• color [hex]</span> - Change terminal color
-<span class="info-message">• sound</span> - Toggle sound effects
-<span class="info-message">• clear</span> - Clear terminal
-<span class="info-message">• secret</span> - ???
-<span class="info-message">• linkedin</span> - Open LinkedIn profile
-<span class="info-message">• github</span> - Open GitHub profile
-<span class="info-message">• email</span> - Send an email
-<span class="info-message">• resume</span> - Download resume
-<span class="info-message">• whoami</span> - Who are you?
-<span class="info-message">• neofetch</span> - System information
-<span class="info-message">• exit</span> - Exit terminal (just kidding!)`,
+                output: `
+<span class="success-message">📚 Available Commands:</span>
+<div class="help-grid">
+  <div><span class="info-message">• help</span> - Show this help menu</div>
+  <div><span class="info-message">• about</span> - Learn about Misbah</div>
+  <div><span class="info-message">• portfolio</span> - Visit portfolio site</div>
+  <div><span class="info-message">• games</span> - Play retro games</div>
+  <div><span class="info-message">• skills</span> - View technical skills</div>
+  <div><span class="info-message">• experience</span> - View work experience</div>
+  <div><span class="info-message">• contact</span> - Get contact information</div>
+  <div><span class="info-message">• projects</span> - See featured projects</div>
+  <div><span class="info-message">• android</span> - Show Android animation</div>
+  <div><span class="info-message">• matrix</span> - Enter the Matrix</div>
+  <div><span class="info-message">• hack</span> - Initiate hacking sequence</div>
+  <div><span class="info-message">• glitch</span> - Cause a glitch</div>
+  <div><span class="info-message">• party</span> - Start a party! 🎉</div>
+  <div><span class="info-message">• coffee</span> - Brew some coffee</div>
+  <div><span class="info-message">• joke</span> - Tell a developer joke</div>
+  <div><span class="info-message">• fortune</span> - Get your fortune</div>
+  <div><span class="info-message">• weather</span> - Check the weather</div>
+  <div><span class="info-message">• date</span> - Show current date</div>
+  <div><span class="info-message">• calculator</span> - Quick math calculations</div>
+  <div><span class="info-message">• color [hex]</span> - Change terminal color</div>
+  <div><span class="info-message">• sound</span> - Toggle sound effects</div>
+  <div><span class="info-message">• clear</span> - Clear terminal</div>
+  <div><span class="info-message">• secret</span> - ???</div>
+  <div><span class="info-message">• linkedin</span> - Open LinkedIn profile</div>
+  <div><span class="info-message">• github</span> - Open GitHub profile</div>
+  <div><span class="info-message">• email</span> - Send an email</div>
+  <div><span class="info-message">• resume</span> - Download resume</div>
+  <div><span class="info-message">• whoami</span> - Who are you?</div>
+  <div><span class="info-message">• neofetch</span> - System information</div>
+  <div><span class="info-message">• exit</span> - Exit terminal (just kidding!)</div>
+</div>`,
+
                 animation: null,
                 description: 'Show all available commands'
             },

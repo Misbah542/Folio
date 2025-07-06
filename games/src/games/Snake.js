@@ -19,36 +19,35 @@ const Snake = ({ onGameEnd, soundEnabled }) => {
   // Handle keyboard input
   useEffect(() => {
     const handleKeyPress = (e) => {
-      if (gameOver) return;
-
-      switch (e.key) {
-        case 'ArrowUp':
-          if (direction.y === 0) {
-            setDirection({ x: 0, y: -1 });
-          }
-          break;
-        case 'ArrowDown':
-          if (direction.y === 0) {
-            setDirection({ x: 0, y: 1 });
-          }
-          break;
-        case 'ArrowLeft':
-          if (direction.x === 0) {
-            setDirection({ x: -1, y: 0 });
-          }
-          break;
-        case 'ArrowRight':
-          if (direction.x === 0) {
-            setDirection({ x: 1, y: 0 });
-          }
-          break;
-        case ' ':
-          setIsPaused(prev => !prev);
-          break;
-        default:
-          break;
-      }
-    };
+        if (gameOver) return;
+      
+        const keys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+      
+        if (keys.includes(e.key)) {
+          e.preventDefault(); 
+        }
+      
+        switch (e.key) {
+          case 'ArrowUp':
+            if (direction.y === 0) setDirection({ x: 0, y: -1 });
+            break;
+          case 'ArrowDown':
+            if (direction.y === 0) setDirection({ x: 0, y: 1 });
+            break;
+          case 'ArrowLeft':
+            if (direction.x === 0) setDirection({ x: -1, y: 0 });
+            break;
+          case 'ArrowRight':
+            if (direction.x === 0) setDirection({ x: 1, y: 0 });
+            break;
+          case ' ':
+            setIsPaused(prev => !prev);
+            break;
+          default:
+            break;
+        }
+      };
+      
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
