@@ -515,6 +515,7 @@ Type 'portfolio' to see detailed project information!`,
         // Play typing sound
         if (this.soundEnabled && this.typingSound && !['Enter', 'Tab', 'Escape'].includes(e.key)) {
             this.typingSound.currentTime = 0;
+            this.typingSound.volume = 0.2;
             this.typingSound.play().catch(() => {});
         }
     }
