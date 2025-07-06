@@ -59,6 +59,7 @@
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
     box-sizing: border-box;
     width: 100%;
+    overflow: hidden; /* Prevent content overflow */
   }
   
   .info-panel h3,
@@ -110,19 +111,32 @@
   .controls-grid {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    font-size: 0.9rem;
+    gap: 6px;
+    font-size: 0.85rem;
     color: var(--text-secondary);
+    width: 100%;
   }
   
   .control-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
+    padding: 4px 8px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     font-family: var(--pixel-font);
+    min-height: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .control-item span:first-child {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .control-key {
@@ -130,6 +144,8 @@
     color: var(--accent-warning);
     font-weight: bold;
     text-shadow: 0 0 5px currentColor;
+    flex-shrink: 0;
+    margin-left: 8px;
   }
   
   /* Game Status */
@@ -277,7 +293,13 @@
     }
     
     .controls-grid {
-      gap: 6px;
+      gap: 5px;
+      font-size: 0.8rem;
+    }
+    
+    .control-item {
+      padding: 3px 6px;
+      min-height: 18px;
     }
     
     .next-piece-canvas {
@@ -314,8 +336,17 @@
       font-size: 0.8rem;
     }
     
+    .controls-grid {
+      gap: 4px;
+      font-size: 0.75rem;
+    }
+    
     .control-item {
-      padding: 4px 8px;
-      font-size: 0.8rem;
+      padding: 2px 5px;
+      min-height: 16px;
+    }
+    
+    .control-key {
+      font-size: 0.75rem;
     }
   }
