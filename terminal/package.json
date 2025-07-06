@@ -1,0 +1,21 @@
+{
+    "name": "misbah-terminal",
+    "version": "3.0.0",
+    "description": "Interactive terminal portfolio for Misbah ul Haque",
+    "main": "index.html",
+    "scripts": {
+      "start": "python -m http.server 8000",
+      "serve": "npx serve ."
+    },
+    "keywords": [
+      "terminal",
+      "portfolio",
+      "interactive",
+      "web-terminal"
+    ],
+    "author": "Misbah ul Haque",
+    "license": "MIT",
+    "devDependencies": {
+      "serve": "^14.2.0"
+    }
+  }

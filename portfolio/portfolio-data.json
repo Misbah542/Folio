@@ -1,0 +1,124 @@
+{
+    "personal": {
+      "name": "Misbah ul Haque",
+      "title": "Android Developer",
+      "email": "misbahul8@gmail.com",
+      "phone": "+91-8376069521",
+      "location": "Bengaluru, India",
+      "linkedin": "https://linkedin.com/in/misbahhaque",
+      "github": "https://github.com/Misbah542",
+      "resume": "resume/Misbah_ul_Haque_Resume.pdf"
+    },
+    "about": {
+      "summary": "Innovative Android Developer with over 2 years of experience in building high-performance mobile applications. Currently working as SDE II at JioCinema, where I optimize apps that serve millions of users during India's largest streaming events.",
+      "highlights": [
+        {
+          "icon": "🚀",
+          "text": "Performance Optimization Expert"
+        },
+        {
+          "icon": "📺",
+          "text": "Android TV Specialist"
+        },
+        {
+          "icon": "🏗️",
+          "text": "Clean Architecture Advocate"
+        }
+      ]
+    },
+    "skills": {
+      "languages": [
+        { "name": "Kotlin", "level": 95 },
+        { "name": "Java", "level": 90 },
+        { "name": "JavaScript", "level": 75 }
+      ],
+      "frameworks": [
+        { "name": "Jetpack Compose", "level": 90 },
+        { "name": "Android Leanback", "level": 85 },
+        { "name": "ExoPlayer", "level": 88 }
+      ],
+      "tools": [
+        "Android Studio",
+        "Firebase",
+        "Git",
+        "Gradle",
+        "Jenkins",
+        "JIRA",
+        "Android TV",
+        "Fire TV"
+      ]
+    },
+    "experience": [
+      {
+        "title": "SDE II - Android",
+        "company": "JioCinema (Viacom18 Media)",
+        "period": "June 2024 - Present",
+        "achievements": [
+          "Optimized app startup time by 60% through advanced initialization strategies",
+          "Maintained 99.9% crash-free rate during IPL 2024 with 50M+ concurrent users",
+          "Led Android TV player redesign improving user engagement by 40%",
+          "Implemented advanced caching mechanisms reducing data usage by 30%"
+        ],
+        "technologies": ["Kotlin", "Jetpack Compose", "ExoPlayer", "MVVM"]
+      },
+      {
+        "title": "SDE I - Android",
+        "company": "JioCinema (Viacom18 Media)",
+        "period": "July 2022 - May 2024",
+        "achievements": [
+          "Redesigned Android TV Player Skin with modern UI/UX principles",
+          "Built Login with QR Code feature improving authentication speed by 70%",
+          "Improved rendering time by 40% through view optimization",
+          "Collaborated with cross-functional teams to deliver features on schedule"
+        ],
+        "technologies": ["Android TV", "Leanback", "Firebase", "Clean Architecture"]
+      }
+    ],
+    "projects": [
+      {
+        "name": "JioCinema Android TV",
+        "description": "Streaming application serving 50M+ users with live sports, movies, and shows.",
+        "icon": "📺",
+        "technologies": ["Kotlin", "Android TV", "ExoPlayer"],
+        "stats": {
+          "users": "50M+",
+          "uptime": "99.9%"
+        }
+      },
+      {
+        "name": "Tetris Game",
+        "description": "Modern implementation of classic Tetris using Jetpack Compose and MVVM architecture.",
+        "icon": "🎮",
+        "technologies": ["Jetpack Compose", "MVVM", "Kotlin"],
+        "link": "https://github.com/Misbah542/tetris"
+      },
+      {
+        "name": "Weather App",
+        "description": "Beautiful weather application with dynamic UI based on weather conditions.",
+        "icon": "🌤️",
+        "technologies": ["Kotlin", "Retrofit", "OpenWeather API"],
+        "link": "https://github.com/Misbah542/weather-app"
+      },
+      {
+        "name": "Portfolio Website",
+        "description": "Interactive portfolio with 3D graphics, terminal interface, and retro games.",
+        "icon": "🌐",
+        "technologies": ["Three.js", "React", "JavaScript"],
+        "link": "https://misbahwebsite.com"
+      }
+    ],
+    "achievements": [
+      {
+        "metric": "50M+",
+        "description": "Users Served"
+      },
+      {
+        "metric": "99.9%",
+        "description": "Crash-Free Rate"
+      },
+      {
+        "metric": "60%",
+        "description": "Faster Startup"
+      }
+    ]
+  }

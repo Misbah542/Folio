@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Misbah ul Haque - Android Developer Portfolio</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Portfolio of Misbah ul Haque - Android Developer specializing in Kotlin, Jetpack Compose, and Android TV applications.">
+    <meta name="keywords" content="Misbah ul Haque, Android Developer, Kotlin, Jetpack Compose, Portfolio">
+    <meta name="author" content="Misbah ul Haque">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Misbah ul Haque - Android Developer Portfolio">
+    <meta property="og:description" content="Innovative Android Developer with expertise in building scalable applications">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portfolio.misbahwebsite.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAnalytics, logEvent } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js';
+        
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        window.analytics = analytics;
+        window.logEvent = logEvent;
+        
+        // Log page view
+        logEvent(analytics, 'page_view', {
+            page_title: 'Portfolio',
+            page_location: window.location.href
+        });
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-text">Loading Portfolio...</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-text">MISBAH.PORTFOLIO</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://misbahwebsite.com" class="nav-btn terminal-btn">
+                    <span>Terminal</span>
+                </a>
+                <a href="https://games.misbahwebsite.com" class="nav-btn games-btn">
+                    <span>Games</span>
+                </a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Three.js Background -->
+    <canvas id="canvas"></canvas>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="text-gradient">Misbah ul Haque</span>
+                </h1>
+                <h2 class="hero-subtitle">Android Developer</h2>
+                <p class="hero-description">
+                    Building scalable Android applications that delight millions of users
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50M+</span>
+                        <span class="stat-label">Users Served</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">Crash-Free Rate</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">60%</span>
+                        <span class="stat-label">Faster Startup</span>
+                    </div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="resume/misbah.pdf" class="btn btn-secondary" download>
+                        <span>Download Resume</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="android-robot" id="androidRobot">
+                    <div class="robot-head">
+                        <div class="robot-eye left"></div>
+                        <div class="robot-eye right"></div>
+                    </div>
+                    <div class="robot-body">
+                        <div class="robot-arm left"></div>
+                        <div class="robot-arm right"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm an innovative Android Developer with over 2 years of experience in building 
+                        high-performance mobile applications. Currently working as SDE II at JioCinema, 
+                        where I optimize apps that serve millions of users during India's largest streaming events.
+                    </p>
+                    <p>
+                        My expertise lies in Kotlin, Jetpack Compose, and Android TV development. I'm passionate 
+                        about creating seamless user experiences and solving complex technical challenges at scale.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight">
+                            <span class="highlight-icon">🚀</span>
+                            <span>Performance Optimization Expert</span>
+                        </div>
+                        <div class="highlight">
+                            <span class="highlight-icon">📺</span>
+                            <span>Android TV Specialist</span>
+                        </div>
+                        <div class="highlight">
+                            <span class="highlight-icon">🏗️</span>
+                            <span>Clean Architecture Advocate</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-container">
+                        <div class="image-frame">
+                            <div class="code-animation">
+                                <pre><code>class AndroidDeveloper {
+    val name = "Misbah ul Haque"
+    val role = "SDE II"
+    val company = "JioCinema"
+    
+    fun buildAmazingApps() {
+        while (true) {
+            learn()
+            code()
+            optimize()
+            deploy()
+        }
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Languages</h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="95">
+                            <span class="skill-name">Kotlin</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="90">
+                            <span class="skill-name">Java</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="75">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Frameworks</h3>
+                    <div class="skill-items">
+                        <div class="skill-item" data-level="90">
+                            <span class="skill-name">Jetpack Compose</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="85">
+                            <span class="skill-name">Android Leanback</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item" data-level="88">
+                            <span class="skill-name">ExoPlayer</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Tools & Platforms</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Android Studio</span>
+                        <span class="skill-tag">Firebase</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Gradle</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">JIRA</span>
+                        <span class="skill-tag">Android TV</span>
+                        <span class="skill-tag">Fire TV</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">June 2024 - Present</div>
+                    <div class="timeline-content">
+                        <h3>SDE II - Android</h3>
+                        <h4>JioCinema (Viacom18 Media)</h4>
+                        <ul>
+                            <li>Optimized app startup time by 60% through advanced initialization strategies</li>
+                            <li>Maintained 99.9% crash-free rate during IPL 2024 with 50M+ concurrent users</li>
+                            <li>Led Android TV player redesign improving user engagement by 40%</li>
+                            <li>Implemented advanced caching mechanisms reducing data usage by 30%</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech">Kotlin</span>
+                            <span class="tech">Jetpack Compose</span>
+                            <span class="tech">ExoPlayer</span>
+                            <span class="tech">MVVM</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">July 2022 - May 2024</div>
+                    <div class="timeline-content">
+                        <h3>SDE I - Android</h3>
+                        <h4>JioCinema (Viacom18 Media)</h4>
+                        <ul>
+                            <li>Redesigned Android TV Player Skin with modern UI/UX principles</li>
+                            <li>Built Login with QR Code feature improving authentication speed by 70%</li>
+                            <li>Improved rendering time by 40% through view optimization</li>
+                            <li>Collaborated with cross-functional teams to deliver features on schedule</li>
+                        </ul>
+                        <div class="tech-stack">
+                            <span class="tech">Android TV</span>
+                            <span class="tech">Leanback</span>
+                            <span class="tech">Firebase</span>
+                            <span class="tech">Clean Architecture</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-icon">📺</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>JioCinema Android TV</h3>
+                        <p>Streaming application serving 50M+ users with live sports, movies, and shows.</p>
+                        <div class="project-tech">
+                            <span>Kotlin</span>
+                            <span>Android TV</span>
+                            <span>ExoPlayer</span>
+                        </div>
+                        <div class="project-stats">
+                            <div class="stat">
+                                <span class="stat-value">50M+</span>
+                                <span class="stat-label">Users</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">99.9%</span>
+                                <span class="stat-label">Uptime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-icon">🎮</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Tetris Game</h3>
+                        <p>Modern implementation of classic Tetris using Jetpack Compose and MVVM architecture.</p>
+                        <div class="project-tech">
+                            <span>Jetpack Compose</span>
+                            <span>MVVM</span>
+                            <span>Kotlin</span>
+                        </div>
+                        <a href="https://github.com/Misbah542/tetris" class="project-link" target="_blank">
+                            View on GitHub →
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-icon">🌤️</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Weather App</h3>
+                        <p>Beautiful weather application with dynamic UI based on weather conditions.</p>
+                        <div class="project-tech">
+                            <span>Kotlin</span>
+                            <span>Retrofit</span>
+                            <span>OpenWeather API</span>
+                        </div>
+                        <a href="https://github.com/Misbah542/weather-app" class="project-link" target="_blank">
+                            View on GitHub →
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-icon">🌐</div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Portfolio Website</h3>
+                        <p>Interactive portfolio with 3D graphics, terminal interface, and retro games.</p>
+                        <div class="project-tech">
+                            <span>Three.js</span>
+                            <span>React</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <a href="https://misbahwebsite.com" class="project-link" target="_blank">
+                            View Live →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>I'm always interested in hearing about new opportunities and challenges. 
+                       Feel free to reach out if you'd like to discuss Android development, 
+                       collaborate on projects, or just say hello!</p>
+                    <div class="contact-items">
+                        <a href="mailto:misbahul8@gmail.com" class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <span>misbahul8@gmail.com</span>
+                        </a>
+                        <a href="tel:+918376069521" class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span>+91 8376069521</span>
+                        </a>
+                        <a href="https://linkedin.com/in/misbahhaque" class="contact-item" target="_blank">
+                            <span class="contact-icon">🔗</span>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://github.com/Misbah542" class="contact-item" target="_blank">
+                            <span class="contact-icon">💻</span>
+                            <span>GitHub</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2024 Misbah ul Haque. Built with passion and code.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="https://misbahwebsite.com" class="footer-link">Terminal</a>
+                    <a href="https://games.misbahwebsite.com" class="footer-link">Games</a>
+                    <a href="https://github.com/Misbah542" class="footer-link">GitHub</a>
+                    <a href="https://linkedin.com/in/misbahhaque" class="footer-link">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <!-- Scripts -->
+    <script type="module" src="firebase-analytics.js"></script>
+    <script src="three-scene.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "name": "misbah-portfolio",
+    "version": "1.0.0",
+    "description": "Professional portfolio website for Misbah ul Haque",
+    "main": "index.html",
+    "scripts": {
+      "start": "python -m http.server 8001",
+      "serve": "npx serve ."
+    },
+    "keywords": [
+      "portfolio",
+      "android",
+      "developer",
+      "misbah"
+    ],
+    "author": "Misbah ul Haque",
+    "license": "MIT",
+    "devDependencies": {
+      "serve": "^14.2.0"
+    }
+  }

@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Misbah ul Haque - Interactive Terminal</title>
     
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Interactive terminal portfolio of Misbah ul Haque - Android Developer. Explore through commands!">
+    <meta name="keywords" content="Misbah ul Haque, Android Developer, Portfolio, Interactive Terminal">
+    <meta name="author" content="Misbah ul Haque">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Misbah ul Haque - Interactive Terminal">
+    <meta property="og:description" content="Explore my interactive terminal portfolio with 25+ commands and 3D experiences">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://misbahwebsite.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==">
+    
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
@@ -47,6 +61,9 @@
                 <div class="loader-bar">
                     <div class="loader-progress"></div>
                 </div>
+                <div class="loader-status">
+                    <span class="status-text" id="loaderStatus">Loading resources...</span>
+                </div>
             </div>
         </div>
     </div>
@@ -54,11 +71,18 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-brand">
+            <span class="brand-icon">⚡</span>
             <span class="brand-text">MISBAH.TERMINAL</span>
         </div>
         <ul>
-            <li><a href="https://portfolio.misbahwebsite.com" class="nav-link">Portfolio</a></li>
-            <li><a href="https://games.misbahwebsite.com" class="nav-link">Games</a></li>
+            <li><a href="https://portfolio.misbahwebsite.com" class="nav-link" data-hover="View Portfolio">
+                <span class="nav-icon">💼</span>
+                <span>Portfolio</span>
+            </a></li>
+            <li><a href="https://games.misbahwebsite.com" class="nav-link" data-hover="Play Games">
+                <span class="nav-icon">🎮</span>
+                <span>Games</span>
+            </a></li>
         </ul>
     </nav>
 
@@ -79,15 +103,30 @@
 
     <!-- Main Terminal Section -->
     <main class="terminal-main">
-        <div class="terminal-container">
+        <div class="terminal-container" id="terminalContainer">
             <div class="terminal-header">
                 <span class="terminal-dot red"></span>
                 <span class="terminal-dot yellow"></span>
                 <span class="terminal-dot green"></span>
                 <span class="terminal-title">misbah@terminal:~$</span>
+                <div class="terminal-actions">
+                    <button class="terminal-action" id="minimizeBtn" title="Minimize">─</button>
+                    <button class="terminal-action" id="maximizeBtn" title="Maximize">□</button>
+                    <button class="terminal-action" id="closeBtn" title="Close">×</button>
+                </div>
             </div>
             <div class="terminal-content" id="terminalContent">
                 <div class="terminal-output" id="terminalOutput">
+                    <div class="terminal-line">
+                        <span class="ascii-art">
+ __  __ _     _           _     
+|  \/  (_)   | |         | |    
+| \  / |_ ___| |__   __ _| |__  
+| |\/| | / __| '_ \ / _` | '_ \ 
+| |  | | \__ \ |_) | (_| | | | |
+|_|  |_|_|___/_.__/ \__,_|_| |_|
+                        </span>
+                    </div>
                     <div class="terminal-line">
                         <span class="system-message">Welcome to Misbah's Interactive Terminal v3.0</span>
                     </div>
@@ -95,15 +134,18 @@
                         <span class="system-message">Type 'help' for available commands or just start exploring!</span>
                     </div>
                     <div class="terminal-line">
-                        <span class="info-message">Quick Links: 'portfolio' | 'games' | 'about'</span>
+                        <span class="info-message">Quick Links: 'portfolio' | 'games' | 'about' | Try 'matrix' for fun!</span>
                     </div>
                 </div>
                 <div class="terminal-input-line">
                     <span class="prompt">$</span>
-                    <input type="text" id="terminalInput" class="terminal-input" autofocus>
+                    <input type="text" id="terminalInput" class="terminal-input" autofocus placeholder="Type a command...">
                     <span class="cursor">|</span>
                 </div>
             </div>
+            
+            <!-- Auto-complete suggestions -->
+            <div class="autocomplete-suggestions" id="autocompleteSuggestions"></div>
         </div>
         
         <!-- Fun animations container -->
@@ -111,16 +153,28 @@
         
         <!-- Quick Actions -->
         <div class="quick-actions">
-            <a href="https://portfolio.misbahwebsite.com" class="action-btn portfolio-btn">
+            <a href="https://portfolio.misbahwebsite.com" class="action-btn portfolio-btn" data-animation="portfolio">
                 <span class="btn-icon">💼</span>
                 <span class="btn-text">View Portfolio</span>
+                <span class="btn-arrow">→</span>
             </a>
-            <a href="https://games.misbahwebsite.com" class="action-btn games-btn">
+            <a href="https://games.misbahwebsite.com" class="action-btn games-btn" data-animation="games">
                 <span class="btn-icon">🎮</span>
                 <span class="btn-text">Play Games</span>
+                <span class="btn-arrow">→</span>
             </a>
         </div>
+        
+        <!-- Floating hint -->
+        <div class="floating-hint" id="floatingHint">
+            <span class="hint-text">💡 Press Tab for autocomplete</span>
+        </div>
     </main>
+
+    <!-- Sound effects (optional) -->
+    <audio id="typingSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBCA=" type="audio/wav">
+    </audio>
 
     <!-- Custom Scripts -->
     <script type="module" src="firebase-analytics.js"></script>

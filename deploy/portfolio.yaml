@@ -1,0 +1,18 @@
+# Render deployment configuration for portfolio site
+services:
+  - type: web
+    name: misbah-portfolio
+    env: static
+    buildCommand: ""
+    staticPublishPath: ./portfolio
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
