@@ -554,7 +554,6 @@ nav ul {
 .prompt {
   color: var(--accent-color);
   font-weight: bold;
-  margin-right: 10px;
 }
 
 .terminal-input-line {
@@ -580,12 +579,12 @@ nav ul {
   font-style: italic;
 }
 
-.cursor {
+/* .cursor {
   animation: blink 1s infinite;
   color: var(--accent-color);
   margin-left: 2px;
   font-weight: bold;
-}
+} */
 
 @keyframes blink {
   0%,
@@ -762,6 +761,27 @@ nav ul {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.cursor {
+  animation: blink 1s infinite;
+  position: absolute;
+  top: 0;
+  margin-left: 20px; 
+  height: 100%;
+  width: 1px;
+  pointer-events: none;
+  
+}
+
 
 .action-btn::before {
   content: "";

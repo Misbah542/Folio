@@ -32,6 +32,11 @@ export class InteractiveTerminal {
         if (this.input) {
             this.input.addEventListener('keydown', (e) => this.handleKeyDown(e));
             this.input.addEventListener('input', (e) => this.handleInput(e));
+            this.cursor = document.getElementById('customCursor');
+            this.input.addEventListener('input', () => this.updateCursorPosition());
+            this.input.addEventListener('click', () => this.updateCursorPosition());
+            window.addEventListener('resize', () => this.updateCursorPosition());
+
             this.input.focus();
         }
         
@@ -430,7 +435,7 @@ Type 'portfolio' to see detailed project information!`,
                 icons: ['📄', '⬇️', '📑'],
                 action: () => {
                     this.logAnalytics('download_resume');
-                    window.open('https://misbah-portfolio.onrender.com/resume/Misbah_ul_Haque_Resume.pdf', '_blank');
+                    window.open('https://misbah-portfolio.onrender.com/resume/MisbahHaque_Resume.pdf', '_blank');
                 },
                 description: 'Download resume'
             },
@@ -559,6 +564,26 @@ Type 'portfolio' to see detailed project information!`,
             this.hideAutocomplete();
         }
     }
+
+    updateCursorPosition() {
+        const input = this.input;
+        const cursor = this.cursor;
+    
+        if (!input || !cursor) return;
+    
+        const span = document.createElement('span');
+        span.style.visibility = 'hidden';
+        span.style.position = 'absolute';
+        span.style.font = getComputedStyle(input).font;
+        span.textContent = input.value.slice(0, input.selectionStart);
+        
+        document.body.appendChild(span);
+        const offset = span.getBoundingClientRect().width;
+        document.body.removeChild(span);
+    
+        cursor.style.left = `${offset + 4}px`; // Adjust +4 for padding/margin
+    }
+    
     
     hideAutocomplete() {
         if (this.suggestionsEl) {
