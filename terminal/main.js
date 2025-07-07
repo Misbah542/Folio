@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const notification = createNotification(msg, 'success');
                 document.body.appendChild(notification);
                 setTimeout(() => notification.remove(), 3000);
-            }, index * 1000);
+            }, index * 3000);
         });
     }
     

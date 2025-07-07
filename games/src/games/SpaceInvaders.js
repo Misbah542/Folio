@@ -193,24 +193,28 @@ const SpaceInvaders = ({ onGameEnd, soundEnabled }) => {
       return { ...prev, x: newX };
     });
     
-    // Update aliens
+    // Update aliens - Fixed boundary check
     setAliens(prev => {
       let shouldDescend = false;
-      const newAliens = prev.map(alien => {
-        if (!alien.alive) return alien;
-        
-        const newX = alien.x + alienDirection * alienSpeed;
-        
-        if (newX <= 0 || newX >= CANVAS_WIDTH - ALIEN_WIDTH) {
+      
+      // Check if any alien hits the boundary
+      for (const alien of prev) {
+        if (!alien.alive) continue;
+        const nextX = alien.x + alienDirection * alienSpeed;
+        if (nextX <= 0 || nextX >= CANVAS_WIDTH - ALIEN_WIDTH) {
           shouldDescend = true;
+          break;
         }
-        
-        return { ...alien, x: newX };
+      }
+      
+      let newAliens = prev.map(alien => {
+        if (!alien.alive) return alien;
+        return { ...alien, x: alien.x + alienDirection * alienSpeed };
       });
       
       if (shouldDescend) {
         setAlienDirection(dir => -dir);
-        return newAliens.map(alien => ({
+        newAliens = newAliens.map(alien => ({
           ...alien,
           y: alien.y + 20
         }));
@@ -335,7 +339,7 @@ const SpaceInvaders = ({ onGameEnd, soundEnabled }) => {
     const aliveAliens = aliens.filter(a => a.alive);
     if (aliveAliens.length === 0) {
       setLevel(prev => prev + 1);
-      setAlienSpeed(prev => prev * 1.2);
+      setAlienSpeed(prev => Math.min(prev * 1.2, 2)); // Cap max speed
       initializeAliens();
       initializeShields();
     }

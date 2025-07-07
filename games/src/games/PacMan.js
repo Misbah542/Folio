@@ -58,7 +58,8 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
     y: 23,
     direction: null,
     nextDirection: null,
-    mouthOpen: true
+    mouthOpen: true,
+    moveProgress: 0
   });
   
   // Ghosts
@@ -74,6 +75,7 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
   
   const keysPressed = useRef({});
   const animationTimer = useRef(0);
+  const moveCounter = useRef(0);
   
   // Initialize maze
   useEffect(() => {
@@ -154,7 +156,7 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
     setLives(3);
     setLevel(1);
     setGameState('menu');
-    setPacman({ x: 14, y: 23, direction: null, nextDirection: null, mouthOpen: true });
+    setPacman({ x: 14, y: 23, direction: null, nextDirection: null, mouthOpen: true, moveProgress: 0 });
     setGhosts([
       { x: 14, y: 11, color: '#ff0000', dx: 1, dy: 0, mode: 'chase' },
       { x: 13, y: 14, color: '#00ffff', dx: -1, dy: 0, mode: 'chase' },
@@ -175,124 +177,152 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
     if (gameState !== 'playing') return;
     
     animationTimer.current++;
+    moveCounter.current++;
     
-    // Update Pac-Man
-    setPacman(prev => {
-      let newX = prev.x;
-      let newY = prev.y;
-      let newDirection = prev.direction;
-      
-      // Try to change direction
-      if (prev.nextDirection) {
-        const testX = prev.x + prev.nextDirection.dx;
-        const testY = prev.y + prev.nextDirection.dy;
+    // Update Pac-Man - Slower movement
+    if (moveCounter.current % 5 === 0) { // Move every 5 frames for smoother, slower movement
+      setPacman(prev => {
+        let newX = prev.x;
+        let newY = prev.y;
+        let newDirection = prev.direction;
         
-        if (canMove(testX, testY)) {
-          newDirection = prev.nextDirection;
+        // Try to change direction
+        if (prev.nextDirection) {
+          const testX = prev.x + prev.nextDirection.dx;
+          const testY = prev.y + prev.nextDirection.dy;
+          
+          if (canMove(testX, testY)) {
+            newDirection = prev.nextDirection;
+          }
         }
-      }
-      
-      // Move in current direction
-      if (newDirection) {
-        const testX = prev.x + newDirection.dx;
-        const testY = prev.y + newDirection.dy;
+        
+        // Move in current direction
+        if (newDirection) {
+          const testX = prev.x + newDirection.dx;
+          const testY = prev.y + newDirection.dy;
+          
+          if (canMove(testX, testY)) {
+            newX = testX;
+            newY = testY;
+            
+            // Wrap around tunnels
+            if (newY === 14) { // Only wrap on the tunnel row
+              if (newX < 0) newX = GRID_WIDTH - 1;
+              if (newX >= GRID_WIDTH) newX = 0;
+            }
+          } else {
+            newDirection = null;
+          }
+        }
+        
+        // Eat dots
+        if (maze[newY] && maze[newY][newX] === 0) {
+          setMaze(m => {
+            const newMaze = m.map(row => [...row]);
+            newMaze[newY][newX] = 3;
+            return newMaze;
+          });
+          setScore(s => s + 10);
+          setDotCount(d => {
+            const newCount = d - 1;
+            if (newCount === 0) {
+              // Level complete
+              setLevel(l => l + 1);
+            }
+            return newCount;
+          });
+        }
+        
+        // Eat power pellet
+        if (maze[newY] && maze[newY][newX] === 2) {
+          setMaze(m => {
+            const newMaze = m.map(row => [...row]);
+            newMaze[newY][newX] = 3;
+            return newMaze;
+          });
+          setScore(s => s + 50);
+          setPowerMode(true);
+          setPowerTimer(500);
+          setDotCount(d => d - 1);
+          
+          // Make ghosts frightened
+          setGhosts(g => g.map(ghost => ({ ...ghost, mode: 'frightened' })));
+        }
+        
+        return {
+          ...prev,
+          x: newX,
+          y: newY,
+          direction: newDirection,
+          mouthOpen: animationTimer.current % 20 < 10
+        };
+      });
+    }
+    
+    // Update ghosts - Slower movement
+    if (moveCounter.current % 7 === 0) { // Ghosts move slightly slower than Pac-Man
+      setGhosts(prev => prev.map((ghost, index) => {
+        let newX = ghost.x;
+        let newY = ghost.y;
+        let newDx = ghost.dx;
+        let newDy = ghost.dy;
+        
+        // Simple AI - change direction at intersections
+        const possibleMoves = [];
+        if (canMove(ghost.x + 1, ghost.y) && ghost.dx !== -1) possibleMoves.push({ dx: 1, dy: 0 });
+        if (canMove(ghost.x - 1, ghost.y) && ghost.dx !== 1) possibleMoves.push({ dx: -1, dy: 0 });
+        if (canMove(ghost.x, ghost.y + 1) && ghost.dy !== -1) possibleMoves.push({ dx: 0, dy: 1 });
+        if (canMove(ghost.x, ghost.y - 1) && ghost.dy !== 1) possibleMoves.push({ dx: 0, dy: -1 });
+        
+        if (possibleMoves.length > 0) {
+          // Sometimes chase Pac-Man, sometimes random
+          if (Math.random() > 0.3 && ghost.mode === 'chase') {
+            // Chase Pac-Man
+            let bestMove = possibleMoves[0];
+            let bestDistance = Infinity;
+            
+            possibleMoves.forEach(move => {
+              const testX = ghost.x + move.dx;
+              const testY = ghost.y + move.dy;
+              const distance = Math.abs(testX - pacman.x) + Math.abs(testY - pacman.y);
+              if (distance < bestDistance) {
+                bestDistance = distance;
+                bestMove = move;
+              }
+            });
+            
+            newDx = bestMove.dx;
+            newDy = bestMove.dy;
+          } else {
+            // Random move
+            const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+            newDx = move.dx;
+            newDy = move.dy;
+          }
+        }
+        
+        // Move ghost
+        const testX = ghost.x + newDx;
+        const testY = ghost.y + newDy;
         
         if (canMove(testX, testY)) {
           newX = testX;
           newY = testY;
           
-          // Wrap around
-          if (newX < 0) newX = GRID_WIDTH - 1;
-          if (newX >= GRID_WIDTH) newX = 0;
-        } else {
-          newDirection = null;
-        }
-      }
-      
-      // Eat dots
-      if (maze[newY] && maze[newY][newX] === 0) {
-        setMaze(m => {
-          const newMaze = m.map(row => [...row]);
-          newMaze[newY][newX] = 3;
-          return newMaze;
-        });
-        setScore(s => s + 10);
-        setDotCount(d => {
-          const newCount = d - 1;
-          if (newCount === 0) {
-            // Level complete
-            setLevel(l => l + 1);
+          // Wrap around tunnels
+          if (newY === 14) { // Only wrap on the tunnel row
+            if (newX < 0) newX = GRID_WIDTH - 1;
+            if (newX >= GRID_WIDTH) newX = 0;
           }
-          return newCount;
-        });
-      }
-      
-      // Eat power pellet
-      if (maze[newY] && maze[newY][newX] === 2) {
-        setMaze(m => {
-          const newMaze = m.map(row => [...row]);
-          newMaze[newY][newX] = 3;
-          return newMaze;
-        });
-        setScore(s => s + 50);
-        setPowerMode(true);
-        setPowerTimer(500);
-        setDotCount(d => d - 1);
+        } else {
+          // Reverse direction if hit wall
+          newDx = -ghost.dx;
+          newDy = -ghost.dy;
+        }
         
-        // Make ghosts frightened
-        setGhosts(g => g.map(ghost => ({ ...ghost, mode: 'frightened' })));
-      }
-      
-      return {
-        ...prev,
-        x: newX,
-        y: newY,
-        direction: newDirection,
-        mouthOpen: animationTimer.current % 20 < 10
-      };
-    });
-    
-    // Update ghosts
-    setGhosts(prev => prev.map((ghost, index) => {
-      if (animationTimer.current % (2 + index) !== 0) return ghost;
-      
-      let newX = ghost.x;
-      let newY = ghost.y;
-      let newDx = ghost.dx;
-      let newDy = ghost.dy;
-      
-      // Simple AI - change direction at intersections
-      const possibleMoves = [];
-      if (canMove(ghost.x + 1, ghost.y) && ghost.dx !== -1) possibleMoves.push({ dx: 1, dy: 0 });
-      if (canMove(ghost.x - 1, ghost.y) && ghost.dx !== 1) possibleMoves.push({ dx: -1, dy: 0 });
-      if (canMove(ghost.x, ghost.y + 1) && ghost.dy !== -1) possibleMoves.push({ dx: 0, dy: 1 });
-      if (canMove(ghost.x, ghost.y - 1) && ghost.dy !== 1) possibleMoves.push({ dx: 0, dy: -1 });
-      
-      if (possibleMoves.length > 0) {
-        const move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
-        newDx = move.dx;
-        newDy = move.dy;
-      }
-      
-      // Move ghost
-      const testX = ghost.x + newDx;
-      const testY = ghost.y + newDy;
-      
-      if (canMove(testX, testY)) {
-        newX = testX;
-        newY = testY;
-        
-        // Wrap around
-        if (newX < 0) newX = GRID_WIDTH - 1;
-        if (newX >= GRID_WIDTH) newX = 0;
-      } else {
-        // Reverse direction if hit wall
-        newDx = -ghost.dx;
-        newDy = -ghost.dy;
-      }
-      
-      return { ...ghost, x: newX, y: newY, dx: newDx, dy: newDy };
-    }));
+        return { ...ghost, x: newX, y: newY, dx: newDx, dy: newDy };
+      }));
+    }
     
     // Check collisions
     ghosts.forEach(ghost => {
@@ -315,7 +345,7 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
           });
           
           // Reset positions
-          setPacman({ x: 14, y: 23, direction: null, nextDirection: null, mouthOpen: true });
+          setPacman({ x: 14, y: 23, direction: null, nextDirection: null, mouthOpen: true, moveProgress: 0 });
           setGhosts([
             { x: 14, y: 11, color: '#ff0000', dx: 1, dy: 0, mode: 'chase' },
             { x: 13, y: 14, color: '#00ffff', dx: -1, dy: 0, mode: 'chase' },
@@ -440,6 +470,15 @@ const PacMan = ({ onGameEnd, soundEnabled }) => {
       ctx.beginPath();
       ctx.arc(ghostX + CELL_SIZE / 3, ghostY + CELL_SIZE / 3, 2, 0, Math.PI * 2);
       ctx.arc(ghostX + 2 * CELL_SIZE / 3, ghostY + CELL_SIZE / 3, 2, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Eye pupils
+      ctx.fillStyle = '#000';
+      const eyeOffsetX = ghost.mode === 'frightened' ? 0 : (pacman.x - ghost.x) * 0.15;
+      const eyeOffsetY = ghost.mode === 'frightened' ? 0 : (pacman.y - ghost.y) * 0.15;
+      ctx.beginPath();
+      ctx.arc(ghostX + CELL_SIZE / 3 + eyeOffsetX, ghostY + CELL_SIZE / 3 + eyeOffsetY, 1, 0, Math.PI * 2);
+      ctx.arc(ghostX + 2 * CELL_SIZE / 3 + eyeOffsetX, ghostY + CELL_SIZE / 3 + eyeOffsetY, 1, 0, Math.PI * 2);
       ctx.fill();
     });
     

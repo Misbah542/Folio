@@ -39,6 +39,7 @@ const Breakout = ({ onGameEnd, soundEnabled }) => {
   const [bricks, setBricks] = useState([]);
   
   const mouseX = useRef(CANVAS_WIDTH / 2);
+  const canvasRect = useRef(null);
   
   // Initialize bricks
   const initializeBricks = () => {
@@ -64,9 +65,10 @@ const Breakout = ({ onGameEnd, soundEnabled }) => {
   useEffect(() => {
     const handleMouseMove = (e) => {
       const canvas = canvasRef.current;
-      if (canvas) {
+      if (canvas && gameState === 'playing') {
         const rect = canvas.getBoundingClientRect();
-        mouseX.current = e.clientX - rect.left;
+        const scaleX = CANVAS_WIDTH / rect.width;
+        mouseX.current = (e.clientX - rect.left) * scaleX;
       }
     };
     
@@ -150,13 +152,12 @@ const Breakout = ({ onGameEnd, soundEnabled }) => {
       let newDy = prev.dy;
       
       // Wall collisions
-      if (newX + BALL_SIZE / 2 > CANVAS_WIDTH || newX - BALL_SIZE / 2 < 0) {
+      if (newX - BALL_SIZE / 2 <= 0 || newX + BALL_SIZE / 2 >= CANVAS_WIDTH) {
         newDx = -newDx;
-        newX = newX + BALL_SIZE / 2 > CANVAS_WIDTH ? 
-               CANVAS_WIDTH - BALL_SIZE / 2 : BALL_SIZE / 2;
+        newX = newX - BALL_SIZE / 2 <= 0 ? BALL_SIZE / 2 : CANVAS_WIDTH - BALL_SIZE / 2;
       }
       
-      if (newY - BALL_SIZE / 2 < 0) {
+      if (newY - BALL_SIZE / 2 <= 0) {
         newDy = -newDy;
         newY = BALL_SIZE / 2;
       }
@@ -171,6 +172,15 @@ const Breakout = ({ onGameEnd, soundEnabled }) => {
         // Add spin based on hit position
         const hitPos = (newX - paddle.x) / PADDLE_WIDTH;
         newDx = 8 * (hitPos - 0.5);
+        
+        // Increase speed slightly
+        const speed = Math.sqrt(newDx * newDx + newDy * newDy);
+        const maxSpeed = 12;
+        if (speed < maxSpeed) {
+          const speedMultiplier = Math.min(1.05, maxSpeed / speed);
+          newDx *= speedMultiplier;
+          newDy *= speedMultiplier;
+        }
         
         newY = CANVAS_HEIGHT - PADDLE_HEIGHT - 20 - BALL_SIZE / 2;
       }
