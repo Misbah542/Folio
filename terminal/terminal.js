@@ -488,6 +488,7 @@ Type 'portfolio' to see detailed project information!`,
                 this.historyIndex = this.history.length;
             }
             this.input.value = '';
+            this.updateCursorPosition();
             this.hideAutocomplete();
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
@@ -579,7 +580,7 @@ Type 'portfolio' to see detailed project information!`,
         const offset = span.getBoundingClientRect().width;
         document.body.removeChild(span);
     
-        cursor.style.left = `${offset + 4}px`; // Adjust +4 for padding/margin
+        // cursor.style.left = `${offset + 4}px`; // Adjust +4 for padding/margin
     }
     
     
