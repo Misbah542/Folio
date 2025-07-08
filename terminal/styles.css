@@ -603,7 +603,7 @@ nav ul {
   bottom: 100%;
   left: 0;
   right: 0;
-  background: var(--bg-secondary);
+  background: var(--text-primary);
   border: 1px solid var(--border-color);
   border-bottom: none;
   border-radius: 8px 8px 0 0;
@@ -775,7 +775,7 @@ nav ul {
   animation: blink 1s infinite;
   position: absolute;
   top: 0;
-  margin-left: 20px; 
+  margin-left: 1px; 
   height: 100%;
   width: 1px;
   pointer-events: none;

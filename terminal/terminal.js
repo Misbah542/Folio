@@ -1013,18 +1013,6 @@ Type 'portfolio' to see detailed project information!`,
                 }
                 break;
                 
-            case 'bounce':
-                const terminal = document.querySelector('.terminal-container');
-                terminal.style.animation = 'none';
-                setTimeout(() => {
-                    terminal.style.animation = 'terminalBounce 0.5s ease-out';
-                }, 10);
-                break;
-                
-            case 'redirect':
-                // Portal effect handled by createPortal method
-                break;
-                
             case 'hack':
                 const hackText = ['ACCESSING MAINFRAME...', 'BYPASSING FIREWALL...', 'INJECTING PAYLOAD...', 'ACCESS GRANTED!'];
                 hackText.forEach((text, i) => {
