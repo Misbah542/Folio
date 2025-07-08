@@ -57,12 +57,12 @@
     <div class="loader" id="loader">
         <div class="loader-content">
             <div class="terminal-loader">
-                <span class="loader-text">Initializing Terminal...</span>
+                <span class="loader-text">INITIALIZING TERMINAL</span>
                 <div class="loader-bar">
                     <div class="loader-progress"></div>
                 </div>
                 <div class="loader-status">
-                    <span class="status-text" id="loaderStatus">Loading resources...</span>
+                    <span class="status-text" id="loaderStatus">Loading...</span>
                 </div>
             </div>
         </div>
@@ -71,31 +71,18 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-brand">
-            <span class="brand-icon">⚡</span>
             <span class="brand-text">MISBAH.TERMINAL</span>
         </div>
-        <ul>
-            <li><a href="http://localhost:8001" class="nav-link" data-hover="View Portfolio">
-                <span class="nav-icon">💼</span>
-                <span>Portfolio</span>
-            </a></li>
-            <li><a href="http://localhost:3000" class="nav-link" data-hover="Play Games">
-                <span class="nav-icon">🎮</span>
-                <span>Games</span>
-            </a></li>
-        </ul>
     </nav>
 
     <!-- 3D Background Interaction Control -->
-    <div class="scene-control" id="sceneControl" title="Click to interact with 3D background">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M12 12L22 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M12 12V22" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M12 12L2 7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+    <div class="scene-control" id="sceneControl" title="Toggle 3D interaction">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 12L22 7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 12V22" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M12 12L2 7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
-        <span class="control-hint">Explore 3D Scene</span>
     </div>
 
     <!-- Three.js Canvas -->
@@ -109,11 +96,6 @@
                 <span class="terminal-dot yellow"></span>
                 <span class="terminal-dot green"></span>
                 <span class="terminal-title">misbah@terminal:~$</span>
-                <div class="terminal-actions">
-                    <button class="terminal-action" id="minimizeBtn" title="Minimize">─</button>
-                    <button class="terminal-action" id="maximizeBtn" title="Maximize">□</button>
-                    <button class="terminal-action" id="closeBtn" title="Close">×</button>
-                </div>
             </div>
             <div class="terminal-content" id="terminalContent">
                 <div class="terminal-output" id="terminalOutput">
@@ -140,9 +122,9 @@
                 <div class="terminal-input-line">
                     <span class="prompt">$</span>
                     <div class="input-wrapper">
-                    <input type="text" id="terminalInput" class="terminal-input" autofocus placeholder="Type a command...">
-                    <span class="cursor" id="customCursor">|</span>
-                </div>
+                        <input type="text" id="terminalInput" class="terminal-input" autofocus placeholder="Type a command...">
+                        <span class="cursor" id="customCursor">|</span>
+                    </div>
                 </div>
             </div>
             
@@ -153,23 +135,21 @@
         <!-- Fun animations container -->
         <div id="terminalAnimations" class="terminal-animations"></div>
         
-        <!-- Quick Actions -->
+        <!-- Quick Actions - Minimalistic -->
         <div class="quick-actions">
-            <a href="https://misbah-portfolio.onrender.com" class="action-btn portfolio-btn" data-animation="portfolio">
+            <a href="https://misbah-portfolio.onrender.com" class="action-btn portfolio-btn">
                 <span class="btn-icon">💼</span>
-                <span class="btn-text">View Portfolio</span>
-                <span class="btn-arrow">→</span>
+                <span class="btn-text">Portfolio</span>
             </a>
-            <a href="https://misbah-games.onrender.com" class="action-btn games-btn" data-animation="games">
+            <a href="https://misbah-games.onrender.com" class="action-btn games-btn">
                 <span class="btn-icon">🎮</span>
-                <span class="btn-text">Play Games</span>
-                <span class="btn-arrow">→</span>
+                <span class="btn-text">Games</span>
             </a>
         </div>
         
         <!-- Floating hint -->
         <div class="floating-hint" id="floatingHint">
-            <span class="hint-text">💡 Press Tab for autocomplete</span>
+            <span class="hint-text">Press Tab for autocomplete</span>
         </div>
     </main>
 

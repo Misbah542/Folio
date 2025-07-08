@@ -9,6 +9,7 @@ let particles, particleSystem;
 let mouseX = 0, mouseY = 0;
 let windowHalfX = window.innerWidth / 2;
 let windowHalfY = window.innerHeight / 2;
+let targetZoom = 100; // Initial zoom target
 
 // Initialize the scene
 function initPortfolioScene() {
@@ -23,7 +24,7 @@ function initPortfolioScene() {
         1,
         1000
     );
-    camera.position.z = 100;
+    camera.position.z = targetZoom;
 
     // Create renderer
     renderer = new THREE.WebGLRenderer({
@@ -49,6 +50,7 @@ function initPortfolioScene() {
     // Event listeners
     document.addEventListener('mousemove', onDocumentMouseMove, false);
     window.addEventListener('resize', onWindowResize, false);
+    document.addEventListener('wheel', onDocumentScroll, { passive: true });
 
     // Start animation
     animate();
@@ -64,18 +66,15 @@ function createParticleSystem() {
     const particleCount = 1000;
 
     for (let i = 0; i < particleCount; i++) {
-        // Position
         vertices.push(
             (Math.random() - 0.5) * 300,
             (Math.random() - 0.5) * 300,
             (Math.random() - 0.5) * 300
         );
 
-        // Color (various shades of green)
         const green = 0.5 + Math.random() * 0.5;
         colors.push(0, green, Math.random() * 0.3);
 
-        // Size
         sizes.push(Math.random() * 2 + 0.5);
     }
 
@@ -83,7 +82,6 @@ function createParticleSystem() {
     geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
 
-    // Particle material
     const material = new THREE.PointsMaterial({
         size: 2,
         sizeAttenuation: true,
@@ -94,11 +92,9 @@ function createParticleSystem() {
         depthWrite: false
     });
 
-    // Create particle system
     particleSystem = new THREE.Points(geometry, material);
     scene.add(particleSystem);
 
-    // Create connecting lines
     createConnectingLines();
 }
 
@@ -119,13 +115,11 @@ function createConnectingLines() {
             const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
             if (distance < maxDistance) {
-                // Add line positions
                 linePositions.push(
                     positions[i], positions[i + 1], positions[i + 2],
                     positions[j], positions[j + 1], positions[j + 2]
                 );
 
-                // Add line colors (fade based on distance)
                 const alpha = 1 - (distance / maxDistance);
                 lineColors.push(
                     0, alpha * 0.5, 0,
@@ -155,6 +149,13 @@ function onDocumentMouseMove(event) {
     mouseY = (event.clientY - windowHalfY) * 0.05;
 }
 
+// Scroll handler (zoom effect)
+function onDocumentScroll(event) {
+    const delta = event.deltaY * 0.1;
+    targetZoom += delta;
+    targetZoom = Math.max(30, Math.min(300, targetZoom)); // Clamp zoom
+}
+
 // Window resize handler
 function onWindowResize() {
     windowHalfX = window.innerWidth / 2;
@@ -170,6 +171,9 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
 
+    // Smooth zoom effect
+    camera.position.z += (targetZoom - camera.position.z) * 0.05;
+
     // Rotate particle system
     particleSystem.rotation.x += 0.0005;
     particleSystem.rotation.y += 0.001;
@@ -179,22 +183,20 @@ function animate() {
     camera.position.y += (-mouseY - camera.position.y) * 0.05;
     camera.lookAt(scene.position);
 
-    // Animate particles
+    // Animate particles (wave motion)
     const positions = particleSystem.geometry.attributes.position.array;
     const time = Date.now() * 0.0001;
 
     for (let i = 0; i < positions.length; i += 3) {
-        // Wave motion
         positions[i + 1] += Math.sin(time + positions[i]) * 0.01;
     }
 
     particleSystem.geometry.attributes.position.needsUpdate = true;
 
-    // Render
     renderer.render(scene, camera);
 }
 
-// Initialize when DOM is loaded
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPortfolioScene);
 } else {
