@@ -76,16 +76,6 @@
     ],
     "projects": [
       {
-        "name": "JioCinema Android TV",
-        "description": "Streaming application serving 50M+ users with live sports, movies, and shows.",
-        "icon": "📺",
-        "technologies": ["Kotlin", "Android TV", "ExoPlayer"],
-        "stats": {
-          "users": "50M+",
-          "uptime": "99.9%"
-        }
-      },
-      {
         "name": "Tetris Game",
         "description": "Modern implementation of classic Tetris using Jetpack Compose and MVVM architecture.",
         "icon": "🎮",
@@ -108,10 +98,6 @@
       }
     ],
     "achievements": [
-      {
-        "metric": "50M+",
-        "description": "Users Served"
-      },
       {
         "metric": "99.9%",
         "description": "Crash-Free Rate"
