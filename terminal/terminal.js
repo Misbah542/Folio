@@ -113,7 +113,6 @@ export class InteractiveTerminal {
                 animation: 'redirect',
                 action: () => {
                     this.logAnalytics('navigate_portfolio');
-                    this.createPortal('portfolio');
                     setTimeout(() => {
                         window.location.href = 'https://misbah-portfolio.onrender.com';
                     }, 2000);
@@ -127,7 +126,6 @@ export class InteractiveTerminal {
                 icons: ['🎮', '🕹️', '👾', '🎯', '🏆'],
                 action: () => {
                     this.logAnalytics('navigate_games');
-                    this.createPortal('games');
                     setTimeout(() => {
                         window.location.href = 'https://games.buildwithmisbah.cc';
                     }, 2000);
@@ -822,34 +820,6 @@ Type 'portfolio' to see detailed project information!`,
         }, 1000);
         
         this.logAnalytics('easter_egg_sudo');
-    }
-    
-    createPortal(destination) {
-        const portal = document.createElement('div');
-        portal.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle, #00ff00, transparent);
-            z-index: 10000;
-            pointer-events: none;
-        `;
-        document.body.appendChild(portal);
-        
-        // Animate portal opening
-        let size = 0;
-        const expand = setInterval(() => {
-            size += 50;
-            portal.style.width = size + 'px';
-            portal.style.height = size + 'px';
-            if (size > Math.max(window.innerWidth, window.innerHeight) * 2) {
-                clearInterval(expand);
-            }
-        }, 20);
     }
     
     createGlitchEffect() {

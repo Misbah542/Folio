@@ -76,7 +76,7 @@
     </nav>
 
     <!-- 3D Background Interaction Control -->
-    <div class="scene-control" id="sceneControl" title="Toggle 3D interaction">
+    <div class="scene-control" id="sceneControl" title="Toggle 3D interaction (Ctrl+3)">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
             <path d="M12 12L22 7" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
@@ -92,9 +92,11 @@
     <main class="terminal-main">
         <div class="terminal-container" id="terminalContainer">
             <div class="terminal-header">
-                <span class="terminal-dot red"></span>
-                <span class="terminal-dot yellow"></span>
-                <span class="terminal-dot green"></span>
+                <div class="terminal-dots">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                </div>
                 <span class="terminal-title">misbah@terminal:~$</span>
             </div>
             <div class="terminal-content" id="terminalContent">
@@ -118,6 +120,9 @@
                     <div class="terminal-line">
                         <span class="info-message">Quick Links: 'portfolio' | 'games' | 'about' | Try 'matrix' for fun!</span>
                     </div>
+                    <div class="terminal-line">
+                        <span class="warning-message">💡 Pro tip: Click the cube icon or press Ctrl+3 for 3D interactive mode!</span>
+                    </div>
                 </div>
                 <div class="terminal-input-line">
                     <span class="prompt">$</span>
@@ -137,11 +142,11 @@
         
         <!-- Quick Actions - Minimalistic -->
         <div class="quick-actions">
-            <a href="https://misbah-portfolio.onrender.com" class="action-btn portfolio-btn">
+            <a href="https://misbah-portfolio.onrender.com" class="action-btn portfolio-btn" data-animation="portfolio">
                 <span class="btn-icon">💼</span>
                 <span class="btn-text">Portfolio</span>
             </a>
-            <a href="https://misbah-games.onrender.com" class="action-btn games-btn">
+            <a href="https://misbah-games.onrender.com" class="action-btn games-btn" data-animation="games">
                 <span class="btn-icon">🎮</span>
                 <span class="btn-text">Games</span>
             </a>

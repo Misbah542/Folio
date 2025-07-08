@@ -1,5 +1,5 @@
 /**
- * Main JavaScript for Terminal Site - Enhanced
+ * Main JavaScript for Terminal Site - Enhanced with 3D Interaction
  * buildwithmisbah.cc
  */
 
@@ -37,6 +37,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Scene interaction state
     let isSceneInteractive = false;
+    
+    // Get DOM elements
+    const terminalMain = document.querySelector('.terminal-main');
+    const navbar = document.querySelector('nav');
+    const quickActions = document.querySelector('.quick-actions');
+    const floatingHint = document.querySelector('.floating-hint');
     
     // Hide loader after everything is ready
     setTimeout(() => {
@@ -117,18 +123,44 @@ document.addEventListener('DOMContentLoaded', function() {
         isSceneInteractive = !isSceneInteractive;
         
         if (isSceneInteractive) {
+            // Enable 3D interaction mode
             sceneControl.classList.add('active');
+            
+            // Hide terminal and UI elements with animation
+            terminalMain.classList.add('hidden');
+            navbar.classList.add('hidden');
+            quickActions.classList.add('hidden');
+            floatingHint.classList.add('hidden');
+            
+            // Dispatch event for 3D scene
             window.dispatchEvent(new CustomEvent('sceneInteractionEnabled'));
-            createNotification('3D interaction enabled! Drag to rotate.', 'success');
+            
+            createNotification('3D interaction enabled! Click and drag to explore. Click objects to interact!', 'success');
             
             // Log to analytics
             if (window.logEvent && window.analytics) {
                 window.logEvent(window.analytics, '3d_interaction_enabled');
             }
         } else {
+            // Disable 3D interaction mode
             sceneControl.classList.remove('active');
+            
+            // Show terminal and UI elements
+            terminalMain.classList.remove('hidden');
+            navbar.classList.remove('hidden');
+            quickActions.classList.remove('hidden');
+            floatingHint.classList.remove('hidden');
+            
+            // Dispatch event for 3D scene
             window.dispatchEvent(new CustomEvent('sceneInteractionDisabled'));
-            createNotification('3D interaction disabled.', 'info');
+            
+            createNotification('Returned to terminal mode.', 'info');
+            
+            // Refocus terminal input
+            const terminalInput = document.getElementById('terminalInput');
+            if (terminalInput) {
+                setTimeout(() => terminalInput.focus(), 500);
+            }
             
             // Log to analytics
             if (window.logEvent && window.analytics) {
@@ -213,9 +245,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add hover effects to action buttons
     document.querySelectorAll('.action-btn').forEach(btn => {
         btn.addEventListener('mouseenter', (e) => {
-            createButtonParticles(e);
-            // Add glow effect
-            btn.style.boxShadow = '0 0 30px rgba(0, 255, 0, 0.6)';
+            if (!isSceneInteractive) {
+                createButtonParticles(e);
+                // Add glow effect
+                btn.style.boxShadow = '0 0 30px rgba(0, 255, 0, 0.6)';
+            }
         });
         
         btn.addEventListener('mouseleave', (e) => {
@@ -227,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function createButtonParticles(e) {
         const button = e.target.closest('.action-btn');
         const rect = button.getBoundingClientRect();
-        const animationType = button.dataset.animation;
+        const animationType = button.classList.contains('portfolio-btn') ? 'portfolio' : 'games';
         
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
@@ -279,11 +313,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ctrl/Cmd + K to focus terminal
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
-            const terminalInput = document.getElementById('terminalInput');
-            if (terminalInput) {
-                terminalInput.focus();
-                terminalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                createNotification('Terminal focused!', 'info');
+            if (!isSceneInteractive) {
+                const terminalInput = document.getElementById('terminalInput');
+                if (terminalInput) {
+                    terminalInput.focus();
+                    terminalInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    createNotification('Terminal focused!', 'info');
+                }
             }
         }
         
@@ -295,11 +331,19 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ctrl/Cmd + L to clear terminal
         if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
             e.preventDefault();
-            const terminalInput = document.getElementById('terminalInput');
-            if (terminalInput) {
-                terminalInput.value = 'clear';
-                terminalInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+            if (!isSceneInteractive) {
+                const terminalInput = document.getElementById('terminalInput');
+                if (terminalInput) {
+                    terminalInput.value = 'clear';
+                    terminalInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+                }
             }
+        }
+        
+        // Ctrl/Cmd + 3 to toggle 3D mode
+        if ((e.ctrlKey || e.metaKey) && e.key === '3') {
+            e.preventDefault();
+            sceneControl.click();
         }
     });
     
@@ -347,6 +391,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 p.element.style.left = p.x + 'px';
                 p.element.style.top = p.y + 'px';
+                
+                // Hide particles in 3D mode
+                p.element.style.display = isSceneInteractive ? 'none' : 'block';
             });
             
             requestAnimationFrame(animateParticles);
@@ -439,4 +486,5 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('%cWelcome to my terminal! 🚀', 'color: #00ff00; font-size: 16px;');
     console.log('%cTry typing "help" in the terminal for available commands.', 'color: #00cc00; font-size: 14px;');
     console.log('%cLooking for the source code? Check out github.com/Misbah542', 'color: #00aa00; font-size: 12px;');
+    console.log('%c🎮 Pro tip: Press Ctrl+3 to toggle 3D interactive mode!', 'color: #6366f1; font-size: 14px; font-weight: bold;');
 });
