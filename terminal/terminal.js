@@ -18,7 +18,7 @@ export class InteractiveTerminal {
         this.isAutocompleting = false;
         
         // Sound effects
-        this.soundEnabled = true;
+        this.soundEnabled = false;
         this.typingSound = document.getElementById('typingSound');
         
         // Konami code tracking
@@ -68,23 +68,16 @@ export class InteractiveTerminal {
   <div><span class="info-message">• contact</span> - Get contact information</div>
   <div><span class="info-message">• projects</span> - See featured projects</div>
   <div><span class="info-message">• android</span> - Show Android animation</div>
-  <div><span class="info-message">• matrix</span> - Enter the Matrix</div>
   <div><span class="info-message">• hack</span> - Initiate hacking sequence</div>
   <div><span class="info-message">• glitch</span> - Cause a glitch</div>
   <div><span class="info-message">• party</span> - Start a party! 🎉</div>
-  <div><span class="info-message">• coffee</span> - Brew some coffee</div>
   <div><span class="info-message">• joke</span> - Tell a developer joke</div>
   <div><span class="info-message">• fortune</span> - Get your fortune</div>
   <div><span class="info-message">• weather</span> - Check the weather</div>
   <div><span class="info-message">• date</span> - Show current date</div>
-  <div><span class="info-message">• calculator</span> - Quick math calculations</div>
   <div><span class="info-message">• color [hex]</span> - Change terminal color</div>
   <div><span class="info-message">• sound</span> - Toggle sound effects</div>
   <div><span class="info-message">• clear</span> - Clear terminal</div>
-  <div><span class="info-message">• secret</span> - ???</div>
-  <div><span class="info-message">• linkedin</span> - Open LinkedIn profile</div>
-  <div><span class="info-message">• github</span> - Open GitHub profile</div>
-  <div><span class="info-message">• email</span> - Send an email</div>
   <div><span class="info-message">• resume</span> - Download resume</div>
   <div><span class="info-message">• whoami</span> - Who are you?</div>
   <div><span class="info-message">• neofetch</span> - System information</div>
@@ -204,16 +197,6 @@ Type 'portfolio' to see detailed project information!`,
                 },
                 description: 'Show Android animation'
             },
-            matrix: {
-                output: `<span class="success-message">🟢 Welcome to the Matrix, Neo...</span>
-<span class="info-message">There is no spoon. Follow the white rabbit 🐰</span>`,
-                animation: 'matrix',
-                action: () => {
-                    this.logAnalytics('command_matrix');
-                    this.playSound('matrix');
-                },
-                description: 'Enter the Matrix'
-            },
             hack: {
                 output: `<span class="success-message">💻 Initiating hacking sequence...</span>
 <span class="info-message">[▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100% Complete</span>
@@ -244,15 +227,6 @@ Type 'portfolio' to see detailed project information!`,
                     this.startPartyMode();
                 },
                 description: 'Start a celebration'
-            },
-            coffee: {
-                output: `<span class="success-message">☕ Brewing coffee...</span>
-<span class="info-message">while(true) { code(); sip(); }</span>
-<span class="system-message">Coffee ready! Productivity +100%</span>`,
-                animation: 'icons',
-                icons: ['☕', '☕', '☕', '☕', '☕'],
-                action: () => this.logAnalytics('command_coffee'),
-                description: 'Brew virtual coffee'
             },
             joke: {
                 output: () => {
@@ -327,27 +301,6 @@ Type 'portfolio' to see detailed project information!`,
                 animation: null,
                 description: 'Show current date and time'
             },
-            calculator: {
-                output: `<span class="info-message">🧮 Calculator Mode</span>
-<span class="system-message">Usage: calc [expression]</span>
-<span class="info-message">Example: calc 2 + 2</span>`,
-                animation: null,
-                description: 'Quick math calculations'
-            },
-            calc: {
-                output: (args) => {
-                    try {
-                        const expression = args.join(' ');
-                        // Safe evaluation for basic math
-                        const result = Function('"use strict"; return (' + expression + ')')();
-                        return `<span class="success-message">🧮 ${expression} = ${result}</span>`;
-                    } catch (e) {
-                        return `<span class="error-message">Invalid expression. Try: calc 2 + 2</span>`;
-                    }
-                },
-                animation: null,
-                hidden: true
-            },
             color: {
                 output: (args) => {
                     if (args.length === 0) {
@@ -379,52 +332,6 @@ Type 'portfolio' to see detailed project information!`,
                 animation: null,
                 action: () => this.logAnalytics('command_clear'),
                 description: 'Clear terminal screen'
-            },
-            // Replace the "secret" command inside initializeCommands() with this version:
-            secret: {
-                output: () => {
-                    const commandCount = Object.keys(this.commands || {}).length;
-                return `<span class="success-message">🎉 You found the secret command!</span>
-        <span class="info-message">Here's a cookie for you: 🍪</span>
-        <span class="system-message">Fun fact: This terminal has ${commandCount} commands!</span>
-        <span class="info-message">Try the Konami code: ↑↑↓↓←→←→BA</span>
-        <span class="warning-message">Easter eggs hidden: 5/10 found</span>`;
-         },
-         animation: 'icons',
-         icons: ['🎉', '🎊', '✨', '🍪', '🏆', '🗝️'],
-           action: () => this.logAnalytics('command_secret'),
-         description: '???'
-              },
-            linkedin: {
-                output: `<span class="success-message">🔗 Opening LinkedIn profile...</span>`,
-                animation: 'icons',
-                icons: ['🔗', '💼', '🌐'],
-                action: () => {
-                    this.logAnalytics('social_linkedin');
-                    window.open('https://linkedin.com/in/misbahhaque', '_blank');
-                },
-                description: 'Open LinkedIn profile'
-            },
-            github: {
-                output: `<span class="success-message">💻 Opening GitHub profile...</span>`,
-                animation: 'icons',
-                icons: ['💻', '🐙', '📦'],
-                action: () => {
-                    this.logAnalytics('social_github');
-                    window.open('https://github.com/Misbah542', '_blank');
-                },
-                description: 'Open GitHub profile'
-            },
-            email: {
-                output: `<span class="success-message">📧 Opening email client...</span>
-<span class="info-message">Email: misbahul8@gmail.com</span>`,
-                animation: 'icons',
-                icons: ['📧', '✉️', '📮'],
-                action: () => {
-                    this.logAnalytics('contact_email');
-                    window.location.href = 'mailto:misbahul8@gmail.com';
-                },
-                description: 'Send an email'
             },
             resume: {
                 output: `<span class="success-message">📄 Downloading resume...</span>
@@ -570,6 +477,15 @@ Type 'portfolio' to see detailed project information!`,
     
         if (!input || !cursor) return;
     
+        // Hide the fake cursor when user types something
+        if (input.value.length > 0) {
+            cursor.style.display = 'none';
+            return;
+        } else {
+            cursor.style.display = 'inline-block';
+        }
+    
+        // Calculate the cursor offset
         const span = document.createElement('span');
         span.style.visibility = 'hidden';
         span.style.position = 'absolute';
@@ -580,8 +496,8 @@ Type 'portfolio' to see detailed project information!`,
         const offset = span.getBoundingClientRect().width;
         document.body.removeChild(span);
     
-        // cursor.style.left = `${offset + 4}px`; // Adjust +4 for padding/margin
     }
+    
     
     
     hideAutocomplete() {
@@ -931,59 +847,65 @@ Type 'portfolio' to see detailed project information!`,
                     });
                 }
                 break;
-                
-            case 'android':
-                const androidIcon = document.createElement('div');
-                androidIcon.className = 'terminal-icon';
-                androidIcon.textContent = '🤖';
-                androidIcon.style.left = '50%';
-                androidIcon.style.top = '50%';
-                androidIcon.style.fontSize = '150px';
-                androidIcon.style.marginLeft = '-75px';
-                androidIcon.style.marginTop = '-75px';
-                androidIcon.style.animation = 'androidBoot 3s ease-out forwards';
-                this.animContainer.appendChild(androidIcon);
-                
-                // Add Android boot text
-                const bootText = ['ANDROID', 'BOOTING...', 'SYSTEM READY'];
-                bootText.forEach((text, i) => {
-                    setTimeout(() => {
-                        const textEl = document.createElement('div');
-                        textEl.style.cssText = `
-                            position: fixed;
-                            top: 60%;
-                            left: 50%;
-                            transform: translateX(-50%);
-                            color: #00ff00;
-                            font-size: 24px;
-                            text-shadow: 0 0 20px #00ff00;
-                            z-index: 9999;
-                        `;
-                        textEl.textContent = text;
-                        this.animContainer.appendChild(textEl);
-                        setTimeout(() => textEl.remove(), 1000);
-                    }, i * 800);
-                });
-                
-                setTimeout(() => androidIcon.remove(), 3000);
-                break;
-                
-            case 'matrix':
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ';
-                for (let i = 0; i < 100; i++) {
-                    setTimeout(() => {
-                        const matrixChar = document.createElement('div');
-                        matrixChar.className = 'matrix-rain';
-                        matrixChar.textContent = chars[Math.floor(Math.random() * chars.length)];
-                        matrixChar.style.left = Math.random() * window.innerWidth + 'px';
-                        matrixChar.style.animationDelay = Math.random() * 3 + 's';
-                        matrixChar.style.animationDuration = (2 + Math.random() * 3) + 's';
-                        this.animContainer.appendChild(matrixChar);
-                        setTimeout(() => matrixChar.remove(), 5000);
-                    }, i * 30);
+
+                case 'android':
+    const androidIcon = document.createElement('div');
+    androidIcon.className = 'terminal-icon';
+    androidIcon.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="150" height="150" fill="#3ddc84">
+            <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm112 384h-48V256h48v128zm-80 0h-64V256h64v128zm-96 0h-48V256h48v128zm-64-192h240v32H128v-32zm120-96c-13.3 0-24-10.7-24-24S234.7 48 248 48s24 10.7 24 24-10.7 24-24 24zm80 0c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"/>
+        </svg>
+    `;
+    androidIcon.style.position = 'fixed';
+    androidIcon.style.left = '50%';
+    androidIcon.style.top = '50%';
+    androidIcon.style.transform = 'translate(-50%, -50%) scale(0)';
+    androidIcon.style.animation = 'androidPopIn 0.6s ease-out forwards, glowPulse 2s ease-in-out infinite';
+    this.animContainer.appendChild(androidIcon);
+
+    // Boot typing effect
+    const bootText = ['ANDROID', 'BOOTING...', 'SYSTEM READY'];
+    const delayPerChar = 80;
+
+    bootText.forEach((text, i) => {
+        const textEl = document.createElement('div');
+        textEl.className = 'boot-line';
+        textEl.style.cssText = `
+            position: fixed;
+            top: ${65 + i * 5}%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00ff00;
+            font-family: monospace;
+            font-size: 22px;
+            text-shadow: 0 0 10px #00ff00;
+            white-space: pre;
+            z-index: 9999;
+        `;
+        textEl.textContent = '';
+        this.animContainer.appendChild(textEl);
+
+        let j = 0;
+        setTimeout(() => {
+            const interval = setInterval(() => {
+                textEl.textContent += text[j];
+                j++;
+                if (j >= text.length) {
+                    clearInterval(interval);
                 }
-                break;
+            }, delayPerChar);
+        }, i * 900);
+    });
+
+    // Remove after full animation
+    setTimeout(() => androidIcon.remove(), 4000);
+    setTimeout(() => {
+        document.querySelectorAll('.boot-line').forEach(el => el.remove());
+    }, 5000);
+    break;
+
                 
+      
             case 'hack':
                 const hackText = ['ACCESSING MAINFRAME...', 'BYPASSING FIREWALL...', 'INJECTING PAYLOAD...', 'ACCESS GRANTED!'];
                 hackText.forEach((text, i) => {

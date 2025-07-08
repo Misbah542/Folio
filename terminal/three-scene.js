@@ -309,23 +309,6 @@ function enableInteractionMode() {
     document.addEventListener('mousemove', onInteractiveMouseMove);
     document.addEventListener('click', onMouseClick);
     
-    // Show interaction instructions
-    const instructions = document.createElement('div');
-    instructions.className = 'interaction-instructions show';
-    instructions.innerHTML = `
-        <h3>🎮 Interactive Mode Enabled</h3>
-        <p>• Click and drag to rotate the scene</p>
-        <p>• Click on objects to interact</p>
-        <p>• Scroll to zoom in/out</p>
-        <p>• Press ESC or toggle button to exit</p>
-    `;
-    document.body.appendChild(instructions);
-    
-    setTimeout(() => {
-        instructions.classList.remove('show');
-        setTimeout(() => instructions.remove(), 300);
-    }, 3000);
-    
     // Add scroll zoom
     document.addEventListener('wheel', onMouseWheel);
 }
