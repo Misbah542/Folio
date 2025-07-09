@@ -73,7 +73,6 @@ export class InteractiveTerminal {
   <div><span class="info-message">• party</span> - Start a party! 🎉</div>
   <div><span class="info-message">• joke</span> - Tell a developer joke</div>
   <div><span class="info-message">• fortune</span> - Get your fortune</div>
-  <div><span class="info-message">• weather</span> - Check the weather</div>
   <div><span class="info-message">• date</span> - Show current date</div>
   <div><span class="info-message">• color [hex]</span> - Change terminal color</div>
   <div><span class="info-message">• sound</span> - Toggle sound effects</div>
@@ -271,15 +270,6 @@ Type 'portfolio' to see detailed project information!`,
                 animation: 'icons',
                 icons: ['🔮', '✨', '🌟', '💫'],
                 description: 'Get your fortune'
-            },
-            weather: {
-                output: `<span class="info-message">🌤️ Current Weather in Bengaluru:</span>
-<span class="success-message">☀️ Partly Cloudy, 25°C (77°F)</span>
-<span class="info-message">Humidity: 65% | Wind: 10 km/h</span>
-<span class="system-message">Perfect coding weather!</span>`,
-                animation: 'icons',
-                icons: ['☀️', '⛅', '🌤️', '🌈'],
-                description: 'Check the weather'
             },
             date: {
                 output: () => {
