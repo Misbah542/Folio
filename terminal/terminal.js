@@ -106,7 +106,7 @@ export class InteractiveTerminal {
                 action: () => {
                     this.logAnalytics('navigate_portfolio');
                     setTimeout(() => {
-                        window.location.href = 'https://misbah-portfolio.onrender.com';
+                        window.location.href = 'https://portfolio.buildwithmisbah.cc';
                     }, 2000);
                 },
                 description: 'Visit portfolio site'
@@ -330,7 +330,7 @@ Type 'portfolio' to see detailed project information!`,
                 icons: ['📄', '⬇️', '📑'],
                 action: () => {
                     this.logAnalytics('download_resume');
-                    window.open('https://misbah-portfolio.onrender.com/resume/MisbahHaque_Resume.pdf', '_blank');
+                    window.open('/portfolio/resume/MisbahHaque_Resume.pdf', '_blank');
                 },
                 description: 'Download resume'
             },
