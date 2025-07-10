@@ -324,12 +324,19 @@ Type 'portfolio' to see detailed project information!`,
             },
             resume: {
                 output: `<span class="success-message">📄 Downloading resume...</span>
-<span class="info-message">Opening Misbah_ul_Haque_Resume.pdf</span>`,
+            <span class="info-message">Opening Misbah_ul_Haque_Resume.pdf</span>`,
                 animation: 'icons',
                 icons: ['📄', '⬇️', '📑'],
                 action: () => {
                     this.logAnalytics('download_resume');
-                    window.open('/portfolio/resume/MisbahHaque_Resume.pdf', '_blank');
+                    
+                    // Create a temporary <a> element to trigger download
+                    const link = document.createElement('a');
+                    link.href = './resume/MisbahHaque_Resume.pdf';
+                    link.download = 'MisbahHaque_Resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
                 },
                 description: 'Download resume'
             },
