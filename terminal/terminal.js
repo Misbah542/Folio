@@ -330,9 +330,9 @@ Type 'portfolio' to see detailed project information!`,
                 action: () => {
                     this.logAnalytics('download_resume');
                     
-                    // Create a temporary <a> element to trigger download
+                  
                     const link = document.createElement('a');
-                    link.href = './resume/MisbahHaque_Resume.pdf';
+                    link.href = '/resume/MisbahHaque_Resume.pdf';
                     link.download = 'MisbahHaque_Resume.pdf';
                     document.body.appendChild(link);
                     link.click();
