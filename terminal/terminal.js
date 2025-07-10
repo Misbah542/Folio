@@ -62,7 +62,6 @@ export class InteractiveTerminal {
   <div><span class="info-message">• help</span> - Show this help menu</div>
   <div><span class="info-message">• about</span> - Learn about Misbah</div>
   <div><span class="info-message">• portfolio</span> - Visit portfolio site</div>
-  <div><span class="info-message">• games</span> - Play retro games</div>
   <div><span class="info-message">• skills</span> - View technical skills</div>
   <div><span class="info-message">• experience</span> - View work experience</div>
   <div><span class="info-message">• contact</span> - Get contact information</div>
