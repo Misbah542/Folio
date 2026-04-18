@@ -41,26 +41,26 @@
 }
 .what-content {
   width: 450px;
-  height: 33%;
-  min-height: 50%;
+  height: 25%;
+  min-height: 25%;
   transition: 0.5s;
   /* border: 0.5px dashed rgba(255, 255, 255, 0.3); */
   position: relative;
-  padding: 50px;
+  padding: 20px 50px;
   box-sizing: border-box;
 }
 
 .what-noTouch:hover,
 .what-content-active {
-  min-height: 67%;
-  padding: 40px 50px;
+  min-height: 55%;
+  padding: 30px 50px;
 }
 
 .what-noTouch:hover ~ .what-content,
 .what-box-in:hover .what-noTouch:not(:hover),
 .what-content.what-sibling {
-  min-height: 33%;
-  padding: 10px 50px;
+  min-height: 15%;
+  padding: 5px 50px;
 }
 .what-content h3 {
   font-size: 35px;
@@ -255,7 +255,7 @@
     font-size: 28px;
   }
   .what-content {
-    padding: 30px;
+    padding: 15px 30px;
     width: 400px;
   }
   .what-content p {
@@ -263,13 +263,13 @@
   }
   .what-noTouch:hover,
   .what-content-active {
-    padding: 20px 30px;
+    padding: 15px 30px;
   }
 
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
   .what-content.what-sibling {
-    padding: 10px 30px;
+    padding: 5px 30px;
   }
   .what-tags {
     font-size: 12px;
@@ -294,7 +294,7 @@
     margin-left: -50px;
   }
   .what-content {
-    padding: 50px;
+    padding: 20px 50px;
     width: 500px;
   }
   .what-content p {
@@ -302,15 +302,15 @@
   }
   .what-noTouch:hover,
   .what-content-active {
-    min-height: 67%;
-    padding: 50px;
+    min-height: 55%;
+    padding: 30px 50px;
   }
 
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
   .what-content.what-sibling {
-    min-height: 33%;
-    padding: 10px 50px;
+    min-height: 15%;
+    padding: 5px 50px;
   }
 }
 @media only screen and (max-width: 900px) {
@@ -352,7 +352,7 @@
     opacity: 1;
   }
   .what-content {
-    padding: 30px;
+    padding: 15px 30px;
   }
   .what-content p {
     font-size: 11px;
@@ -368,7 +368,7 @@
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
   .what-content.what-sibling {
-    padding: 5px 30px;
+    padding: 2px 30px;
   }
   .what-content h3 {
     font-size: 25px;

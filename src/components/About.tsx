@@ -6,11 +6,12 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          I'm an Android Developer who thrives on pushing boundaries. With a
-          track record of slashing load times by 45% and optimizing startup by
-          60%, I build robust, high-performance apps for millions of users
-          across Android Mobile and TV platforms. If it needs to scale, stay
-          stable, and deliver a flawless UX—I'm your engineer.
+          I'm a dedicated Android Developer specializing in building
+          high-performance, user-centric mobile applications. With expertise in
+          Kotlin, Jetpack Compose, and Material Design, I focus on crafting
+          seamless experiences that push the boundaries of the Android platform.
+          I'm passionate about architecting scalable solutions and ensuring
+          smooth performance, delivering robust software that users truly enjoy.
         </p>
       </div>
     </div>

@@ -87,21 +87,20 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>ANDROID MOBILE & TV</h3>
-              <h4>Scalable Apps for Every Screen</h4>
+              <h3>ANDROID APP DEVELOPMENT</h3>
+              <h4>Building robust apps with Kotlin</h4>
               <p>
-                Specialist in creating high-performance Android applications for
-                Mobile, Android TV, Google TV, and FireStick, with a focus on
-                immersive TV experiences and seamless UI/UX.
+                Specializing in creating high-performance Android applications
+                for Mobile and TV platforms, focusing on scalability and user
+                experience.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Kotlin & Java</div>
-                <div className="what-tags">Jetpack Compose</div>
-                <div className="what-tags">Android Leanback</div>
-                <div className="what-tags">ExoPlayer</div>
+                <div className="what-tags">Kotlin</div>
                 <div className="what-tags">Coroutines</div>
                 <div className="what-tags">Dagger Hilt</div>
+                <div className="what-tags">Android SDK</div>
+                <div className="what-tags">Gradle</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -125,21 +124,92 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>PERFORMANCE & ARCHITECTURE</h3>
-              <h4>Optimised for Scale & Stability</h4>
+              <h3>MODERN UI/UX</h3>
+              <h4>Crafting beautiful interfaces with Jetpack Compose</h4>
               <p>
-                I architect robust systems using MVVM and Clean Architecture,
-                optimising app startup, load times, and rendering to ensure a
-                crash-free experience for millions of concurrent users.
+                Expertise in building declarative UIs with Jetpack Compose,
+                Material Design 3, and custom animations for immersive digital
+                experiences.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">MVVM & Clean Architecture</div>
-                <div className="what-tags">Room & SQLite</div>
-                <div className="what-tags">Retrofit & GraphQL</div>
-                <div className="what-tags">Performance Profiling</div>
-                <div className="what-tags">Firebase & Analytics</div>
-                <div className="what-tags">CI/CD & Git</div>
+                <div className="what-tags">Jetpack Compose</div>
+                <div className="what-tags">Material 3</div>
+                <div className="what-tags">Animations</div>
+                <div className="what-tags">Responsive Design</div>
+              </div>
+              <div className="what-arrow"></div>
+            </div>
+          </div>
+          <div
+            className="what-content what-noTouch"
+            ref={(el) => setRef(el, 2)}
+          >
+            <div className="what-border1">
+              <svg height="100%">
+                <line
+                  x1="0"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
+              </svg>
+            </div>
+            <div className="what-corner"></div>
+            <div className="what-content-in">
+              <h3>PERFORMANCE OPTIMIZATION</h3>
+              <h4>Ensuring smooth performance and low memory footprint</h4>
+              <p>
+                Optimizing app startup, reducing memory usage, and improving
+                frame rates to deliver a lightning-fast experience for millions
+                of users.
+              </p>
+              <h5>Skillset & tools</h5>
+              <div className="what-content-flex">
+                <div className="what-tags">Profiling</div>
+                <div className="what-tags">LeakCanary</div>
+                <div className="what-tags">Benchmarking</div>
+                <div className="what-tags">R8/ProGuard</div>
+              </div>
+              <div className="what-arrow"></div>
+            </div>
+          </div>
+          <div
+            className="what-content what-noTouch"
+            ref={(el) => setRef(el, 3)}
+          >
+            <div className="what-border1">
+              <svg height="100%">
+                <line
+                  x1="0"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeDasharray="6,6"
+                />
+              </svg>
+            </div>
+            <div className="what-corner"></div>
+            <div className="what-content-in">
+              <h3>ARCHITECTURE</h3>
+              <h4>Scalable solutions with MVVM/MVI</h4>
+              <p>
+                Architecting robust systems using modern patterns like MVVM and
+                MVI, ensuring code maintainability and testability.
+              </p>
+              <h5>Skillset & tools</h5>
+              <div className="what-content-flex">
+                <div className="what-tags">MVVM</div>
+                <div className="what-tags">MVI</div>
+                <div className="what-tags">Clean Architecture</div>
+                <div className="what-tags">Flow</div>
+                <div className="what-tags">Room</div>
+                <div className="what-tags">Retrofit</div>
               </div>
               <div className="what-arrow"></div>
             </div>
