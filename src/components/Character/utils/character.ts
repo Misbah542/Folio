@@ -36,11 +36,11 @@ const setCharacter = (
                 if (mesh.material) {
                   if (mesh.name === "BODY.SHIRT") { // The shirt mesh
                     const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
-                    newMat.color = new THREE.Color("#8B4513");
+                    newMat.color = new THREE.Color("#673AB7");
                     mesh.material = newMat;
                   } else if (mesh.name === "Pant") {
                     const newMat = (mesh.material as THREE.Material).clone() as THREE.MeshStandardMaterial;
-                    newMat.color = new THREE.Color("#000000");
+                    newMat.color = new THREE.Color("#1A1A1B");
                     mesh.material = newMat;
                   }
                 }
