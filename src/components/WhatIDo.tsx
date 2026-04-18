@@ -92,7 +92,7 @@ const WhatIDo = () => {
               <p>
                 Specialist in creating high-performance Android applications for
                 Mobile, Android TV, Google TV, and FireStick, with a focus on
-                immersive OTT experiences and seamless UI/UX.
+                immersive TV experiences and seamless UI/UX.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">

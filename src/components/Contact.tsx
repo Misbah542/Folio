@@ -17,27 +17,18 @@ const Contact = () => {
                 data-cursor="disable"
               >
                 LinkedIn — misbahulhaque
-              </a>
-            </p>
-            <p>
-              <a
-                href="mailto:misbahul8@gmail.com"
-                data-cursor="disable"
-              >
+                </a>
+                </p>
+                <p>
+                <a href="mailto:misbahul8@gmail.com" data-cursor="disable">
                 Email — misbahul8@gmail.com
-              </a>
-            </p>
-            <p>
-              <span data-cursor="disable">
-                Phone — +91-8376069521
-              </span>
-            </p>
-            <h4>Education</h4>
-            <p>
-              BTech in Electronics and Communication, PES University (RR Campus) — 2018–2022
-            </p>
-          </div>
-          <div className="contact-box">
+                </a>
+                </p>
+                <p>
+                <span data-cursor="disable">Phone — +91-8376069521</span>
+                </p>
+                </div>
+                <div className="contact-box">
             <h4>Social</h4>
             <a
               href="https://github.com/Misbah542"

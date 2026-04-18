@@ -57,19 +57,6 @@ const Career = () => {
               2022 and IPL 2023.
             </p>
           </div>
-          <div className="career-info-box">
-            <div className="career-info-in">
-              <div className="career-role">
-                <h4>BTech - ECE</h4>
-                <h5>PES University (RR Campus)</h5>
-              </div>
-              <h3>2018–22</h3>
-            </div>
-            <p>
-              Bachelor of Technology in Electronics and Communication with
-              Minors in Computer Science.
-            </p>
-          </div>
         </div>
       </div>
     </div>

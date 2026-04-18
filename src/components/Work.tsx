@@ -5,23 +5,16 @@ import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
-    title: "Disney+ Hotstar",
-    category: "OTT Application (Android Mobile & TV)",
-    tools: "Kotlin, Jetpack Compose, MVVM, Hilt, Paging 3, Retrofit",
-    image: "/images/placeholder.webp",
-    link: "https://www.hotstar.com",
-  },
-  {
-    title: "JioCinema",
-    category: "OTT Application (Android Mobile & TV)",
-    tools: "Android Startup, Leanback, ExoPlayer, GraphQL, MVVM",
-    image: "/images/placeholder.webp",
-    link: "https://www.jiocinema.com",
-  },
-  {
     title: "Tetris Game",
     category: "Mobile Game",
     tools: "MVVM, Kotlin Compose, LiveData, Coroutines",
+    image: "/images/placeholder.webp",
+    link: "#",
+  },
+  {
+    title: "SplitTrip App",
+    category: "Travel & Utility (Placeholder)",
+    tools: "Kotlin, Jetpack Compose, Placeholder Tools",
     image: "/images/placeholder.webp",
     link: "#",
   },

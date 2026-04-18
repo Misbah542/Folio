@@ -6,11 +6,11 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          I am an innovative Android Developer with 3+ years of experience in
-          creating user-centric Android Mobile and Android TV applications.
-          Proficient in Kotlin and Jetpack Compose, I excel in optimising
-          performance and enhancing UI/UX, delivering high-quality solutions for
-          high-traffic OTT platforms like Disney+ Hotstar and JioCinema.
+          I'm an Android Developer who thrives on pushing boundaries. With a
+          track record of slashing load times by 45% and optimizing startup by
+          60%, I build robust, high-performance apps for millions of users
+          across Android Mobile and TV platforms. If it needs to scale, stay
+          stable, and deliver a flawless UX—I'm your engineer.
         </p>
       </div>
     </div>
