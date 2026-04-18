@@ -13,12 +13,12 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/react2.webp", // To be replaced with kotlin.webp
-  "/images/next2.webp",  // To be replaced with android.webp
-  "/images/typescript.webp", // To be replaced with compose.webp
-  "/images/node2.webp",  // To be replaced with firebase.webp
-  "/images/express.webp", // To be replaced with gradle.webp
-  "/images/mongo.webp",   // To be replaced with studio.webp
+  "/images/kotlin.webp",
+  "/images/android.webp",
+  "/images/compose.webp",
+  "/images/firebase.webp",
+  "/images/gradle.webp",
+  "/images/studio.webp",
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 

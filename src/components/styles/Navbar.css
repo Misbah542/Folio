@@ -26,7 +26,7 @@
 .header ul li {
   margin-left: 0px;
   letter-spacing: 1px;
-  color: #ccc;
+  color: var(--textColor);
   font-weight: 600;
   cursor: pointer;
 }
@@ -39,11 +39,13 @@
   font-size: 15px;
   letter-spacing: 1px;
   font-weight: 500;
+  color: var(--textColor);
 }
 .navbar-title {
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
+  color: var(--textColor);
 }
 @media only screen and (min-width: 500px) {
   .header {
@@ -55,7 +57,14 @@
     font-size: 14px;
   }
   .header ul li {
-    color: #eae5ec;
+    color: var(--textColor);
+    padding: 8px 20px;
+    border-radius: 100px;
+    transition: 0.3s;
+  }
+  .header ul li:hover {
+    background-color: var(--accentColor);
+    color: white;
   }
   .navbar-title {
     font-size: 16px;

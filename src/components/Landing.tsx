@@ -8,7 +8,7 @@ const Landing = ({ children }: PropsWithChildren) => {
         <div className="landing-container">
           <div className="landing-intro">
             <h2>Hi there, I'm</h2>
-            <h1>
+            <h1 className="landing-name">
               MISBAH
               <br />
               <span>UL HAQUE</span>
@@ -20,7 +20,7 @@ const Landing = ({ children }: PropsWithChildren) => {
               <div className="landing-h2-1">Building</div>
               <div className="landing-h2-2">Modern</div>
             </h2>
-            <h2>
+            <h2 className="landing-info-bottom">
               <div className="landing-h2-info">Android</div>
               <div className="landing-h2-info-1">Apps</div>
             </h2>

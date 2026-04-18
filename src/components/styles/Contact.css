@@ -9,9 +9,10 @@
 
 .contact-section h3 {
   font-size: 60px;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
   margin: 0;
+  font-family: "Bricolage Grotesque", sans-serif;
 }
 
 .contact-flex {
@@ -23,6 +24,7 @@
   font-weight: 500;
   margin: 0;
   opacity: 0.6;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .contact-box {
@@ -37,13 +39,21 @@
 
 a.contact-social {
   font-size: 25px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--borderColor);
+  padding: 5px 0;
+  transition: 0.3s;
+}
+
+a.contact-social:hover {
+  color: var(--accentColor);
+  border-bottom-color: var(--accentColor);
 }
 
 .contact-box h2 {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 23px;
   margin: 0;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 .contact-box h2>span {
@@ -57,6 +67,7 @@ a.contact-social {
   display: flex;
   gap: 10px;
   opacity: 0.5;
+  font-family: "Space Grotesk", sans-serif;
 }
 
 @media only screen and (max-width: 1600px) {

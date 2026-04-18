@@ -10,16 +10,13 @@
   --accentColorSecondary: #673AB7; /* Deep Violet */
   --backgroundColor: #FDFDFD;
   --textColor: #1A1A1B;
-  color: var(--textColor);
-  background-color: var(--backgroundColor);
+  --mutedTextColor: #5F6368;
+  --borderColor: #DADCE0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
   --vh: 100vh;
   --vh: 100svh;
 }
@@ -35,11 +32,7 @@ h6 {
 
 ::selection {
   background: var(--accentColor);
-  color: white;
-}
-
-body {
-  overflow: hidden;
+  color: var(--textColor);
 }
 
 a {
@@ -72,11 +65,12 @@ body {
   margin: 0;
   height: auto;
   background-color: var(--backgroundColor);
+  color: var(--textColor);
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .main-body {
