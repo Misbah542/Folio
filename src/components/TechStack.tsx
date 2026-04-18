@@ -154,8 +154,8 @@ const TechStack = () => {
       (texture) =>
         new THREE.MeshPhysicalMaterial({
           map: texture,
-          color: "#ffffff",
-          emissive: "#ffffff",
+          color: "#eeeeee",
+          emissive: "#cccccc",
           emissiveMap: texture,
           emissiveIntensity: 0.1,
           metalness: 0.2,
@@ -180,7 +180,7 @@ const TechStack = () => {
           position={[20, 20, 25]}
           penumbra={1}
           angle={0.2}
-          color="white"
+          color="#eeeeee"
           castShadow
           shadow-mapSize={[512, 512]}
         />

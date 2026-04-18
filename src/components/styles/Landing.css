@@ -235,6 +235,7 @@
 .landing-h2-info-1 {
   position: absolute;
   top: 0;
+  left: 0;
 }
 
 h2.landing-info-h2 {
@@ -248,9 +249,12 @@ h2.landing-info-h2 {
   margin-left: -5px;
 }
 
-.landing-h2-2 {
+.landing-h2-2,
+.landing-h2-3,
+.landing-h2-4 {
   position: absolute;
   top: 0;
+  left: 0;
 }
 
 .landing-info-h2::after {
