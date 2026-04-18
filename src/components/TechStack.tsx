@@ -13,14 +13,12 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+  "/images/react2.webp", // To be replaced with kotlin.webp
+  "/images/next2.webp",  // To be replaced with android.webp
+  "/images/typescript.webp", // To be replaced with compose.webp
+  "/images/node2.webp",  // To be replaced with firebase.webp
+  "/images/express.webp", // To be replaced with gradle.webp
+  "/images/mongo.webp",   // To be replaced with studio.webp
 ];
 const textures = imageUrls.map((url) => textureLoader.load(url));
 
@@ -156,15 +154,15 @@ const TechStack = () => {
       (texture) =>
         new THREE.MeshPhysicalMaterial({
           map: texture,
+          color: "#ffffff",
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          emissiveIntensity: 0.1,
+          metalness: 0.2,
+          roughness: 0.8,
         })
     );
-  }, []);
+  }, [textures]);
 
   return (
     <div className="techstack">
