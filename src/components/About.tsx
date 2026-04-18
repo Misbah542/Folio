@@ -6,11 +6,11 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          I am currently co-founder of CallHQ.ai, building real-time voice AI for
-          businesses. I am a technologist at heart with strong business judgment—
-          I enjoy going from product strategy to hands-on engineering. My background
-          spans leadership at Adobe, founding Broki and CallHQ, and shipping
-          full-stack products end to end.
+          I am an innovative Android Developer with 3+ years of experience in
+          creating user-centric Android Mobile and Android TV applications.
+          Proficient in Kotlin and Jetpack Compose, I excel in optimising
+          performance and enhancing UI/UX, delivering high-quality solutions for
+          high-traffic OTT platforms like Disney+ Hotstar and JioCinema.
         </p>
       </div>
     </div>

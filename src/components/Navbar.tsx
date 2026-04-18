@@ -48,7 +48,7 @@ const Navbar = () => {
           MH
         </a>
         <a
-          href="#"
+          href="https://linkedin.com/in/misbahulhaque"
           className="navbar-connect"
           data-cursor="disable"
           target="_blank"

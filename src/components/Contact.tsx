@@ -11,7 +11,7 @@ const Contact = () => {
             <h4>Connect</h4>
             <p>
               <a
-                href="#"
+                href="https://linkedin.com/in/misbahulhaque"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
@@ -19,19 +19,28 @@ const Contact = () => {
                 LinkedIn — misbahulhaque
               </a>
             </p>
-            <h4>Education</h4>
             <p>
-              PGPWE (MBA), Indian Institute of Management, Lucknow — 2021–2023
+              <a
+                href="mailto:misbahul8@gmail.com"
+                data-cursor="disable"
+              >
+                Email — misbahul8@gmail.com
+              </a>
             </p>
             <p>
-              B.Tech Computer Science, Manav Rachna Educational Institutions —
-              2009–2013
+              <span data-cursor="disable">
+                Phone — +91-8376069521
+              </span>
+            </p>
+            <h4>Education</h4>
+            <p>
+              BTech in Electronics and Communication, PES University (RR Campus) — 2018–2022
             </p>
           </div>
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="#"
+              href="https://github.com/Misbah542"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -40,7 +49,7 @@ const Contact = () => {
               GitHub <MdArrowOutward />
             </a>
             <a
-              href="#"
+              href="https://linkedin.com/in/misbahulhaque"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
