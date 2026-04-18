@@ -11,12 +11,12 @@ const Contact = () => {
             <h4>Connect</h4>
             <p>
               <a
-                href="https://www.linkedin.com/in/akashrmalhotra/"
+                href="#"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
               >
-                LinkedIn — akashrmalhotra
+                LinkedIn — misbahulhaque
               </a>
             </p>
             <h4>Education</h4>
@@ -31,7 +31,7 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Social</h4>
             <a
-              href="https://github.com/akashrmalhotra"
+              href="#"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -40,7 +40,7 @@ const Contact = () => {
               GitHub <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com/in/akashrmalhotra/"
+              href="#"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -49,7 +49,7 @@ const Contact = () => {
               LinkedIn <MdArrowOutward />
             </a>
             <a
-              href="https://www.youtube.com/@Leftbraincoder"
+              href="#"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
@@ -58,7 +58,7 @@ const Contact = () => {
               YouTube <MdArrowOutward />
             </a>
             <a
-              href="https://www.instagram.com/leftbraincoder/"
+              href="#"
               target="_blank"
               rel="noreferrer"
               data-cursor="disable"
