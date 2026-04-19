@@ -35,7 +35,7 @@ const Career = () => {
                 <h4>SDE II — Android</h4>
                 <h5>Viacom Media Pvt Ltd — JioCinema</h5>
               </div>
-              <h3>2024</h3>
+              <h3>2024-25</h3>
             </div>
             <p>
               Optimised app startup by 60% using Content Provider and Android
