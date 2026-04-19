@@ -12,7 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Helpers ──────────────────────────────────────────────
 
 function seededRandom(seed: number) {
-  let s = seed + 1;
+  // Hash seed to avoid correlation between low sequential seeds
+  let s = ((seed + 1) * 2654435761) % 2147483647;
+  if (s <= 0) s += 2147483646;
+  // Burn-in: skip first few values for better distribution
+  for (let b = 0; b < 3; b++) {
+    s = (s * 16807) % 2147483647;
+  }
   return () => {
     s = (s * 16807) % 2147483647;
     return (s - 1) / 2147483646;
@@ -96,10 +102,6 @@ function FloatingIcons({
     const t = clock.getElapsedTime();
     const total = TECH_SKILLS.length;
 
-    // Phase split: 0→0.4 = scattered, 0.4→1.0 = assemble
-    const assembleRaw = Math.max(0, (p - 0.4) / 0.6);
-    const assembleT = easeInOutCubic(assembleRaw);
-
     // Responsive scale
     const baseScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.85 : 0.7;
     // Responsive drift
@@ -112,28 +114,37 @@ function FloatingIcons({
       const sprite = spritesRef.current[i];
       if (!sprite) continue;
 
+      // Stagger: each icon starts assembling at a different threshold
+      const staggerOffset = (i / total) * 0.3; // spread across 0.3 of progress
+      const iconAssembleRaw = Math.max(0, Math.min(1, (p - 0.3 - staggerOffset) / 0.4));
+      const iconT = easeInOutCubic(iconAssembleRaw);
+
       // Grid target shifted below heading
       const gx = grid[i].x;
       const gy = grid[i].y + gridYOffset;
 
-      // Base interpolation: scattered → grid (only during assembly phase)
+      // Scroll-based movement: icons shift position as you scroll
+      const scrollDriftX = Math.sin(p * Math.PI * 2 + i * 1.3) * (1 - iconT) * 1.5;
+      const scrollDriftY = Math.cos(p * Math.PI * 1.5 + i * 0.9) * (1 - iconT) * 1.0;
+
+      // Base interpolation: scattered → grid with per-icon stagger
       tempVec.set(
-        THREE.MathUtils.lerp(scattered[i].x, gx, assembleT),
-        THREE.MathUtils.lerp(scattered[i].y, gy, assembleT),
+        THREE.MathUtils.lerp(scattered[i].x + scrollDriftX, gx, iconT),
+        THREE.MathUtils.lerp(scattered[i].y + scrollDriftY, gy, iconT),
         0
       );
 
-      // Spiral only during assembly phase, gentler
-      if (assembleRaw > 0) {
-        const spiralStrength = Math.sin(assembleRaw * Math.PI) * 2;
+      // Gentle spiral only during assembly
+      if (iconAssembleRaw > 0 && iconAssembleRaw < 1) {
+        const spiralStrength = Math.sin(iconAssembleRaw * Math.PI) * 1.5;
         const spiralAngle =
-          assembleRaw * Math.PI * 2 + (i / total) * Math.PI * 2;
+          iconAssembleRaw * Math.PI * 2 + (i / total) * Math.PI * 2;
         tempVec.x += Math.cos(spiralAngle) * spiralStrength;
         tempVec.y += Math.sin(spiralAngle) * spiralStrength;
       }
 
-      // Drift: always present while scattered, fades during assembly
-      const drift = (1 - assembleT) * 0.4 * driftScale;
+      // Time-based drift: fades as icons assemble
+      const drift = (1 - iconT) * 0.3 * driftScale;
       tempVec.x += Math.sin(t * 0.5 + i * 1.7) * drift;
       tempVec.y += Math.cos(t * 0.3 + i * 2.3) * drift;
 
@@ -143,14 +154,13 @@ function FloatingIcons({
 
       sprite.position.copy(tempVec);
 
-      // Opacity: gradual increase 0.15→0.5 during scatter, then 0.5→1.0 during assembly
-      const scatterOpacity = THREE.MathUtils.lerp(0.15, 0.5, Math.min(p / 0.4, 1));
-      const enterOpacity = THREE.MathUtils.lerp(scatterOpacity, 1.0, assembleT);
+      // Opacity: 0.15 while scattered, ramps to 1.0 as icon assembles
+      const enterOpacity = THREE.MathUtils.lerp(0.15, 1.0, iconT);
       const mat = sprite.material as THREE.SpriteMaterial;
       mat.opacity = enterOpacity * (1 - exitEased);
 
       // Scale
-      const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, assembleT);
+      const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, iconT);
       sprite.scale.set(s, s, s);
     }
   });
