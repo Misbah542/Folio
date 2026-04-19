@@ -32,26 +32,9 @@
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.3s, box-shadow 0.3s, height 0.3s, border-radius 0.3s;
 }
-
-/* Vertical pill shape with black neon on hover */
-.social-icons span:hover {
-  height: 70px;
-  border-radius: 25px;
-  background-color: #0a0a0a;
-  box-shadow: 0 0 10px var(--accentColor), 0 0 25px rgba(61, 220, 132, 0.3);
-}
-
-.social-icons span:hover a {
+.social-icons a:hover {
   color: var(--accentColor);
-}
-
-/* In bottom bar mode, make horizontal pill instead */
-.social-icons.bottom-bar span:hover {
-  height: 50px;
-  width: 70px;
-  border-radius: 25px;
 }
 .social-icons a {
   --siLeft: 50%;
