@@ -1,17 +1,30 @@
 :root {
   font-family: "Space Grotesk", sans-serif;
-
   font-optical-sizing: auto;
   font-style: normal;
   line-height: 1.5;
   scroll-behavior: smooth;
-  color-scheme: light;
-  --accentColor: #3DDC84; /* Android Green */
-  --accentColorSecondary: #673AB7; /* Deep Violet */
-  --backgroundColor: #FDFDFD;
-  --textColor: #1A1A1B;
-  --mutedTextColor: #5F6368;
-  --borderColor: #DADCE0;
+  color-scheme: dark light;
+
+  /* Accent colours */
+  --accentColor: #3DDC84;
+  --accentColorSecondary: #673AB7;
+
+  /* New design tokens */
+  --bg-dark:      #0D0D0D;
+  --bg-light:     #F7F7F5;
+  --text-dark:    #0D0D0D;
+  --text-light:   #F0EFE9;
+  --muted-dark:   #A0A0A0;
+  --muted-light:  #5F6368;
+  --border-dark:  rgba(255, 255, 255, 0.08);
+  --border-light: rgba(0, 0, 0, 0.10);
+
+  /* Legacy aliases — many existing selectors reference these */
+  --backgroundColor: var(--bg-dark);
+  --textColor:       var(--text-light);
+  --mutedTextColor:  var(--muted-dark);
+  --borderColor:     var(--border-dark);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -21,18 +34,13 @@
   --vh: 100svh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: "Bricolage Grotesque", sans-serif;
 }
 
 ::selection {
   background: var(--accentColor);
-  color: var(--textColor);
+  color: var(--text-dark);
 }
 
 a {
@@ -56,16 +64,14 @@ main {
 }
 
 @keyframes fadeIn {
-  100% {
-    opacity: 1;
-  }
+  100% { opacity: 1; }
 }
 
 body {
   margin: 0;
   height: auto;
-  background-color: var(--backgroundColor);
-  color: var(--textColor);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
@@ -91,9 +97,7 @@ body {
   position: relative;
 }
 
-.split-line {
-  overflow: hidden;
-}
+.split-line { overflow: hidden; }
 
 .split-h2 {
   overflow: hidden;
@@ -102,6 +106,42 @@ body {
   flex-wrap: nowrap;
 }
 
+/* ── Shared Section Utilities ── */
+.section-label {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accentColor);
+  margin-bottom: 16px;
+}
+
+.section-label-muted {
+  color: var(--muted-light);
+}
+
+.section-watermark {
+  position: absolute;
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-size: 120px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  top: 50px;
+  left: 0;
+  z-index: 0;
+  color: white;
+  opacity: 0.05;
+}
+
+.section-watermark-violet {
+  color: var(--accentColorSecondary);
+  opacity: 0.1;
+}
+
+/* ── TechStack ── */
 .techstack {
   width: 100%;
   position: relative;
@@ -110,27 +150,54 @@ body {
   margin: auto;
   margin-top: 50px;
   margin-bottom: -100px;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
 }
 
 .techstack h2 {
-  font-size: 80px;
+  font-size: 72px;
   text-align: center;
   position: absolute;
   width: 100%;
   top: 120px;
   left: 0;
-  font-weight: 400;
+  font-weight: 700;
+  color: var(--text-dark);
+  z-index: 2;
+}
+
+.techstack .section-label {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--muted-light);
+  z-index: 2;
+}
+
+.tech-descriptor {
+  position: absolute;
+  top: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
   text-transform: uppercase;
+  color: var(--muted-light);
+  z-index: 2;
+  margin: 0;
+}
+
+.techstack-watermark {
+  top: 40px;
 }
 
 @media screen and (min-width: 768px) {
-  body {
-    --cWidth: 94%;
-  }
+  body { --cWidth: 94%; }
 }
 
 @media screen and (max-width: 900px) {
-  .techstack h2 {
-    font-size: 40px;
-  }
+  .techstack h2 { font-size: 40px; }
+  .tech-descriptor { top: 170px; }
 }
