@@ -3,9 +3,7 @@ import { Application, SplineEvent } from "@splinetool/runtime";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Skill, SkillNames, SKILLS } from "../data/constants";
-import { sleep } from "../lib/utils";
 import { useMediaQuery } from "../hooks/use-media-query";
-import { useLoading } from "../context/LoadingProvider";
 import {
   KeyboardSection,
   getKeyboardState,
@@ -17,7 +15,6 @@ const Spline = React.lazy(() => import("@splinetool/react-spline"));
 gsap.registerPlugin(ScrollTrigger);
 
 const AnimatedKeyboard = () => {
-  const { isLoading } = useLoading();
   const isMobile = useMediaQuery("(max-width: 767px)");
   const splineContainer = useRef<HTMLDivElement>(null);
   const [splineApp, setSplineApp] = useState<Application>();
@@ -29,7 +26,6 @@ const AnimatedKeyboard = () => {
   const [activeSection, setActiveSection] = useState<KeyboardSection>("hidden");
 
   const keycapAnimationsRef = useRef<{ start: () => void; stop: () => void } | null>(null);
-  const [keyboardRevealed, setKeyboardRevealed] = useState(false);
 
   // --- Event Handlers ---
 
@@ -133,14 +129,44 @@ const AnimatedKeyboard = () => {
     const kbd = splineApp.findObjectByName("keyboard");
     if (!kbd) return;
 
+    // Start fully hidden — not just scaled down, but invisible
+    kbd.visible = false;
     const hiddenState = getKeyboardState({ section: "hidden", isMobile });
     gsap.set(kbd.scale, hiddenState.scale);
     gsap.set(kbd.position, hiddenState.position);
 
-    createSectionTimeline("#career", "career", "hidden", "top 70%");
+    // Career: keyboard becomes visible and enters
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: "#career",
+        start: "top 70%",
+        end: "bottom bottom",
+        scrub: true,
+        onEnter: () => {
+          kbd.visible = true;
+          setActiveSection("career");
+          const state = getKeyboardState({ section: "career", isMobile });
+          gsap.to(kbd.scale, { ...state.scale, duration: 1 });
+          gsap.to(kbd.position, { ...state.position, duration: 1 });
+          gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
+        },
+        onLeaveBack: () => {
+          setActiveSection("hidden");
+          const state = getKeyboardState({ section: "hidden", isMobile });
+          gsap.to(kbd.scale, {
+            ...state.scale,
+            duration: 0.6,
+            onComplete: () => { kbd.visible = false; },
+          });
+          gsap.to(kbd.position, { ...state.position, duration: 0.6 });
+        },
+      },
+    });
+
     createSectionTimeline("#work", "work", "career", "top 70%");
     createSectionTimeline("#techstack", "techstack", "work", "top 50%");
 
+    // Contact: keyboard hides
     gsap.timeline({
       scrollTrigger: {
         trigger: "#contact",
@@ -150,10 +176,15 @@ const AnimatedKeyboard = () => {
         onEnter: () => {
           setActiveSection("hidden");
           const state = getKeyboardState({ section: "hidden", isMobile });
-          gsap.to(kbd.scale, { ...state.scale, duration: 1 });
-          gsap.to(kbd.position, { ...state.position, duration: 1 });
+          gsap.to(kbd.scale, {
+            ...state.scale,
+            duration: 0.6,
+            onComplete: () => { kbd.visible = false; },
+          });
+          gsap.to(kbd.position, { ...state.position, duration: 0.6 });
         },
         onLeaveBack: () => {
+          kbd.visible = true;
           setActiveSection("techstack");
           const state = getKeyboardState({ section: "techstack", isMobile });
           gsap.to(kbd.scale, { ...state.scale, duration: 1 });
@@ -209,61 +240,6 @@ const AnimatedKeyboard = () => {
     return { start, stop };
   };
 
-  const revealKeyboard = async () => {
-    if (!splineApp) return;
-    const kbd = splineApp.findObjectByName("keyboard");
-    if (!kbd) return;
-
-    kbd.visible = false;
-    await sleep(400);
-    kbd.visible = true;
-    setKeyboardRevealed(true);
-
-    const currentState = getKeyboardState({ section: activeSection, isMobile });
-    gsap.fromTo(
-      kbd.scale,
-      { x: 0.01, y: 0.01, z: 0.01 },
-      {
-        ...currentState.scale,
-        duration: 1.5,
-        ease: "elastic.out(1, 0.6)",
-      }
-    );
-
-    const allObjects = splineApp.getAllObjects();
-    const keycaps = allObjects.filter((obj) => obj.name === "keycap");
-
-    await sleep(900);
-
-    if (isMobile) {
-      const mobileKeyCaps = allObjects.filter(
-        (obj) => obj.name === "keycap-mobile"
-      );
-      mobileKeyCaps.forEach((keycap) => {
-        keycap.visible = true;
-      });
-    } else {
-      const desktopKeyCaps = allObjects.filter(
-        (obj) => obj.name === "keycap-desktop"
-      );
-      desktopKeyCaps.forEach(async (keycap, idx) => {
-        await sleep(idx * 70);
-        keycap.visible = true;
-      });
-    }
-
-    keycaps.forEach(async (keycap, idx) => {
-      keycap.visible = false;
-      await sleep(idx * 70);
-      keycap.visible = true;
-      gsap.fromTo(
-        keycap.position,
-        { y: 200 },
-        { y: 50, duration: 0.5, delay: 0.1, ease: "bounce.out" }
-      );
-    });
-  };
-
   // --- Effects ---
 
   useEffect(() => {
@@ -311,12 +287,6 @@ const AnimatedKeyboard = () => {
   }, [splineApp, isMobile, activeSection]);
 
   useEffect(() => {
-    if (!selectedSkill || !splineApp) return;
-    splineApp.setVariable("heading", selectedSkill.label);
-    splineApp.setVariable("desc", selectedSkill.shortDescription);
-  }, [selectedSkill]);
-
-  useEffect(() => {
     if (!splineApp) return;
 
     let rotateKeyboard: gsap.core.Tween | undefined;
@@ -357,10 +327,12 @@ const AnimatedKeyboard = () => {
     };
   }, [activeSection, splineApp]);
 
+  // Update Spline variables when a skill is selected
   useEffect(() => {
-    if (!splineApp || isLoading || keyboardRevealed) return;
-    revealKeyboard();
-  }, [splineApp, isLoading]);
+    if (!selectedSkill || !splineApp) return;
+    splineApp.setVariable("heading", selectedSkill.label);
+    splineApp.setVariable("desc", selectedSkill.shortDescription);
+  }, [selectedSkill, splineApp]);
 
   return (
     <div className="fixed inset-0 z-[5] pointer-events-none">
