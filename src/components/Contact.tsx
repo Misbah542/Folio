@@ -14,7 +14,7 @@ const Contact = () => {
             <h4>Connect</h4>
             <div className="contact-links">
               <a
-                href="https://linkedin.com/in/misbahulhaque"
+                href="https://linkedin.com/in/misbahhaque"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
@@ -42,7 +42,7 @@ const Contact = () => {
                 GitHub <MdArrowOutward className="social-icon" />
               </a>
               <a
-                href="https://linkedin.com/in/misbahulhaque"
+                href="https://linkedin.com/in/misbahhaque"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
