@@ -151,26 +151,12 @@ function IconField({
     () => (ready ? computeGrid(count, viewport.width) : []),
     [count, viewport.width, ready]
   );
-  // Track the heading's on-screen position so the assembled grid
-  // stays anchored just below it regardless of how far we've scrolled.
+  // Cache the heading element; its position is read per-frame in useFrame
+  // (reading DOM rects each frame stays in sync with GSAP ScrollSmoother,
+  // avoiding the jitter from scroll-event / interval updates).
+  const headingElRef = useRef<HTMLElement | null>(null);
   const headingBottomRef = useRef<number>(0);
-  useEffect(() => {
-    const update = () => {
-      const h = document.querySelector<HTMLElement>("#techstack h2");
-      if (!h) return;
-      const r = h.getBoundingClientRect();
-      headingBottomRef.current = r.bottom;
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    const iv = setInterval(update, 100);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-      clearInterval(iv);
-    };
-  }, []);
+  const smoothedOffsetRef = useRef<number | null>(null);
 
   // bounds (ambient playground)
   const bounds = useMemo(
@@ -220,6 +206,25 @@ function IconField({
     const p = progressRef.current;
     const exit = exitRef.current;
     const exitEased = easeInOutCubic(exit);
+
+    // Read the heading's current screen position once per frame and convert
+    // to a world-space Y offset. Exponential smoothing kills sub-pixel jitter
+    // from ScrollSmoother while still tracking the heading in real time.
+    if (!headingElRef.current) {
+      headingElRef.current = document.querySelector<HTMLElement>("#techstack h2");
+    }
+    if (headingElRef.current) {
+      const r = headingElRef.current.getBoundingClientRect();
+      headingBottomRef.current = r.bottom;
+    }
+    const targetOffset = headingBottomRef.current
+      ? ((size.height / 2 - headingBottomRef.current - 40) * viewport.height) /
+        size.height
+      : -viewport.height * 0.12;
+    if (smoothedOffsetRef.current === null) smoothedOffsetRef.current = targetOffset;
+    smoothedOffsetRef.current +=
+      (targetOffset - smoothedOffsetRef.current) * Math.min(1, dt * 12);
+    const gridYOffsetFrame = smoothedOffsetRef.current;
 
     // smoothed scroll velocity
     velSmooth.current += (velocityRef.current - velSmooth.current) * 0.12;
@@ -360,14 +365,7 @@ function IconField({
       const assem = assembles[i];
 
       const gx = grid[i].x;
-      // Anchor the grid just under the #techstack heading. Convert the
-      // heading's current screen y to world coords so the grid tracks it
-      // while the page scrolls.
-      const headingBottomPx = headingBottomRef.current || size.height * 0.3;
-      const gridYOffset =
-        ((size.height / 2 - headingBottomPx - 40) * viewport.height) /
-        size.height;
-      const gy = grid[i].y + gridYOffset;
+      const gy = grid[i].y + gridYOffsetFrame;
 
       // subtle breathing bob on assembled icons so they don't freeze
       const t = performance.now() * 0.001;
