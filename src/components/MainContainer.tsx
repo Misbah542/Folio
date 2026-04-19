@@ -9,7 +9,7 @@ import SocialIcons from "./SocialIcons";
 import WhatIDo from "./WhatIDo";
 import Work from "./Work";
 import setSplitText from "./utils/splitText";
-import TechSwarm from "./TechSwarm";
+import AnimatedKeyboard from "./AnimatedKeyboard";
 
 const TechStack = lazy(() => import("./TechStack"));
 
@@ -32,7 +32,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <div className="container-main relative">
-      <TechSwarm />
+      <AnimatedKeyboard />
       <Cursor />
       <Navbar />
       <SocialIcons />
