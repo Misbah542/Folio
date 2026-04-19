@@ -166,7 +166,7 @@ const TechStack = () => {
 
   return (
     <div className="techstack">
-      <div className="techstack-watermark section-watermark section-watermark-violet">05</div>
+      <div className="techstack-watermark section-watermark">05</div>
       <span className="section-label">[ Tech Stack ]</span>
       <h2> My Android Techstack</h2>
       <p className="tech-descriptor">[ drag to interact ]</p>
