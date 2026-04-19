@@ -218,7 +218,7 @@ function IconField({
       headingBottomRef.current = r.bottom;
     }
     const targetOffset = headingBottomRef.current
-      ? ((size.height / 2 - headingBottomRef.current - 40) * viewport.height) /
+      ? ((size.height / 2 - headingBottomRef.current - 120) * viewport.height) /
         size.height
       : -viewport.height * 0.12;
     if (smoothedOffsetRef.current === null) smoothedOffsetRef.current = targetOffset;
