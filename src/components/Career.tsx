@@ -4,8 +4,10 @@ const Career = () => {
   return (
     <div className="career-section section-container">
       <div className="career-container">
+        <div className="career-watermark section-watermark section-watermark-violet">03</div>
+        <span className="section-label section-label-muted">[ Experience ]</span>
         <h2>
-          My career <span>&</span>
+          My career <span>&amp;</span>
           <br /> experience
         </h2>
         <div className="career-info">
@@ -15,8 +17,8 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>SDE II - Android</h4>
-                <h5>Star India Pvt Ltd – Disney + Hotstar</h5>
+                <h4>SDE II — Android</h4>
+                <h5>Star India Pvt Ltd — Disney + Hotstar</h5>
               </div>
               <h3>2025–Present</h3>
             </div>
@@ -30,8 +32,8 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>SDE II - Android</h4>
-                <h5>Viacom Media Pvt Ltd – JioCinema</h5>
+                <h4>SDE II — Android</h4>
+                <h5>Viacom Media Pvt Ltd — JioCinema</h5>
               </div>
               <h3>2024</h3>
             </div>
@@ -45,8 +47,8 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>SDE I - Android</h4>
-                <h5>Viacom Media Pvt Ltd – JioCinema</h5>
+                <h4>SDE I — Android</h4>
+                <h5>Viacom Media Pvt Ltd — JioCinema</h5>
               </div>
               <h3>2022–24</h3>
             </div>

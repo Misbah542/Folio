@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import "./styles/Work.css";
 import WorkImage from "./WorkImage";
-import { MdArrowBack, MdArrowForward } from "react-icons/md";
 
 const projects = [
   {
@@ -13,7 +12,7 @@ const projects = [
   },
   {
     title: "SplitTrip App",
-    category: "Travel & Utility (Placeholder)",
+    category: "Travel & Utility",
     tools: "Kotlin, Jetpack Compose, Placeholder Tools",
     image: "/images/placeholder.webp",
     link: "#",
@@ -35,33 +34,32 @@ const Work = () => {
   );
 
   const goToPrev = useCallback(() => {
-    const newIndex =
-      currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
+    const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
     goToSlide(newIndex);
   }, [currentIndex, goToSlide]);
 
   const goToNext = useCallback(() => {
-    const newIndex =
-      currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
+    const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
     goToSlide(newIndex);
   }, [currentIndex, goToSlide]);
 
   return (
     <div className="work-section" id="work">
       <div className="work-container section-container">
+        <div className="work-watermark section-watermark">04</div>
+        <span className="section-label">[ Selected Work ]</span>
         <h2>
           My <span>Work</span>
         </h2>
 
         <div className="carousel-wrapper">
-          {/* Navigation Arrows */}
           <button
             className="carousel-arrow carousel-arrow-left"
             onClick={goToPrev}
             aria-label="Previous project"
             data-cursor="disable"
           >
-            <MdArrowBack />
+            ← PREV
           </button>
           <button
             className="carousel-arrow carousel-arrow-right"
@@ -69,16 +67,13 @@ const Work = () => {
             aria-label="Next project"
             data-cursor="disable"
           >
-            <MdArrowForward />
+            NEXT →
           </button>
 
-          {/* Slides */}
           <div className="carousel-track-container">
             <div
               className="carousel-track"
-              style={{
-                transform: `translateX(-${currentIndex * 100}%)`,
-              }}
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {projects.map((project, index) => (
                 <div className="carousel-slide" key={index}>
@@ -89,11 +84,9 @@ const Work = () => {
                       </div>
                       <div className="carousel-details">
                         <h4>{project.title}</h4>
-                        <p className="carousel-category">
-                          {project.category}
-                        </p>
+                        <p className="carousel-category">{project.category}</p>
                         <div className="carousel-tools">
-                          <span className="tools-label">Tools & Features</span>
+                          <span className="tools-label">Tools &amp; Features</span>
                           <p>{project.tools}</p>
                         </div>
                       </div>
@@ -111,18 +104,13 @@ const Work = () => {
             </div>
           </div>
 
-          {/* Dot Indicators */}
-          <div className="carousel-dots">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
-                  }`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to project ${index + 1}`}
-                data-cursor="disable"
-              />
-            ))}
+          <div className="carousel-progress">
+            <div
+              className="carousel-progress-fill"
+              style={{
+                width: `${((currentIndex + 1) / projects.length) * 100}%`,
+              }}
+            />
           </div>
         </div>
       </div>

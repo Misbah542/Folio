@@ -127,11 +127,11 @@ const TechStack = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      const workSection = document.getElementById("work");
+      if (!workSection) return;
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
-      setIsActive(scrollY > threshold);
+      const threshold = workSection.getBoundingClientRect().top + scrollY;
+      setIsActive(scrollY > threshold - 200);
     };
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
@@ -166,7 +166,10 @@ const TechStack = () => {
 
   return (
     <div className="techstack">
+      <div className="techstack-watermark section-watermark section-watermark-violet">05</div>
+      <span className="section-label">[ Tech Stack ]</span>
       <h2> My Android Techstack</h2>
+      <p className="tech-descriptor">[ drag to interact ]</p>
 
       <Canvas
         shadows
@@ -202,7 +205,7 @@ const TechStack = () => {
           environmentRotation={[0, 4, 2]}
         />
         <EffectComposer enableNormalPass={false}>
-          <N8AO color="#0f002c" aoRadius={2} intensity={1.15} />
+          <N8AO color="#1a0a2e" aoRadius={2} intensity={1.15} />
         </EffectComposer>
       </Canvas>
     </div>

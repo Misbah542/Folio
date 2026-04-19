@@ -7,6 +7,7 @@ const WhatIDo = () => {
   const setRef = (el: HTMLDivElement | null, index: number) => {
     containerRef.current[index] = el;
   };
+
   useEffect(() => {
     if (ScrollTrigger.isTouch) {
       containerRef.current.forEach((container) => {
@@ -24,9 +25,12 @@ const WhatIDo = () => {
       });
     };
   }, []);
+
   return (
     <div className="whatIDO">
+      <div className="what-watermark section-watermark">02</div>
       <div className="what-box">
+        <span className="section-label what-section-label">[ What I Do ]</span>
         <h2 className="title">
           W<span className="hat-h2">HAT</span>
           <div>
@@ -36,56 +40,8 @@ const WhatIDo = () => {
       </div>
       <div className="what-box">
         <div className="what-box-in">
-          <div className="what-border2">
-            <svg width="100%">
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="100%"
-                stroke="var(--textColor)"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-              <line
-                x1="100%"
-                y1="0"
-                x2="100%"
-                y2="100%"
-                stroke="var(--textColor)"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-            </svg>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 0)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="100%"
-                  y2="0"
-                  stroke="var(--textColor)"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="var(--textColor)"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
+          <div className="what-content what-noTouch" ref={(el) => setRef(el, 0)}>
             <div className="what-corner"></div>
-
             <div className="what-content-in">
               <h3>ANDROID APP DEVELOPMENT</h3>
               <h4>Building robust apps with Kotlin</h4>
@@ -94,7 +50,7 @@ const WhatIDo = () => {
                 for Mobile and TV platforms, focusing on scalability and user
                 experience.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skillset &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Kotlin</div>
                 <div className="what-tags">Coroutines</div>
@@ -105,23 +61,7 @@ const WhatIDo = () => {
               <div className="what-arrow"></div>
             </div>
           </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 1)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="var(--textColor)"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
+          <div className="what-content what-noTouch" ref={(el) => setRef(el, 1)}>
             <div className="what-corner"></div>
             <div className="what-content-in">
               <h3>MODERN UI/UX</h3>
@@ -131,7 +71,7 @@ const WhatIDo = () => {
                 Material Design 3, and custom animations for immersive digital
                 experiences.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skillset &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Jetpack Compose</div>
                 <div className="what-tags">Material 3</div>
@@ -141,23 +81,7 @@ const WhatIDo = () => {
               <div className="what-arrow"></div>
             </div>
           </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 2)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="var(--textColor)"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
+          <div className="what-content what-noTouch" ref={(el) => setRef(el, 2)}>
             <div className="what-corner"></div>
             <div className="what-content-in">
               <h3>PERFORMANCE OPTIMIZATION</h3>
@@ -167,7 +91,7 @@ const WhatIDo = () => {
                 frame rates to deliver a lightning-fast experience for millions
                 of users.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skillset &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">Profiling</div>
                 <div className="what-tags">LeakCanary</div>
@@ -177,23 +101,7 @@ const WhatIDo = () => {
               <div className="what-arrow"></div>
             </div>
           </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 3)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="var(--textColor)"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
+          <div className="what-content what-noTouch" ref={(el) => setRef(el, 3)}>
             <div className="what-corner"></div>
             <div className="what-content-in">
               <h3>ARCHITECTURE</h3>
@@ -202,7 +110,7 @@ const WhatIDo = () => {
                 Architecting robust systems using modern patterns like MVVM and
                 MVI, ensuring code maintainability and testability.
               </p>
-              <h5>Skillset & tools</h5>
+              <h5>Skillset &amp; tools</h5>
               <div className="what-content-flex">
                 <div className="what-tags">MVVM</div>
                 <div className="what-tags">MVI</div>
@@ -227,7 +135,6 @@ function handleClick(container: HTMLDivElement) {
   container.classList.remove("what-sibling");
   if (container.parentElement) {
     const siblings = Array.from(container.parentElement.children);
-
     siblings.forEach((sibling) => {
       if (sibling !== container) {
         sibling.classList.remove("what-content-active");

@@ -11,27 +11,38 @@
   margin: auto;
   z-index: 9;
 }
+
+.what-watermark {
+  left: 0;
+  top: 60px;
+}
+
+.what-section-label {
+  margin-bottom: 24px;
+}
+
 .what-box {
   width: 50%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: relative;
   z-index: 9;
 }
+
 .what-box h2 {
   font-size: calc(4vw + 25px);
   line-height: calc(4vw + 20px);
   font-weight: 600;
   margin-right: 10%;
   margin-bottom: 100px;
+  color: var(--text-light);
 }
 
-.hat-h2 {
-  font-style: italic;
-}
-.do-h2 {
-  color: var(--accentColor);
-}
+.hat-h2 { font-style: italic; }
+
+.do-h2 { color: var(--accentColor); }
+
 .what-box-in {
   flex-direction: column;
   height: 600px;
@@ -39,21 +50,32 @@
   position: relative;
   display: none;
 }
+
+/* Cards */
 .what-content {
   width: 450px;
   height: 25%;
   min-height: 25%;
-  transition: 0.5s;
-  /* border: 0.5px dashed rgba(0, 0, 0, 0.3); */
+  transition: min-height 0.5s, padding 0.5s, border-color 0.3s, background 0.3s;
   position: relative;
   padding: 20px 50px;
   box-sizing: border-box;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+  animation: whatBorderReveal 1.2s 1 forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes whatBorderReveal {
+  to { border-color: var(--border-dark); }
 }
 
 .what-noTouch:hover,
 .what-content-active {
   min-height: 65%;
   padding: 30px 50px;
+  border-color: var(--accentColor) !important;
+  background: rgba(61, 220, 132, 0.05);
 }
 
 .what-noTouch:hover .what-content-in,
@@ -67,12 +89,17 @@
   min-height: 10%;
   padding: 5px 50px;
 }
+
 .what-content h3 {
-  font-size: 35px;
-  letter-spacing: 1px;
+  font-size: 13px;
+  letter-spacing: 3px;
   margin: 0;
-  font-family: "Bricolage Grotesque", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--accentColor);
+  text-transform: uppercase;
+  font-weight: 500;
 }
+
 .what-content p,
 .what-content h4,
 .what-content-in h5,
@@ -99,37 +126,36 @@
 
 .what-content p {
   font-size: 14px;
-  line-height: 18px;
+  line-height: 1.7;
   font-weight: 400;
-  letter-spacing: 0.7px;
+  letter-spacing: 0.4px;
+  color: var(--muted-dark);
 }
+
 .what-content h4 {
   font-weight: 500;
-  letter-spacing: 1px;
-  margin: 0px;
-  font-size: 14px;
-  opacity: 0.6;
+  letter-spacing: 0.5px;
+  margin: 0;
+  font-size: 18px;
+  opacity: 1;
+  color: var(--text-light);
+  font-family: "Bricolage Grotesque", sans-serif;
 }
+
 .what-content-in {
   opacity: 0;
   animation: whatFlicker 0.5s 1 forwards;
   animation-delay: 1s;
+  height: 100%;
+  overflow: hidden;
 }
-@keyframes whatFlicker {
-  0%,
-  25%,
-  35%,
-  60% {
-    opacity: 0;
-  }
 
-  30%,
-  50%,
-  40%,
-  100% {
-    opacity: 1;
-  }
+@keyframes whatFlicker {
+  0%, 25%, 35%, 60% { opacity: 0; }
+  30%, 50%, 40%, 100% { opacity: 1; }
 }
+
+/* Corner brackets */
 .what-content::before,
 .what-corner::before,
 .what-content::after,
@@ -138,276 +164,155 @@
   width: 10px;
   height: 10px;
   position: absolute;
-  border: 4px solid var(--textColor);
+  border: 3px solid var(--accentColor);
   opacity: 0;
   animation: whatCorners 0.2s 1 forwards;
   animation-delay: 0.5s;
 }
+
 @keyframes whatCorners {
-  100% {
-    opacity: 1;
-  }
+  100% { opacity: 0.6; }
 }
+
 .what-content::before {
   top: -2px;
   left: -2px;
   border-right: none;
   border-bottom: none;
 }
+
 .what-corner::before {
   top: -2px;
   right: -2px;
   border-left: none;
   border-bottom: none;
 }
+
 .what-content::after {
   bottom: -2px;
   left: -2px;
   border-top: none;
   border-right: none;
 }
+
 .what-corner::after {
   bottom: -2px;
   right: -2px;
   border-left: none;
   border-top: none;
 }
+
+/* Arrow */
 .what-arrow {
   position: absolute;
   bottom: 20px;
   right: 20px;
   width: 25px;
   height: 25px;
-  border: 1px solid var(--textColor);
+  border: 1px solid var(--accentColor);
 }
+
 .what-arrow::before {
   content: "";
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(-45deg);
-  border-left: 1px solid var(--textColor);
-  border-bottom: 1px solid var(--textColor);
+  border-left: 1px solid var(--accentColor);
+  border-bottom: 1px solid var(--accentColor);
   transition: 0.5s;
   width: 10px;
   height: 10px;
 }
+
 .what-noTouch:hover .what-arrow::before,
 .what-content-active .what-arrow::before {
   transform: translate(-50%, -20%) rotate(-225deg);
 }
-.what-border1 {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100%;
-  transition: 0.5s;
-  max-width: 0%;
-  overflow: hidden;
-  opacity: 0.8;
-  animation: whatBorders 1.2s 1 forwards;
-}
-.what-border1 svg {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 450px;
-}
-.what-border2 {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  left: 0;
-  transform: translateY(-50%);
-  height: 100%;
-  max-height: 0%;
-  overflow: hidden;
-  transition: 0.5s;
-  opacity: 0.8;
-  animation: whatBorders 1.2s 1 forwards;
-}
-.what-border2 svg {
-  height: 600px;
-  top: 50%;
-  transform: translateY(-50%);
-  position: absolute;
-}
-.what-content-in {
-  height: 100%;
-  overflow: hidden;
-}
-.what-content-in h5 {
-  font-weight: 500;
-  opacity: 0.7;
-  font-size: 12px;
-  letter-spacing: 1px;
-  font-family: "Space Grotesk", sans-serif;
-  margin-bottom: 5px;
-}
-@keyframes whatBorders {
-  80% {
-    opacity: 0.8;
-  }
-  100% {
-    max-height: 100%;
-    max-width: 100%;
-    opacity: 0.4;
-  }
-}
+
+/* Tags */
 .what-content-flex {
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
 }
+
 .what-tags {
-  font-size: 13px;
-  font-weight: 500;
-  padding: 5px 15px;
-  background-color: rgba(61, 220, 132, 0.1);
-  border: 1px solid var(--accentColor);
+  font-size: 11px;
+  font-weight: 400;
+  padding: 4px 12px;
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--border-dark);
   border-radius: 100px;
-  color: var(--textColor);
+  color: var(--text-light);
 }
+
+.what-content-in h5 {
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-family: "Space Grotesk", sans-serif;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  color: var(--muted-dark);
+}
+
+/* ── Responsive ── */
 @media only screen and (max-width: 1600px) {
-  .what-box h2 {
-    margin-right: 18%;
-  }
+  .what-box h2 { margin-right: 18%; }
 }
-@media only screen and (max-width: 1400px) {
-  .what-box h2 {
-    margin-right: 20%;
-  }
-  .what-box-in {
-    height: 400px;
-  }
-  .what-content h3 {
-    font-size: 28px;
-  }
-  .what-content {
-    padding: 15px 30px;
-    width: 400px;
-  }
-  .what-content p {
-    font-size: 13px;
-  }
-  .what-noTouch:hover,
-  .what-content-active {
-    padding: 15px 30px;
-  }
 
+@media only screen and (max-width: 1400px) {
+  .what-box h2 { margin-right: 20%; }
+  .what-box-in { height: 400px; }
+  .what-content h3 { font-size: 12px; }
+  .what-content { padding: 15px 30px; width: 400px; }
+  .what-content p { font-size: 13px; }
+  .what-noTouch:hover,
+  .what-content-active { padding: 15px 30px; }
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
-  .what-content.what-sibling {
-    padding: 5px 30px;
-  }
-  .what-tags {
-    font-size: 12px;
-  }
+  .what-content.what-sibling { padding: 5px 30px; }
+  .what-tags { font-size: 11px; }
+  .what-box-in { margin-left: 50px; }
+  .what-content { width: 380px; }
 }
-@media only screen and (max-width: 1400px) {
-  .what-box-in {
-    margin-left: 50px;
-  }
-  .what-content {
-    width: 380px;
-  }
-}
+
 @media only screen and (max-width: 1024px) {
-  .whatIDO {
-    height: auto;
-    padding: 50px 0px;
-    padding-bottom: 50px;
-  }
-  .what-box-in {
-    height: 500px;
-    margin-left: -50px;
-  }
-  .what-content {
-    padding: 20px 50px;
-    width: 500px;
-  }
-  .what-content p {
-    font-size: 14px;
-  }
+  .whatIDO { height: auto; padding: 50px 0; }
+  .what-box-in { height: 500px; margin-left: -50px; }
+  .what-content { padding: 20px 50px; width: 500px; }
+  .what-content p { font-size: 14px; }
   .what-noTouch:hover,
-  .what-content-active {
-    min-height: 55%;
-    padding: 30px 50px;
-  }
-
+  .what-content-active { min-height: 55%; padding: 30px 50px; }
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
-  .what-content.what-sibling {
-    min-height: 15%;
-    padding: 5px 50px;
-  }
+  .what-content.what-sibling { min-height: 15%; padding: 5px 50px; }
 }
+
 @media only screen and (max-width: 900px) {
-  .whatIDO {
-    flex-direction: column;
-  }
-  .what-box h2 {
-    margin: 50px 0;
-    font-size: 55px;
-    line-height: 53px;
-  }
-  .what-box:first-child {
-    justify-content: left;
-  }
-  .what-box:last-child {
-    height: 500px;
-  }
-  .what-box {
-    width: 500px;
-    max-width: calc(100% - 50px);
-    margin: auto;
-  }
-  .what-content {
-    width: 100%;
-  }
-  .what-box-in {
-    margin-left: 0px;
-    height: 450px;
-  }
-  .what-content {
-    padding: 15px 30px;
-  }
-  .what-content p {
-    font-size: 11px;
-  }
-  .what-noTouch:hover,
-  .what-content-active {
-    padding: 10px 30px;
-  }
-  .what-tags {
-    font-size: 11px;
-  }
-
+  .whatIDO { flex-direction: column; }
+  .what-box h2 { margin: 50px 0; font-size: 55px; line-height: 53px; }
+  .what-box:first-child { justify-content: left; }
+  .what-box:last-child { height: 500px; }
+  .what-box { width: 500px; max-width: calc(100% - 50px); margin: auto; }
+  .what-content { width: 100%; }
+  .what-box-in { margin-left: 0; height: 450px; }
+  .what-content { padding: 15px 30px; }
+  .what-content p { font-size: 11px; }
+  .what-noTouch:hover, .what-content-active { padding: 10px 30px; }
+  .what-tags { font-size: 11px; }
   .what-noTouch:hover ~ .what-content,
   .what-box-in:hover .what-noTouch:not(:hover),
-  .what-content.what-sibling {
-    padding: 2px 30px;
-  }
-  .what-content h3 {
-    font-size: 25px;
-  }
+  .what-content.what-sibling { padding: 2px 30px; }
+  .what-content h3 { font-size: 12px; }
 }
+
 @media only screen and (max-width: 550px) {
-  .whatIDO {
-    place-items: inherit;
-    align-items: start;
-    justify-content: left;
-  }
-  .what-box {
-    max-width: calc(100% - 25px);
-    margin: 0;
-  }
+  .whatIDO { place-items: inherit; align-items: start; justify-content: left; }
+  .what-box { max-width: calc(100% - 25px); margin: 0; }
 }
+
 @media only screen and (min-width: 1950px) {
-  .what-box h2 {
-    font-size: 7rem;
-    line-height: 6.8rem;
-  }
+  .what-box h2 { font-size: 7rem; line-height: 6.8rem; }
 }

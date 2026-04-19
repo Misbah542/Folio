@@ -3,77 +3,78 @@ import "./styles/Contact.css";
 
 const Contact = () => {
   return (
-    <div className="contact-section section-container" id="contact">
-      <div className="contact-container">
-        <h3>Contact</h3>
+    <div className="contact-section" id="contact">
+      <div className="contact-container section-container">
+        <div className="contact-watermark section-watermark">06</div>
+        <span className="section-label">[ Get In Touch ]</span>
+        <h3 className="contact-heading">Contact</h3>
+
         <div className="contact-flex">
           <div className="contact-box">
             <h4>Connect</h4>
-            <p>
+            <div className="contact-links">
               <a
                 href="https://linkedin.com/in/misbahulhaque"
                 target="_blank"
                 rel="noreferrer"
                 data-cursor="disable"
               >
-                LinkedIn — misbahulhaque
-                </a>
-                </p>
-                <p>
-                <a href="mailto:misbahul8@gmail.com" data-cursor="disable">
-                Email — misbahul8@gmail.com
-                </a>
-                </p>
-                <p>
-                <span data-cursor="disable">Phone — +91-8376069521</span>
-                </p>
-                </div>
-                <div className="contact-box">
-            <h4>Social</h4>
-            <a
-              href="https://github.com/Misbah542"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              GitHub <MdArrowOutward />
-            </a>
-            <a
-              href="https://linkedin.com/in/misbahulhaque"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              LinkedIn <MdArrowOutward />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              YouTube <MdArrowOutward />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="disable"
-              className="contact-social"
-            >
-              Instagram <MdArrowOutward />
-            </a>
+                <span className="link-arrow">→</span> LinkedIn
+              </a>
+              <a href="mailto:misbahul8@gmail.com" data-cursor="disable">
+                <span className="link-arrow">→</span> Email
+              </a>
+              <span className="contact-phone" data-cursor="disable">
+                <span className="link-arrow">→</span> +91-8376069521
+              </span>
+            </div>
           </div>
+
           <div className="contact-box">
+            <h4>Social</h4>
+            <div className="contact-social-links">
+              <a
+                href="https://github.com/Misbah542"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
+                GitHub <MdArrowOutward className="social-icon" />
+              </a>
+              <a
+                href="https://linkedin.com/in/misbahulhaque"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
+                LinkedIn <MdArrowOutward className="social-icon" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
+                YouTube <MdArrowOutward className="social-icon" />
+              </a>
+              <a
+                href="#"
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="disable"
+              >
+                Instagram <MdArrowOutward className="social-icon" />
+              </a>
+            </div>
+          </div>
+
+          <div className="contact-box contact-credit">
             <h2>
               Designed and Developed <br /> by <span>Misbah ul Haque</span>
             </h2>
-            <h5>
-              <MdCopyright /> 2026
-            </h5>
+            <div className="contact-copyright">
+              <MdCopyright /> 2026 — All Rights Reserved
+            </div>
           </div>
         </div>
       </div>
