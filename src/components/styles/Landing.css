@@ -222,6 +222,10 @@
   color: var(--text-light);
 }
 
+.landing-info-bottom {
+  color: var(--muted-dark);
+}
+
 .landing-h2-info-1 {
   position: absolute;
   top: 0;
