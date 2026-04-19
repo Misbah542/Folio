@@ -1,14 +1,9 @@
 .about-section {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  place-items: center;
   position: relative; /* needed for absolute watermark */
   opacity: 1;
   height: auto;
-  width: var(--cWidth);
-  margin: auto;
-  background-color: var(--bg-dark);
+  width: 100%;
+  background-color: transparent;
   color: var(--text-light);
 }
 
@@ -81,17 +76,24 @@
 
 @media only screen and (min-width: 1025px) {
   .about-section {
-    width: var(--cWidth);
-    justify-content: right;
+    width: 100%;
     max-width: 1920px;
     height: var(--vh);
     padding: 0;
     opacity: 1;
   }
 
+  .about-container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: relative;
+  }
+
   .about-me {
     padding: 0;
     width: 42%;
+    margin-left: auto; /* Push the content to the right without moving the container */
   }
 
   .about-me p {

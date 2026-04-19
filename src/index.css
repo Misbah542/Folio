@@ -129,8 +129,8 @@ body {
   line-height: 1;
   pointer-events: none;
   user-select: none;
-  top: 50px;
-  left: 0;
+  top: 60px;
+  left: 180px;
   z-index: 0;
   color: var(--text-light);
   opacity: 0.05;
@@ -146,51 +146,22 @@ body {
   width: 100%;
   position: relative;
   overflow: clip;
-  height: var(--vh);
-  margin: auto;
-  margin-top: 50px;
-  margin-bottom: -100px;
+  padding: 120px 0;
   background-color: transparent;
   color: var(--text-light);
 }
 
 .techstack h2 {
   font-size: 72px;
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  top: 120px;
-  left: 0;
   font-weight: 700;
   color: var(--text-light);
-  z-index: 2;
-}
-
-.techstack .section-label {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--accentColor);
-  z-index: 2;
-}
-
-.tech-descriptor {
-  position: absolute;
-  top: 210px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--muted-dark);
-  z-index: 2;
-  margin: 0;
+  margin-top: 16px;
+  margin-bottom: 60px;
+  font-family: "Bricolage Grotesque", sans-serif;
 }
 
 .techstack-watermark {
-  top: 40px;
+  top: 60px;
 }
 
 @media screen and (min-width: 768px) {

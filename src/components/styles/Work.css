@@ -3,9 +3,7 @@
   z-index: 1;
   background-color: transparent;
   padding: 120px 0;
-  width: var(--cWidth);
-  margin: auto;
-  max-width: var(--cMaxWidth);
+  width: 100%;
 }
 
 .work-section h2 {

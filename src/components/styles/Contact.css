@@ -1,7 +1,5 @@
 .contact-section {
-  width: var(--cWidth);
-  margin: auto;
-  max-width: var(--cMaxWidth);
+  width: 100%;
   padding: 120px 0 80px 0;
   position: relative;
   z-index: 2;
