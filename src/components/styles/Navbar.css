@@ -11,12 +11,17 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 9999;
+  background: rgba(13, 13, 13, 0.5);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: background 0.3s;
 }
 
-/* Default: dark section — no tinted bg needed, blur is enough */
+.header.nav-on-light {
+  background: rgba(247, 247, 245, 0.75);
+}
+
+/* Default: dark section */
 .header ul {
   font-size: 12px;
   display: flex;

@@ -38,9 +38,10 @@ const Navbar = () => {
       });
     });
 
+    const navTriggers: ReturnType<typeof ScrollTrigger.create>[] = [];
     const lightSections = ['#about', '.career-section', '.techstack'];
     lightSections.forEach((selector) => {
-      ScrollTrigger.create({
+      const st = ScrollTrigger.create({
         trigger: selector,
         start: 'top 80px',
         end: 'bottom 80px',
@@ -53,11 +54,16 @@ const Navbar = () => {
         onLeaveBack: () =>
           document.querySelector('.header')?.classList.remove('nav-on-light'),
       });
+      navTriggers.push(st);
     });
 
     window.addEventListener("resize", () => {
       ScrollSmoother.refresh(true);
     });
+
+    return () => {
+      navTriggers.forEach((st) => st.kill());
+    };
   }, []);
   return (
     <>
