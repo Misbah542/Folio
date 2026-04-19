@@ -14,13 +14,13 @@ type SectionStates = Record<
 export const KEYBOARD_STATES: SectionStates = {
   hidden: {
     desktop: {
-      scale: { x: 0.01, y: 0.01, z: 0.01 },
-      position: { x: 0, y: -300, z: 0 },
+      scale: { x: 0.001, y: 0.001, z: 0.001 },
+      position: { x: 0, y: -500, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
     },
     mobile: {
-      scale: { x: 0.01, y: 0.01, z: 0.01 },
-      position: { x: 0, y: -300, z: 0 },
+      scale: { x: 0.001, y: 0.001, z: 0.001 },
+      position: { x: 0, y: -500, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
     },
   },

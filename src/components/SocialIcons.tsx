@@ -1,13 +1,17 @@
 import {
   FaGithub,
-  FaInstagram,
   FaLinkedinIn,
-  FaYoutube,
+  FaPhone,
 } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SocialIcons = () => {
   useEffect(() => {
@@ -54,6 +58,33 @@ const SocialIcons = () => {
         elem.removeEventListener("mousemove", onMouseMove);
       };
     });
+
+    // Animate social icons below when reaching contact section
+    const iconsSection = document.querySelector(".icons-section") as HTMLElement;
+    if (iconsSection) {
+      ScrollTrigger.create({
+        trigger: "#contact",
+        start: "top 50%",
+        end: "top 20%",
+        scrub: true,
+        onEnter: () => {
+          gsap.to(iconsSection, {
+            y: 100,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+        },
+        onLeaveBack: () => {
+          gsap.to(iconsSection, {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            ease: "power2.inOut",
+          });
+        },
+      });
+    }
   }, []);
 
   return (
@@ -79,20 +110,18 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="#"
-            target="_blank"
+            href="tel:+918376069521"
             rel="noreferrer"
           >
-            <FaYoutube />
+            <FaPhone />
           </a>
         </span>
         <span>
           <a
-            href="#"
-            target="_blank"
+            href="mailto:misbahul8@gmail.com"
             rel="noreferrer"
           >
-            <FaInstagram />
+            <MdEmail />
           </a>
         </span>
       </div>
