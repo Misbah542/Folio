@@ -32,6 +32,17 @@
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Black neon glow on all buttons when any is hovered */
+.social-icons:hover span {
+  background-color: #0a0a0a;
+  box-shadow: 0 0 10px var(--accentColor), 0 0 25px rgba(61, 220, 132, 0.3);
+}
+
+.social-icons:hover a {
+  color: var(--accentColor);
 }
 .social-icons a {
   --siLeft: 50%;
