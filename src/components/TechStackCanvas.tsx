@@ -12,46 +12,56 @@ gsap.registerPlugin(ScrollTrigger);
 // ── Helpers ──────────────────────────────────────────────
 
 function seededRandom(seed: number) {
-  // Hash seed to avoid correlation between low sequential seeds
   let s = ((seed + 1) * 2654435761) % 2147483647;
   if (s <= 0) s += 2147483646;
-  // Burn-in: skip first few values for better distribution
-  for (let b = 0; b < 3; b++) {
-    s = (s * 16807) % 2147483647;
-  }
+  for (let b = 0; b < 3; b++) s = (s * 16807) % 2147483647;
   return () => {
     s = (s * 16807) % 2147483647;
     return (s - 1) / 2147483646;
   };
 }
 
+function easeOutBack(t: number): number {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+}
+
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-function computeGridPositions(
-  count: number,
-  viewportWidth: number
-): THREE.Vector3[] {
-  const cols = viewportWidth > 15 ? 5 : viewportWidth > 10 ? 4 : 3;
-  const spacing = viewportWidth > 15 ? 2.5 : viewportWidth > 10 ? 2.0 : 1.5;
-  const rows = Math.ceil(count / cols);
-  const offsetX = ((cols - 1) * spacing) / 2;
-  const offsetY = ((rows - 1) * spacing) / 2;
+// Per-icon motion parameters for organic, unique movement
+interface IconMotion {
+  freqX: number; freqY: number; freqZ: number;
+  phaseX: number; phaseY: number; phaseZ: number;
+  rotSpeedX: number; rotSpeedY: number; rotSpeedZ: number;
+  bounceFreq: number; bouncePhase: number;
+  scrollPhaseX: number; scrollPhaseY: number;
+}
 
+function computeMotionParams(count: number): IconMotion[] {
   return Array.from({ length: count }, (_, i) => {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    return new THREE.Vector3(
-      col * spacing - offsetX,
-      -row * spacing + offsetY,
-      0
-    );
+    const rng = seededRandom(i + 200);
+    return {
+      freqX: 0.3 + rng() * 0.5,
+      freqY: 0.25 + rng() * 0.4,
+      freqZ: 0.15 + rng() * 0.3,
+      phaseX: rng() * Math.PI * 2,
+      phaseY: rng() * Math.PI * 2,
+      phaseZ: rng() * Math.PI * 2,
+      rotSpeedX: 0.3 + rng() * 0.6,
+      rotSpeedY: 0.4 + rng() * 0.7,
+      rotSpeedZ: 0.2 + rng() * 0.4,
+      bounceFreq: 0.8 + rng() * 1.2,
+      bouncePhase: rng() * Math.PI * 2,
+      scrollPhaseX: rng() * Math.PI * 2,
+      scrollPhaseY: rng() * Math.PI * 2,
+    };
   });
 }
 
-// Scattered positions relative to viewport so they fill the screen
-function computeScatteredPositions(
+function computeScattered3D(
   count: number,
   vw: number,
   vh: number
@@ -59,14 +69,30 @@ function computeScatteredPositions(
   return Array.from({ length: count }, (_, i) => {
     const rng = seededRandom(i);
     return new THREE.Vector3(
-      (rng() - 0.5) * vw * 0.85,
-      (rng() - 0.5) * vh * 0.85,
-      0
+      (rng() - 0.5) * vw * 1.4,
+      (rng() - 0.5) * vh * 1.4,
+      (rng() - 0.5) * 10 // z-depth for parallax
     );
   });
 }
 
-// ── FloatingIcons ────────────────────────────────────────
+function computeGridPositions(
+  count: number,
+  vw: number
+): THREE.Vector3[] {
+  const cols = vw > 15 ? 5 : vw > 10 ? 4 : 3;
+  const spacing = vw > 15 ? 2.2 : vw > 10 ? 1.8 : 1.4;
+  const rows = Math.ceil(count / cols);
+  const offsetX = ((cols - 1) * spacing) / 2;
+  const offsetY = ((rows - 1) * spacing) / 2;
+  return Array.from({ length: count }, (_, i) => {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    return new THREE.Vector3(col * spacing - offsetX, -row * spacing + offsetY, 0);
+  });
+}
+
+// ── FloatingIcons (3D meshes) ────────────────────────────
 
 const iconUrls = TECH_SKILLS.map((s) => s.icon);
 
@@ -79,10 +105,12 @@ function FloatingIcons({
 }) {
   const textures = useSvgTextures(iconUrls);
   const { viewport } = useThree();
-  const spritesRef = useRef<(THREE.Sprite | null)[]>([]);
+  const meshesRef = useRef<(THREE.Mesh | null)[]>([]);
+
+  const motions = useMemo(() => computeMotionParams(TECH_SKILLS.length), []);
 
   const scattered = useMemo(
-    () => computeScatteredPositions(TECH_SKILLS.length, viewport.width, viewport.height),
+    () => computeScattered3D(TECH_SKILLS.length, viewport.width, viewport.height),
     [viewport.width, viewport.height]
   );
 
@@ -91,77 +119,75 @@ function FloatingIcons({
     [viewport.width]
   );
 
+  const gridYOffset = -viewport.height * 0.12;
   const tempVec = useMemo(() => new THREE.Vector3(), []);
-
-  // Offset grid down so it assembles below the techstack heading
-  const gridYOffset = -viewport.height * 0.15;
 
   useFrame(({ clock }) => {
     const p = progressRef.current;
     const exit = exitRef.current;
     const t = clock.getElapsedTime();
     const total = TECH_SKILLS.length;
-
-    // Responsive scale
-    const baseScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.85 : 0.7;
-    // Responsive drift
-    const driftScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.6 : 0.3;
-
-    // Exit: fade out when entering contact
     const exitEased = easeInOutCubic(exit);
 
+    const baseScale = viewport.width > 15 ? 0.9 : viewport.width > 10 ? 0.75 : 0.6;
+
     for (let i = 0; i < total; i++) {
-      const sprite = spritesRef.current[i];
-      if (!sprite) continue;
+      const mesh = meshesRef.current[i];
+      if (!mesh) continue;
 
-      // Stagger: each icon starts assembling at a different threshold
-      const staggerOffset = (i / total) * 0.3; // spread across 0.3 of progress
-      const iconAssembleRaw = Math.max(0, Math.min(1, (p - 0.3 - staggerOffset) / 0.4));
-      const iconT = easeInOutCubic(iconAssembleRaw);
+      const m = motions[i];
 
-      // Grid target shifted below heading
+      // Per-icon staggered assembly (icons snap one by one)
+      const staggerOffset = (i / total) * 0.25;
+      const iconRaw = Math.max(0, Math.min(1, (p - 0.35 - staggerOffset) / 0.35));
+      const iconT = easeOutBack(iconRaw); // overshoot for snappy feel
+
+      const alive = 1 - iconT; // how much "floating" remains
+
+      // ── Floating motion (fades as icon assembles) ──
+      const floatX = Math.sin(t * m.freqX + m.phaseX) * 1.5 * alive;
+      const floatY = Math.cos(t * m.freqY + m.phaseY) * 1.0 * alive;
+      const floatZ = Math.sin(t * m.freqZ + m.phaseZ) * 0.6 * alive;
+      const bounce = Math.abs(Math.sin(t * m.bounceFreq + m.bouncePhase)) * 0.4 * alive;
+
+      // ── Scroll-driven drift (icons move as you scroll) ──
+      const scrollX = Math.sin(p * Math.PI * 3 + m.scrollPhaseX) * 2.0 * alive;
+      const scrollY = Math.cos(p * Math.PI * 2.5 + m.scrollPhaseY) * 1.5 * alive;
+
+      // Scattered position with all motion layers
+      const sx = scattered[i].x + floatX + scrollX;
+      const sy = scattered[i].y + floatY + bounce + scrollY;
+      const sz = scattered[i].z + floatZ;
+
+      // Grid target (below heading)
       const gx = grid[i].x;
       const gy = grid[i].y + gridYOffset;
 
-      // Scroll-based movement: icons shift position as you scroll
-      const scrollDriftX = Math.sin(p * Math.PI * 2 + i * 1.3) * (1 - iconT) * 1.5;
-      const scrollDriftY = Math.cos(p * Math.PI * 1.5 + i * 0.9) * (1 - iconT) * 1.0;
-
-      // Base interpolation: scattered → grid with per-icon stagger
+      // Interpolate scattered → grid
       tempVec.set(
-        THREE.MathUtils.lerp(scattered[i].x + scrollDriftX, gx, iconT),
-        THREE.MathUtils.lerp(scattered[i].y + scrollDriftY, gy, iconT),
-        0
+        THREE.MathUtils.lerp(sx, gx, iconT),
+        THREE.MathUtils.lerp(sy, gy, iconT),
+        THREE.MathUtils.lerp(sz, 0, iconT)
       );
 
-      // Gentle spiral only during assembly
-      if (iconAssembleRaw > 0 && iconAssembleRaw < 1) {
-        const spiralStrength = Math.sin(iconAssembleRaw * Math.PI) * 1.5;
-        const spiralAngle =
-          iconAssembleRaw * Math.PI * 2 + (i / total) * Math.PI * 2;
-        tempVec.x += Math.cos(spiralAngle) * spiralStrength;
-        tempVec.y += Math.sin(spiralAngle) * spiralStrength;
-      }
+      // Exit animation
+      tempVec.y -= exitEased * (viewport.height * 0.8 + i * 0.15);
 
-      // Time-based drift: fades as icons assemble
-      const drift = (1 - iconT) * 0.3 * driftScale;
-      tempVec.x += Math.sin(t * 0.5 + i * 1.7) * drift;
-      tempVec.y += Math.cos(t * 0.3 + i * 2.3) * drift;
+      mesh.position.copy(tempVec);
 
-      // Exit: push icons down and apart
-      tempVec.y -= exitEased * (viewport.height * 0.6 + i * 0.3);
-      tempVec.x += exitEased * ((i % 2 === 0 ? 1 : -1) * i * 0.2);
+      // ── 3D rotation (tumble while floating, flatten on assemble) ──
+      mesh.rotation.x = Math.sin(t * m.rotSpeedX + m.phaseX + p * 1.5) * 0.7 * alive;
+      mesh.rotation.y = Math.cos(t * m.rotSpeedY + m.phaseY + p * 1.0) * 0.9 * alive;
+      mesh.rotation.z = Math.sin(t * m.rotSpeedZ * 0.7 + m.phaseZ + p * 2) * 0.4 * alive;
 
-      sprite.position.copy(tempVec);
-
-      // Opacity: 0.15 while scattered, ramps to 1.0 as icon assembles
-      const enterOpacity = THREE.MathUtils.lerp(0.15, 1.0, iconT);
-      const mat = sprite.material as THREE.SpriteMaterial;
+      // Opacity: ghostly while floating → solid when assembled
+      const enterOpacity = THREE.MathUtils.lerp(0.18, 1.0, iconT);
+      const mat = mesh.material as THREE.MeshBasicMaterial;
       mat.opacity = enterOpacity * (1 - exitEased);
 
-      // Scale
-      const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, iconT);
-      sprite.scale.set(s, s, s);
+      // Scale: smaller while floating, full size when assembled
+      const s = THREE.MathUtils.lerp(0.65 * baseScale, baseScale, iconT);
+      mesh.scale.set(s, s, s);
     }
   });
 
@@ -169,20 +195,20 @@ function FloatingIcons({
     <>
       {TECH_SKILLS.map((skill, i) =>
         textures[i] ? (
-          <sprite
+          <mesh
             key={skill.name}
-            ref={(el) => {
-              spritesRef.current[i] = el;
-            }}
+            ref={(el) => { meshesRef.current[i] = el; }}
             position={[scattered[i].x, scattered[i].y, scattered[i].z]}
           >
-            <spriteMaterial
+            <planeGeometry args={[1.2, 1.2]} />
+            <meshBasicMaterial
               map={textures[i]}
               transparent
-              opacity={0.15}
+              opacity={0.18}
+              side={THREE.DoubleSide}
               depthWrite={false}
             />
-          </sprite>
+          </mesh>
         ) : null
       )}
     </>
@@ -196,9 +222,7 @@ const TechStackCanvas = () => {
   const exitRef = useRef(0);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     if (!mounted) return;
@@ -206,28 +230,21 @@ const TechStackCanvas = () => {
     let enterTrigger: ScrollTrigger | null = null;
     let exitTrigger: ScrollTrigger | null = null;
 
-    // Delay to ensure ScrollSmoother is initialized (created in Navbar)
     const timer = setTimeout(() => {
-      // Assemble: scatter → grid as techstack approaches
       enterTrigger = ScrollTrigger.create({
         trigger: "#techstack",
         start: "top bottom",
         end: "top 20%",
         scrub: true,
-        onUpdate: (self) => {
-          progressRef.current = self.progress;
-        },
+        onUpdate: (self) => { progressRef.current = self.progress; },
       });
 
-      // Exit: fade out when scrolling into contact
       exitTrigger = ScrollTrigger.create({
         trigger: "#contact",
         start: "top bottom",
         end: "top 50%",
         scrub: true,
-        onUpdate: (self) => {
-          exitRef.current = self.progress;
-        },
+        onUpdate: (self) => { exitRef.current = self.progress; },
       });
 
       ScrollTrigger.refresh();
@@ -254,8 +271,7 @@ const TechStackCanvas = () => {
     >
       <Suspense fallback={null}>
         <Canvas
-          orthographic
-          camera={{ zoom: 50, position: [0, 0, 100] }}
+          camera={{ fov: 60, position: [0, 0, 20] }}
           gl={{ alpha: true, antialias: true }}
           style={{ background: "transparent" }}
         >
