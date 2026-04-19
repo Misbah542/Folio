@@ -10,7 +10,7 @@
   margin: auto;
   margin-bottom: 250px;
   padding: 120px 0;
-  background-color: var(--bg-dark);
+  background-color: transparent;
   color: var(--text-light);
 }
 

@@ -1,7 +1,7 @@
 .work-section {
   position: relative;
   z-index: 1;
-  background-color: var(--bg-dark);
+  background-color: transparent;
   padding: 120px 0;
   width: var(--cWidth);
   margin: auto;

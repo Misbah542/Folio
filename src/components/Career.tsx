@@ -2,7 +2,7 @@ import "./styles/Career.css";
 
 const Career = () => {
   return (
-    <div className="career-section section-container">
+    <div className="career-section section-container" id="career">
       <div className="career-container">
         <div className="career-watermark section-watermark">03</div>
         <span className="section-label">[ Experience ]</span>

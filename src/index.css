@@ -150,7 +150,7 @@ body {
   margin: auto;
   margin-top: 50px;
   margin-bottom: -100px;
-  background-color: var(--bg-dark);
+  background-color: transparent;
   color: var(--text-light);
 }
 
