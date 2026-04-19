@@ -89,8 +89,8 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  min-height: 70%;
-  padding: 30px 40px;
+  min-height: 55%;
+  padding: 24px 40px;
   border-color: var(--accentColor) !important;
   background: rgba(61, 220, 132, 0.05);
 }
@@ -103,8 +103,8 @@
 .what-noTouch:hover ~ .what-content,
 .what-box-in:hover .what-noTouch:not(:hover),
 .what-content.what-sibling {
-  min-height: 10%;
-  padding: 5px 40px;
+  min-height: 15%;
+  padding: 8px 40px;
 }
 
 .what-content h3 {
@@ -165,6 +165,21 @@
   animation-delay: 1s;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.what-content-in h4 {
+  margin-bottom: 4px;
+}
+
+.what-content-in p {
+  margin: 0;
+}
+
+.what-content-in .what-content-flex {
+  margin-top: 2px;
 }
 
 @keyframes whatFlicker {
