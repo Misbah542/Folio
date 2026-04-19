@@ -69,20 +69,6 @@
   100% { transform: translate(calc(100% - 2px), -50%) rotate(360deg); }
 }
 
-.landing-video,
-.landing-image {
-  position: absolute;
-  bottom: 0;
-  height: 95%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.landing-image img {
-  height: 100%;
-  z-index: 2;
-  position: relative;
-}
 
 .character-rim {
   position: absolute;
@@ -100,7 +86,6 @@
 }
 
 .character-model {
-  height: 80%;
   height: 80vh;
   position: absolute;
   max-width: 1920px;
@@ -137,11 +122,6 @@
   position: absolute;
 }
 
-.character-loaded .character-rim {
-  animation: backlight 3s forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
-}
 
 .character-model canvas {
   position: relative;
@@ -265,7 +245,6 @@ h2.landing-info-h2 {
 /* ── Responsive ── */
 @media screen and (min-width: 500px) {
   .landing-circle2 { display: block; }
-  .character-model { z-index: 0; }
 
   .landing-label { font-size: 11px; }
 
