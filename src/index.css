@@ -147,6 +147,7 @@ body {
   position: relative;
   overflow: clip;
   padding: 120px 0;
+  opacity: 0;
   background-color: transparent;
   color: var(--text-light);
 }

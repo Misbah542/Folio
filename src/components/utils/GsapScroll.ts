@@ -69,6 +69,7 @@ export function setCharTimeline(
         .fromTo(".character-model", { x: 0 }, { x: "-25%", duration: 1 }, 0)
         .to(".landing-container", { opacity: 0, duration: 0.4 }, 0)
         .to(".landing-container", { y: "40%", duration: 0.8 }, 0)
+        .fromTo(".about-section", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.4)
         .fromTo(".about-me", { y: "-50%" }, { y: "0%" }, 0);
 
       tl2
@@ -79,6 +80,7 @@ export function setCharTimeline(
         )
         .to(".about-section", { y: "30%", duration: 6 }, 0)
         .to(".about-section", { opacity: 0, delay: 3, duration: 2 }, 0)
+        .fromTo(".whatIDO", { opacity: 0 }, { opacity: 1, delay: 4, duration: 2 }, 0)
         .fromTo(
           ".character-model",
           { pointerEvents: "inherit" },
@@ -144,6 +146,12 @@ export function setAllTimeline() {
   });
   careerTimeline
     .fromTo(
+      ".career-section",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5 },
+      0
+    )
+    .fromTo(
       ".career-timeline",
       { maxHeight: "10%" },
       { maxHeight: "100%", duration: 0.5 },
@@ -188,4 +196,46 @@ export function setAllTimeline() {
       0
     );
   }
+
+  // Work section fade
+  gsap.fromTo(".work-section", 
+    { opacity: 0 },
+    {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".work-section",
+        start: "top 80%",
+        end: "top 20%",
+        scrub: true,
+      }
+    }
+  );
+
+  // TechStack section fade
+  gsap.fromTo(".techstack", 
+    { opacity: 0 },
+    {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".techstack",
+        start: "top 80%",
+        end: "top 20%",
+        scrub: true,
+      }
+    }
+  );
+
+  // Contact section fade
+  gsap.fromTo(".contact-section", 
+    { opacity: 0 },
+    {
+      opacity: 1,
+      scrollTrigger: {
+        trigger: ".contact-section",
+        start: "top 90%",
+        end: "top 40%",
+        scrub: true,
+      }
+    }
+  );
 }

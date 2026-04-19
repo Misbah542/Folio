@@ -1,8 +1,8 @@
 .about-section {
   position: relative; /* needed for absolute watermark */
-  opacity: 1;
-  height: auto;
+  opacity: 0; /* Hidden initially, GSAP will fade in */
   width: 100%;
+  padding: 120px 0;
   background-color: transparent;
   color: var(--text-light);
 }
@@ -78,9 +78,7 @@
   .about-section {
     width: 100%;
     max-width: 1920px;
-    height: var(--vh);
     padding: 0;
-    opacity: 1;
   }
 
   .about-container {

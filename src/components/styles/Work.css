@@ -1,6 +1,7 @@
 .work-section {
   position: relative;
   z-index: 1;
+  opacity: 0;
   background-color: transparent;
   padding: 120px 0;
   width: 100%;
