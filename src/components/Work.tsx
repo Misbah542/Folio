@@ -80,9 +80,9 @@ const Work = () => {
       <div className="section-container">
         <div className="work-watermark section-watermark">04</div>
         <div className="work-container">
-          <span className="section-label">[ Selected Work ]</span>
+          <span className="section-label">[ Projects ]</span>
           <h2>
-            My <span>Work</span>
+            My <span>Projects</span>
           </h2>
 
           <div className="carousel-wrapper">
