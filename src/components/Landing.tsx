@@ -7,15 +7,15 @@ const Landing = ({ children }: PropsWithChildren) => {
       <div className="landing-section" id="landingDiv">
         <div className="landing-container">
           <div className="landing-intro">
-            <h2>Hi there, I'm</h2>
+            <span className="landing-label">[ Android Developer ]</span>
             <h1 className="landing-name">
               MISBAH
               <br />
               <span>UL HAQUE</span>
             </h1>
+            <hr className="landing-rule" />
           </div>
           <div className="landing-info">
-            <h3>Android Developer</h3>
             <h2 className="landing-info-h2">
               <div className="landing-h2-1">Building</div>
               <div className="landing-h2-2">Modern</div>
