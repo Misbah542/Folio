@@ -11,14 +11,24 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 9999;
-  background: rgba(13, 13, 13, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   transition: background 0.3s;
 }
 
 .header.nav-on-light {
-  background: rgba(247, 247, 245, 0.75);
+  background: transparent !important;
+}
+
+/* Force text colors to light regardless of section */
+.header .navbar-title,
+.header ul li,
+.header .navbar-connect,
+.header.nav-on-light .navbar-title,
+.header.nav-on-light ul li,
+.header.nav-on-light .navbar-connect {
+  color: var(--text-light) !important;
 }
 
 /* Default: dark section */
@@ -68,12 +78,6 @@
   transition: color 0.3s;
 }
 
-/* Light section override */
-.header.nav-on-light .navbar-title,
-.header.nav-on-light ul li,
-.header.nav-on-light .navbar-connect {
-  color: var(--text-dark);
-}
 
 @media only screen and (min-width: 500px) {
   .header { padding: 20px 0; }
