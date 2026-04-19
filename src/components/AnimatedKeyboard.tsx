@@ -29,6 +29,8 @@ export default function AnimatedKeyboard() {
   useEffect(() => {
     if (!splineApp) return;
 
+    const triggers: ScrollTrigger[] = [];
+
     const createSectionTimeline = (
       triggerId: string,
       targetSection: Section,
@@ -39,7 +41,7 @@ export default function AnimatedKeyboard() {
       const kbd = splineApp.findObjectByName("keyboard");
       if (!kbd) return;
 
-      gsap.timeline({
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: triggerId,
           start,
@@ -75,6 +77,10 @@ export default function AnimatedKeyboard() {
           },
         },
       });
+
+      if (tl.scrollTrigger) {
+        triggers.push(tl.scrollTrigger);
+      }
     };
 
     const kbd = splineApp.findObjectByName("keyboard");
@@ -99,7 +105,7 @@ export default function AnimatedKeyboard() {
     }
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      triggers.forEach(t => t.kill());
     };
   }, [splineApp, isMobile]);
 
