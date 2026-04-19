@@ -41,7 +41,7 @@ const ICON_RADIUS = ICON_SIZE * 0.55;
 const MAX_SPEED = 29.4;
 const WALL_RESTITUTION = 0.8;    // bouncy walls (30% softer)
 const ICON_RESTITUTION = 0.88;   // icon-icon collisions (30% softer)
-const SCATTER_OPACITY = 0.1;       // icons invisible while scattered
+const SCATTER_OPACITY = 0.01;       // icons invisible while scattered
 
 interface IconState {
   pos: THREE.Vector3;

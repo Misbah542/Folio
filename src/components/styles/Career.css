@@ -83,6 +83,7 @@
   color: var(--accentColorSecondary);
   text-transform: uppercase;
   line-height: 1.4;
+  white-space: nowrap;
 }
 
 /* Role */
