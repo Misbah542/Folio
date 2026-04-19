@@ -93,8 +93,8 @@ export function setCharTimeline(
         .to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0)
         .fromTo(
           ".what-box-in",
-          { display: "none" },
-          { display: "flex", duration: 0.1, delay: 6 },
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 1, delay: 4.5 },
           0
         )
         .fromTo(
@@ -129,7 +129,7 @@ export function setCharTimeline(
           end: "bottom top",
         },
       });
-      tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
+      tM2.fromTo(".what-box-in", { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, 0);
     }
   }
 }

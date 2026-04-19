@@ -81,6 +81,11 @@
     padding: 0;
   }
 
+  .about-watermark {
+    left: auto;
+    right: 25%;
+  }
+
   .about-container {
     display: flex;
     align-items: center;
