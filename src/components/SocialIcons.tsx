@@ -1,13 +1,17 @@
 import {
   FaGithub,
-  FaInstagram,
   FaLinkedinIn,
-  FaYoutube,
+  FaPhone,
 } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SocialIcons = () => {
   useEffect(() => {
@@ -54,6 +58,64 @@ const SocialIcons = () => {
         elem.removeEventListener("mousemove", onMouseMove);
       };
     });
+
+    // Animate social icons one-by-one to bottom bar at contact
+    const socialIcons = document.querySelector(".social-icons") as HTMLElement;
+    const resumeBtn = document.querySelector(".resume-button") as HTMLElement;
+    const iconSpans = socialIcons?.querySelectorAll("span");
+
+    if (socialIcons && iconSpans?.length) {
+      ScrollTrigger.create({
+        trigger: "#contact",
+        start: "top 50%",
+        onEnter: () => {
+          // Stagger buttons out one-by-one
+          gsap.to(iconSpans, {
+            y: 40,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.add("bottom-bar");
+              // Stagger buttons back in at bottom bar
+              gsap.set(iconSpans, { y: 30, opacity: 0 });
+              gsap.to(iconSpans, {
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.35,
+                ease: "back.out(1.4)",
+              });
+            },
+          });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 0, pointerEvents: "none", duration: 0.3 });
+        },
+        onLeaveBack: () => {
+          // Stagger buttons out of bottom bar
+          gsap.to(iconSpans, {
+            y: 30,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.remove("bottom-bar");
+              // Stagger buttons back in at sidebar
+              gsap.set(iconSpans, { y: -30, opacity: 0 });
+              gsap.to(iconSpans, {
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.35,
+                ease: "back.out(1.4)",
+              });
+            },
+          });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 1, pointerEvents: "auto", duration: 0.3 });
+        },
+      });
+    }
   }, []);
 
   return (
@@ -79,20 +141,18 @@ const SocialIcons = () => {
         </span>
         <span>
           <a
-            href="#"
-            target="_blank"
+            href="tel:+918376069521"
             rel="noreferrer"
           >
-            <FaYoutube />
+            <FaPhone />
           </a>
         </span>
         <span>
           <a
-            href="#"
-            target="_blank"
+            href="mailto:misbahul8@gmail.com"
             rel="noreferrer"
           >
-            <FaInstagram />
+            <MdEmail />
           </a>
         </span>
       </div>
