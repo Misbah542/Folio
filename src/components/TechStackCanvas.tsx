@@ -87,36 +87,53 @@ function FloatingIcons({
 
   const tempVec = useMemo(() => new THREE.Vector3(), []);
 
+  // Offset grid down so it assembles below the techstack heading
+  const gridYOffset = -viewport.height * 0.15;
+
   useFrame(({ clock }) => {
     const p = progressRef.current;
     const exit = exitRef.current;
     const t = clock.getElapsedTime();
-    const baseT = easeInOutCubic(p);
     const total = TECH_SKILLS.length;
+
+    // Phase split: 0→0.4 = scattered, 0.4→1.0 = assemble
+    const assembleRaw = Math.max(0, (p - 0.4) / 0.6);
+    const assembleT = easeInOutCubic(assembleRaw);
 
     // Responsive scale
     const baseScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.85 : 0.7;
     // Responsive drift
     const driftScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.6 : 0.3;
 
-    // Exit: fade out + scatter downward when entering contact
+    // Exit: fade out when entering contact
     const exitEased = easeInOutCubic(exit);
 
     for (let i = 0; i < total; i++) {
       const sprite = spritesRef.current[i];
       if (!sprite) continue;
 
-      // Base interpolation: scattered → grid
-      tempVec.lerpVectors(scattered[i], grid[i], baseT);
+      // Grid target shifted below heading
+      const gx = grid[i].x;
+      const gy = grid[i].y + gridYOffset;
 
-      // Spiral offset: bell-curve, peaks mid-transition
-      const spiralStrength = Math.sin(p * Math.PI) * 3;
-      const spiralAngle = p * Math.PI * 3 + (i / total) * Math.PI * 2;
-      tempVec.x += Math.cos(spiralAngle) * spiralStrength;
-      tempVec.y += Math.sin(spiralAngle) * spiralStrength;
+      // Base interpolation: scattered → grid (only during assembly phase)
+      tempVec.set(
+        THREE.MathUtils.lerp(scattered[i].x, gx, assembleT),
+        THREE.MathUtils.lerp(scattered[i].y, gy, assembleT),
+        0
+      );
 
-      // Drift: fades with progress, scaled by viewport
-      const drift = (1 - p) * 0.4 * driftScale;
+      // Spiral only during assembly phase, gentler
+      if (assembleRaw > 0) {
+        const spiralStrength = Math.sin(assembleRaw * Math.PI) * 2;
+        const spiralAngle =
+          assembleRaw * Math.PI * 2 + (i / total) * Math.PI * 2;
+        tempVec.x += Math.cos(spiralAngle) * spiralStrength;
+        tempVec.y += Math.sin(spiralAngle) * spiralStrength;
+      }
+
+      // Drift: always present while scattered, fades during assembly
+      const drift = (1 - assembleT) * 0.4 * driftScale;
       tempVec.x += Math.sin(t * 0.5 + i * 1.7) * drift;
       tempVec.y += Math.cos(t * 0.3 + i * 2.3) * drift;
 
@@ -126,13 +143,14 @@ function FloatingIcons({
 
       sprite.position.copy(tempVec);
 
-      // Opacity: 0.15 → 1.0 during enter, then 1.0 → 0.0 during exit
-      const enterOpacity = THREE.MathUtils.lerp(0.15, 1.0, p);
+      // Opacity: gradual increase 0.15→0.5 during scatter, then 0.5→1.0 during assembly
+      const scatterOpacity = THREE.MathUtils.lerp(0.15, 0.5, Math.min(p / 0.4, 1));
+      const enterOpacity = THREE.MathUtils.lerp(scatterOpacity, 1.0, assembleT);
       const mat = sprite.material as THREE.SpriteMaterial;
       mat.opacity = enterOpacity * (1 - exitEased);
 
       // Scale
-      const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, p);
+      const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, assembleT);
       sprite.scale.set(s, s, s);
     }
   });
