@@ -59,45 +59,62 @@ const SocialIcons = () => {
       };
     });
 
-    // Slide social icons from vertical sidebar → horizontal bottom bar at contact
+    // Animate social icons one-by-one from vertical sidebar → horizontal bottom bar at contact
     const socialIcons = document.querySelector(".social-icons") as HTMLElement;
     const resumeBtn = document.querySelector(".resume-button") as HTMLElement;
+    const iconSpans = socialIcons?.querySelectorAll("span");
 
-    if (socialIcons) {
+    if (socialIcons && iconSpans?.length) {
       ScrollTrigger.create({
         trigger: "#contact",
         start: "top 50%",
         onEnter: () => {
-          // Slide column down, switch layout, slide row up
-          gsap.to(socialIcons, {
-            y: 30,
+          // Stagger each button down and out
+          gsap.to(iconSpans, {
+            y: 40,
             opacity: 0,
-            duration: 0.3,
+            stagger: 0.08,
+            duration: 0.25,
             ease: "power2.in",
             onComplete: () => {
               socialIcons.classList.add("bottom-bar");
+              // Reset positions then stagger each button back in
               gsap.fromTo(
-                socialIcons,
+                iconSpans,
                 { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                {
+                  y: 0,
+                  opacity: 1,
+                  stagger: 0.1,
+                  duration: 0.35,
+                  ease: "back.out(1.4)",
+                }
               );
             },
           });
           if (resumeBtn) gsap.to(resumeBtn, { opacity: 0, pointerEvents: "none", duration: 0.3 });
         },
         onLeaveBack: () => {
-          // Slide row down, switch layout back, slide column up
-          gsap.to(socialIcons, {
+          // Stagger each button out of bottom bar
+          gsap.to(iconSpans, {
             y: 30,
             opacity: 0,
-            duration: 0.3,
+            stagger: 0.08,
+            duration: 0.25,
             ease: "power2.in",
             onComplete: () => {
               socialIcons.classList.remove("bottom-bar");
+              // Stagger each button back into vertical sidebar
               gsap.fromTo(
-                socialIcons,
-                { y: 30, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+                iconSpans,
+                { y: -30, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  stagger: 0.1,
+                  duration: 0.35,
+                  ease: "back.out(1.4)",
+                }
               );
             },
           });
