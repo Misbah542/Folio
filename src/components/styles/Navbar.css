@@ -3,7 +3,7 @@
   max-width: var(--cMaxWidth);
   width: var(--cWidth);
   justify-content: space-between;
-  padding: 20px 0px;
+  padding: 20px 0;
   margin-bottom: -100px;
   box-sizing: border-box;
   position: fixed;
@@ -11,7 +11,12 @@
   transform: translateX(-50%);
   top: 0;
   z-index: 9999;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.3s;
 }
+
+/* Default: dark section — no tinted bg needed, blur is enough */
 .header ul {
   font-size: 12px;
   display: flex;
@@ -23,13 +28,19 @@
   row-gap: 8px;
   align-items: end;
 }
+
 .header ul li {
-  margin-left: 0px;
-  letter-spacing: 1px;
-  color: var(--textColor);
+  margin-left: 0;
+  letter-spacing: 2px;
+  color: var(--text-light);
   font-weight: 600;
   cursor: pointer;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  transition: color 0.2s;
 }
+
 .navbar-connect {
   position: absolute;
   display: none;
@@ -39,54 +50,56 @@
   font-size: 15px;
   letter-spacing: 1px;
   font-weight: 500;
-  color: var(--textColor);
+  color: var(--text-light);
+  transition: color 0.3s;
 }
+
 .navbar-title {
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
-  color: var(--textColor);
+  color: var(--text-light);
+  font-family: "Bricolage Grotesque", sans-serif;
+  transition: color 0.3s;
 }
+
+/* Light section override */
+.header.nav-on-light .navbar-title,
+.header.nav-on-light ul li,
+.header.nav-on-light .navbar-connect {
+  color: var(--text-dark);
+}
+
 @media only screen and (min-width: 500px) {
-  .header {
-    padding: 20px 0px;
-  }
+  .header { padding: 20px 0; }
+
   .header ul {
     flex-direction: row;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
   }
+
   .header ul li {
-    color: var(--textColor);
     padding: 8px 20px;
     border-radius: 100px;
-    transition: 0.3s;
+    transition: background 0.2s, color 0.2s;
   }
+
   .header ul li:hover {
     background-color: var(--accentColor);
-    color: white;
+    color: var(--bg-dark) !important;
   }
-  .navbar-title {
-    font-size: 16px;
-  }
+
+  .navbar-title { font-size: 16px; }
 }
+
 @media only screen and (min-width: 900px) {
-  .navbar-connect {
-    display: block;
-  }
+  .navbar-connect { display: block; }
 }
+
 @media only screen and (min-width: 1200px) {
-  .header {
-    padding: 35px 0px;
-  }
-  .header ul {
-    column-gap: 80px;
-    font-size: 16px;
-  }
-  .navbar-connect {
-    font-size: 16px;
-  }
-  .navbar-title {
-    font-size: 18px;
-  }
+  .header { padding: 35px 0; }
+  .header ul { column-gap: 80px; font-size: 13px; }
+  .navbar-connect { font-size: 16px; }
+  .navbar-title { font-size: 18px; }
 }

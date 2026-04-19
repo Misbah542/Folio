@@ -37,6 +37,24 @@ const Navbar = () => {
         }
       });
     });
+
+    const lightSections = ['#about', '.career-section', '.techstack'];
+    lightSections.forEach((selector) => {
+      ScrollTrigger.create({
+        trigger: selector,
+        start: 'top 80px',
+        end: 'bottom 80px',
+        onEnter: () =>
+          document.querySelector('.header')?.classList.add('nav-on-light'),
+        onLeave: () =>
+          document.querySelector('.header')?.classList.remove('nav-on-light'),
+        onEnterBack: () =>
+          document.querySelector('.header')?.classList.add('nav-on-light'),
+        onLeaveBack: () =>
+          document.querySelector('.header')?.classList.remove('nav-on-light'),
+      });
+    });
+
     window.addEventListener("resize", () => {
       ScrollSmoother.refresh(true);
     });
