@@ -62,14 +62,15 @@
   display: flex;
   width: 450px;
   margin-left: auto;
+  gap: 0;
 }
 
 /* Cards */
 .what-content {
   width: 100%;
-  height: 25%;
+  flex: 0 0 auto;
   min-height: 25%;
-  transition: min-height 0.5s, padding 0.5s, border-color 0.3s, background 0.3s;
+  transition: min-height 0.5s, flex-basis 0.5s, padding 0.5s, border-color 0.3s, background 0.3s;
   position: relative;
   padding: 20px 40px;
   box-sizing: border-box;
@@ -89,7 +90,8 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  min-height: 55%;
+  min-height: fit-content;
+  flex: 1 1 auto;
   padding: 24px 40px;
   border-color: var(--accentColor) !important;
   background: rgba(61, 220, 132, 0.05);
