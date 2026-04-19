@@ -45,14 +45,22 @@ const Navbar = () => {
         trigger: selector,
         start: 'top 80px',
         end: 'bottom 80px',
-        onEnter: () =>
-          document.querySelector('.header')?.classList.add('nav-on-light'),
-        onLeave: () =>
-          document.querySelector('.header')?.classList.remove('nav-on-light'),
-        onEnterBack: () =>
-          document.querySelector('.header')?.classList.add('nav-on-light'),
-        onLeaveBack: () =>
-          document.querySelector('.header')?.classList.remove('nav-on-light'),
+        onEnter: () => {
+          document.querySelector('.header')?.classList.add('nav-on-light');
+          document.querySelector('.icons-section')?.classList.add('nav-on-light');
+        },
+        onLeave: () => {
+          document.querySelector('.header')?.classList.remove('nav-on-light');
+          document.querySelector('.icons-section')?.classList.remove('nav-on-light');
+        },
+        onEnterBack: () => {
+          document.querySelector('.header')?.classList.add('nav-on-light');
+          document.querySelector('.icons-section')?.classList.add('nav-on-light');
+        },
+        onLeaveBack: () => {
+          document.querySelector('.header')?.classList.remove('nav-on-light');
+          document.querySelector('.icons-section')?.classList.remove('nav-on-light');
+        },
       });
       navTriggers.push(st);
     });
