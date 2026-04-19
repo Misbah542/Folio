@@ -70,7 +70,10 @@
   width: 100%;
   flex: 0 0 25%;
   min-height: 25%;
-  transition: flex-basis 0.5s, min-height 0.5s, padding 0.5s, border-color 0.3s, background 0.3s;
+  transition: flex-basis 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    min-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s, background 0.3s;
   position: relative;
   padding: 20px 40px;
   box-sizing: border-box;
@@ -90,8 +93,8 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  min-height: fit-content;
-  flex: 1 1 auto;
+  flex: 0 0 60%;
+  min-height: 60%;
   padding: 24px 40px;
   border-color: var(--accentColor) !important;
   background: rgba(61, 220, 132, 0.05);
@@ -105,8 +108,8 @@
 .what-noTouch:hover ~ .what-content,
 .what-box-in:hover .what-noTouch:not(:hover),
 .what-content.what-sibling {
-  flex: 0 0 15%;
-  min-height: 15%;
+  flex: 0 0 13.33%;
+  min-height: 13.33%;
   padding: 8px 40px;
 }
 
