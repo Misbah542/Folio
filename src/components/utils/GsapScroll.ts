@@ -197,36 +197,39 @@ export function setAllTimeline() {
     );
   }
 
-  // Work section fade
-  gsap.fromTo(".work-section", 
-    { opacity: 0 },
-    {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: ".work-section",
-        start: "top 80%",
-        end: "top 20%",
-        scrub: true,
-      }
-    }
-  );
+  // Work section — clean reveal (no scrub: animates IN, not continuously)
+  const workTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".work-section",
+      start: "top 80%",
+      end: "bottom 20%",
+      toggleActions: "play none none reverse",
+    },
+  });
+  workTl
+    .fromTo(
+      ".work-section",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.6, ease: "power2.out" }
+    )
+    .fromTo(
+      ".work-section .work-box, .work-section [class*='work-item']",
+      { y: 60, opacity: 0, scale: 0.96 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.12,
+      },
+      "-=0.3"
+    );
 
-  // TechStack section fade
-  gsap.fromTo(".techstack", 
-    { opacity: 0 },
-    {
-      opacity: 1,
-      scrollTrigger: {
-        trigger: ".techstack",
-        start: "top 80%",
-        end: "top 20%",
-        scrub: true,
-      }
-    }
-  );
-
-  // Contact section fade
-  gsap.fromTo(".contact-section", 
+  // TechStack handles its own reveal via gsap.context() inside the
+  // component. Contact keeps a simple scroll-linked fade here.
+  gsap.fromTo(
+    ".contact-section",
     { opacity: 0 },
     {
       opacity: 1,
@@ -235,7 +238,7 @@ export function setAllTimeline() {
         start: "top 90%",
         end: "top 40%",
         scrub: true,
-      }
+      },
     }
   );
 }
