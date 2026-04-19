@@ -61,18 +61,8 @@
   text-transform: uppercase;
 }
 
-.about-watermark {
-  left: 15px;
-  right: auto;
-}
-
 @media only screen and (min-width: 600px) {
   .about-section { justify-content: center; }
-
-  .about-watermark {
-    left: auto;
-    right: 10%;
-  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -89,11 +79,6 @@
     width: 100%;
     max-width: 1920px;
     padding: 0;
-  }
-
-  .about-watermark {
-    left: auto;
-    right: 25%;
   }
 
   .about-container {

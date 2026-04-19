@@ -25,10 +25,8 @@ function easeInOutCubic(t: number): number {
 
 function computeGridPositions(
   count: number,
-  viewportWidth: number,
-  _viewportHeight: number
+  viewportWidth: number
 ): THREE.Vector3[] {
-  // World-unit breakpoints at zoom 50: 15u ≈ 750px (tablet), 10u ≈ 500px (mobile)
   const cols = viewportWidth > 15 ? 5 : viewportWidth > 10 ? 4 : 3;
   const spacing = viewportWidth > 15 ? 2.5 : viewportWidth > 10 ? 2.0 : 1.5;
   const rows = Math.ceil(count / cols);
@@ -46,13 +44,18 @@ function computeGridPositions(
   });
 }
 
-function computeScatteredPositions(count: number): THREE.Vector3[] {
+// Scattered positions relative to viewport so they fill the screen
+function computeScatteredPositions(
+  count: number,
+  vw: number,
+  vh: number
+): THREE.Vector3[] {
   return Array.from({ length: count }, (_, i) => {
     const rng = seededRandom(i);
     return new THREE.Vector3(
-      (rng() - 0.5) * 20,
-      (rng() - 0.5) * 12,
-      (rng() - 0.5) * 2
+      (rng() - 0.5) * vw * 0.85,
+      (rng() - 0.5) * vh * 0.85,
+      0
     );
   });
 }
@@ -63,43 +66,41 @@ const iconUrls = TECH_SKILLS.map((s) => s.icon);
 
 function FloatingIcons({
   progressRef,
+  exitRef,
 }: {
-  progressRef: React.RefObject<number>;
+  progressRef: React.MutableRefObject<number>;
+  exitRef: React.MutableRefObject<number>;
 }) {
   const textures = useSvgTextures(iconUrls);
   const { viewport } = useThree();
   const spritesRef = useRef<(THREE.Sprite | null)[]>([]);
 
   const scattered = useMemo(
-    () => computeScatteredPositions(TECH_SKILLS.length),
-    []
+    () => computeScatteredPositions(TECH_SKILLS.length, viewport.width, viewport.height),
+    [viewport.width, viewport.height]
   );
 
   const grid = useMemo(
-    () =>
-      computeGridPositions(
-        TECH_SKILLS.length,
-        viewport.width,
-        viewport.height
-      ),
-    [viewport.width, viewport.height]
+    () => computeGridPositions(TECH_SKILLS.length, viewport.width),
+    [viewport.width]
   );
 
   const tempVec = useMemo(() => new THREE.Vector3(), []);
 
   useFrame(({ clock }) => {
-    const p = progressRef.current ?? 0;
+    const p = progressRef.current;
+    const exit = exitRef.current;
     const t = clock.getElapsedTime();
     const baseT = easeInOutCubic(p);
     const total = TECH_SKILLS.length;
 
-    // Responsive scale: 1.0 desktop, 0.85 tablet, 0.7 mobile
-    const baseScale =
-      viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.85 : 0.7;
+    // Responsive scale
+    const baseScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.85 : 0.7;
+    // Responsive drift
+    const driftScale = viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.6 : 0.3;
 
-    // Responsive drift: full on desktop, reduced on smaller screens
-    const driftScale =
-      viewport.width > 15 ? 1.0 : viewport.width > 10 ? 0.6 : 0.3;
+    // Exit: fade out + scatter downward when entering contact
+    const exitEased = easeInOutCubic(exit);
 
     for (let i = 0; i < total; i++) {
       const sprite = spritesRef.current[i];
@@ -108,25 +109,29 @@ function FloatingIcons({
       // Base interpolation: scattered → grid
       tempVec.lerpVectors(scattered[i], grid[i], baseT);
 
-      // Spiral offset: bell-curve strength, peaks mid-transition
+      // Spiral offset: bell-curve, peaks mid-transition
       const spiralStrength = Math.sin(p * Math.PI) * 3;
-      const spiralAngle =
-        p * Math.PI * 3 + (i / total) * Math.PI * 2;
+      const spiralAngle = p * Math.PI * 3 + (i / total) * Math.PI * 2;
       tempVec.x += Math.cos(spiralAngle) * spiralStrength;
       tempVec.y += Math.sin(spiralAngle) * spiralStrength;
 
-      // Drift: fades out as progress increases, scaled by viewport
+      // Drift: fades with progress, scaled by viewport
       const drift = (1 - p) * 0.4 * driftScale;
       tempVec.x += Math.sin(t * 0.5 + i * 1.7) * drift;
       tempVec.y += Math.cos(t * 0.3 + i * 2.3) * drift;
 
+      // Exit: push icons down and apart
+      tempVec.y -= exitEased * (viewport.height * 0.6 + i * 0.3);
+      tempVec.x += exitEased * ((i % 2 === 0 ? 1 : -1) * i * 0.2);
+
       sprite.position.copy(tempVec);
 
-      // Opacity
+      // Opacity: 0.15 → 1.0 during enter, then 1.0 → 0.0 during exit
+      const enterOpacity = THREE.MathUtils.lerp(0.15, 1.0, p);
       const mat = sprite.material as THREE.SpriteMaterial;
-      mat.opacity = THREE.MathUtils.lerp(0.15, 1.0, p);
+      mat.opacity = enterOpacity * (1 - exitEased);
 
-      // Scale: responsive base size
+      // Scale
       const s = THREE.MathUtils.lerp(0.6 * baseScale, baseScale, p);
       sprite.scale.set(s, s, s);
     }
@@ -160,6 +165,7 @@ function FloatingIcons({
 
 const TechStackCanvas = () => {
   const progressRef = useRef(0);
+  const exitRef = useRef(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -169,9 +175,13 @@ const TechStackCanvas = () => {
   useEffect(() => {
     if (!mounted) return;
 
-    // Small delay to ensure DOM is ready after hydration
+    let enterTrigger: ScrollTrigger | null = null;
+    let exitTrigger: ScrollTrigger | null = null;
+
+    // Delay to ensure ScrollSmoother is initialized (created in Navbar)
     const timer = setTimeout(() => {
-      const trigger = ScrollTrigger.create({
+      // Assemble: scatter → grid as techstack approaches
+      enterTrigger = ScrollTrigger.create({
         trigger: "#techstack",
         start: "top bottom",
         end: "top 20%",
@@ -181,10 +191,25 @@ const TechStackCanvas = () => {
         },
       });
 
-      return () => trigger.kill();
-    }, 100);
+      // Exit: fade out when scrolling into contact
+      exitTrigger = ScrollTrigger.create({
+        trigger: "#contact",
+        start: "top bottom",
+        end: "top 50%",
+        scrub: true,
+        onUpdate: (self) => {
+          exitRef.current = self.progress;
+        },
+      });
 
-    return () => clearTimeout(timer);
+      ScrollTrigger.refresh();
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      enterTrigger?.kill();
+      exitTrigger?.kill();
+    };
   }, [mounted]);
 
   return (
@@ -206,7 +231,7 @@ const TechStackCanvas = () => {
           gl={{ alpha: true, antialias: true }}
           style={{ background: "transparent" }}
         >
-          <FloatingIcons progressRef={progressRef} />
+          <FloatingIcons progressRef={progressRef} exitRef={exitRef} />
           <AdaptiveDpr pixelated />
         </Canvas>
       </Suspense>
