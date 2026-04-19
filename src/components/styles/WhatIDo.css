@@ -93,8 +93,8 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  flex: 0 0 60%;
-  min-height: 60%;
+  flex: 0 0 70%;
+  min-height: 70%;
   padding: 24px 40px;
   border-color: var(--accentColor) !important;
   background: rgba(61, 220, 132, 0.05);
@@ -108,8 +108,8 @@
 .what-noTouch:hover ~ .what-content,
 .what-box-in:hover .what-noTouch:not(:hover),
 .what-content.what-sibling {
-  flex: 0 0 13.33%;
-  min-height: 13.33%;
+  flex: 0 0 10%;
+  min-height: 10%;
   padding: 8px 40px;
 }
 
