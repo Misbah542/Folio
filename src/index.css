@@ -144,6 +144,7 @@ body {
 /* ── TechStack ── */
 .techstack {
   width: 100%;
+  min-height: 80vh;
   position: relative;
   overflow: clip;
   padding: 120px 0;

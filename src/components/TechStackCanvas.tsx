@@ -26,7 +26,7 @@ function easeInOutCubic(t: number): number {
 function computeGridPositions(
   count: number,
   viewportWidth: number,
-  viewportHeight: number
+  _viewportHeight: number
 ): THREE.Vector3[] {
   // World-unit breakpoints at zoom 50: 15u ≈ 750px (tablet), 10u ≈ 500px (mobile)
   const cols = viewportWidth > 15 ? 5 : viewportWidth > 10 ? 4 : 3;
