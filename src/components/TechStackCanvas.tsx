@@ -41,7 +41,7 @@ const ICON_RADIUS = ICON_SIZE * 0.55;
 const MAX_SPEED = 29.4;
 const WALL_RESTITUTION = 0.8;    // bouncy walls (30% softer)
 const ICON_RESTITUTION = 0.88;   // icon-icon collisions (30% softer)
-const SCATTER_OPACITY = 0;       // icons invisible while scattered
+const SCATTER_OPACITY = 0.1;       // icons invisible while scattered
 
 interface IconState {
   pos: THREE.Vector3;
@@ -151,9 +151,26 @@ function IconField({
     () => (ready ? computeGrid(count, viewport.width) : []),
     [count, viewport.width, ready]
   );
-  // Place the top row of the grid just below the centerline so the whole
-  // grid sits visually below the section heading.
-  const gridYOffset = -viewport.height * 0.12;
+  // Track the heading's on-screen position so the assembled grid
+  // stays anchored just below it regardless of how far we've scrolled.
+  const headingBottomRef = useRef<number>(0);
+  useEffect(() => {
+    const update = () => {
+      const h = document.querySelector<HTMLElement>("#techstack h2");
+      if (!h) return;
+      const r = h.getBoundingClientRect();
+      headingBottomRef.current = r.bottom;
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    const iv = setInterval(update, 100);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      clearInterval(iv);
+    };
+  }, []);
 
   // bounds (ambient playground)
   const bounds = useMemo(
@@ -343,6 +360,13 @@ function IconField({
       const assem = assembles[i];
 
       const gx = grid[i].x;
+      // Anchor the grid just under the #techstack heading. Convert the
+      // heading's current screen y to world coords so the grid tracks it
+      // while the page scrolls.
+      const headingBottomPx = headingBottomRef.current || size.height * 0.3;
+      const gridYOffset =
+        ((size.height / 2 - headingBottomPx - 40) * viewport.height) /
+        size.height;
       const gy = grid[i].y + gridYOffset;
 
       // subtle breathing bob on assembled icons so they don't freeze
