@@ -59,51 +59,62 @@ const SocialIcons = () => {
       };
     });
 
-    // Animate social icons one-by-one with scroll from sidebar → bottom bar
+    // Animate social icons one-by-one to bottom bar at contact
     const socialIcons = document.querySelector(".social-icons") as HTMLElement;
     const resumeBtn = document.querySelector(".resume-button") as HTMLElement;
     const iconSpans = socialIcons?.querySelectorAll("span");
 
     if (socialIcons && iconSpans?.length) {
-      const spans = Array.from(iconSpans);
-
-      // Toggle layout class at midpoint
       ScrollTrigger.create({
         trigger: "#contact",
-        start: "top 35%",
-        onEnter: () => socialIcons.classList.add("bottom-bar"),
-        onLeaveBack: () => socialIcons.classList.remove("bottom-bar"),
-      });
-
-      // Scrub timeline — each button animates individually
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: "#contact",
-          start: "top 60%",
-          end: "top 10%",
-          scrub: 0.5,
+        start: "top 50%",
+        onEnter: () => {
+          // Stagger buttons out one-by-one
+          gsap.to(iconSpans, {
+            y: 40,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.add("bottom-bar");
+              // Stagger buttons back in at bottom bar
+              gsap.set(iconSpans, { y: 30, opacity: 0 });
+              gsap.to(iconSpans, {
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.35,
+                ease: "back.out(1.4)",
+              });
+            },
+          });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 0, pointerEvents: "none", duration: 0.3 });
+        },
+        onLeaveBack: () => {
+          // Stagger buttons out of bottom bar
+          gsap.to(iconSpans, {
+            y: 30,
+            opacity: 0,
+            stagger: 0.08,
+            duration: 0.25,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.remove("bottom-bar");
+              // Stagger buttons back in at sidebar
+              gsap.set(iconSpans, { y: -30, opacity: 0 });
+              gsap.to(iconSpans, {
+                y: 0,
+                opacity: 1,
+                stagger: 0.1,
+                duration: 0.35,
+                ease: "back.out(1.4)",
+              });
+            },
+          });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 1, pointerEvents: "auto", duration: 0.3 });
         },
       });
-
-      // Phase 1: each button fades out from sidebar one-by-one
-      spans.forEach((span, i) => {
-        tl.to(span, { y: 40, opacity: 0, duration: 0.1, ease: "power2.in" }, i * 0.08);
-      });
-
-      // Phase 2: each button fades in at bottom bar one-by-one
-      spans.forEach((span, i) => {
-        tl.fromTo(
-          span,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.12, ease: "back.out(1.4)" },
-          0.5 + i * 0.08
-        );
-      });
-
-      // Fade resume button out
-      if (resumeBtn) {
-        tl.to(resumeBtn, { opacity: 0, pointerEvents: "none", duration: 0.2 }, 0);
-      }
     }
   }, []);
 

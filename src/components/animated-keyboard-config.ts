@@ -1,4 +1,4 @@
-export type KeyboardSection = "hidden" | "career" | "work" | "techstack";
+export type KeyboardSection = "landing" | "about" | "whatido" | "career" | "work" | "techstack" | "contact";
 
 type TransformState = {
   scale: { x: number; y: number; z: number };
@@ -11,69 +11,90 @@ type SectionStates = Record<
   { desktop: TransformState; mobile: TransformState }
 >;
 
+// Matches reference repo (3d-portfolio-main) states mapped to our sections
 export const KEYBOARD_STATES: SectionStates = {
-  hidden: {
-    desktop: {
-      scale: { x: 0.001, y: 0.001, z: 0.001 },
-      position: { x: 0, y: -500, z: 0 },
-      rotation: { x: 0, y: 0, z: 0 },
-    },
-    mobile: {
-      scale: { x: 0.001, y: 0.001, z: 0.001 },
-      position: { x: 0, y: -500, z: 0 },
-      rotation: { x: 0, y: 0, z: 0 },
-    },
-  },
-  career: {
+  landing: {
     desktop: {
       scale: { x: 0.20, y: 0.20, z: 0.20 },
       position: { x: 225, y: -100, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
     },
     mobile: {
-      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      scale: { x: 0.30, y: 0.30, z: 0.30 },
       position: { x: 0, y: -200, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
+    },
+  },
+  about: {
+    desktop: {
+      scale: { x: 0.4, y: 0.4, z: 0.4 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: 0, y: Math.PI / 12, z: 0 },
+    },
+    mobile: {
+      scale: { x: 0.4, y: 0.4, z: 0.4 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: 0, y: Math.PI / 6, z: 0 },
+    },
+  },
+  whatido: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: Math.PI / 12, y: -Math.PI / 4, z: 0 },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: Math.PI / 6, y: -Math.PI / 6, z: 0 },
+    },
+  },
+  career: {
+    desktop: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: 0, y: Math.PI / 12, z: 0 },
+    },
+    mobile: {
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: -40, z: 0 },
+      rotation: { x: 0, y: Math.PI / 6, z: 0 },
     },
   },
   work: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
       position: { x: 0, y: -40, z: 0 },
-      rotation: {
-        x: Math.PI,
-        y: Math.PI / 3,
-        z: Math.PI,
-      },
+      rotation: { x: Math.PI, y: Math.PI / 3, z: Math.PI },
     },
     mobile: {
       scale: { x: 0.3, y: 0.3, z: 0.3 },
       position: { x: 0, y: 150, z: 0 },
-      rotation: {
-        x: Math.PI,
-        y: Math.PI / 3,
-        z: Math.PI,
-      },
+      rotation: { x: Math.PI, y: Math.PI / 3, z: Math.PI },
     },
   },
   techstack: {
     desktop: {
       scale: { x: 0.25, y: 0.25, z: 0.25 },
       position: { x: 0, y: -40, z: 0 },
-      rotation: {
-        x: 0,
-        y: Math.PI / 12,
-        z: 0,
-      },
+      rotation: { x: 0, y: Math.PI / 12, z: 0 },
     },
     mobile: {
       scale: { x: 0.3, y: 0.3, z: 0.3 },
       position: { x: 0, y: -40, z: 0 },
-      rotation: {
-        x: 0,
-        y: Math.PI / 6,
-        z: 0,
-      },
+      rotation: { x: 0, y: Math.PI / 6, z: 0 },
+    },
+  },
+  contact: {
+    desktop: {
+      scale: { x: 0.2, y: 0.2, z: 0.2 },
+      position: { x: 350, y: -250, z: 0 },
+      rotation: { x: 0, y: 0, z: 0 },
+    },
+    mobile: {
+      scale: { x: 0.25, y: 0.25, z: 0.25 },
+      position: { x: 0, y: 150, z: 0 },
+      rotation: { x: Math.PI, y: Math.PI / 3, z: Math.PI },
     },
   },
 };

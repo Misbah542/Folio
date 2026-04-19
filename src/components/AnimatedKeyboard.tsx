@@ -23,7 +23,7 @@ const AnimatedKeyboard = () => {
   const { playPressSound, playReleaseSound } = useSounds();
 
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
-  const [activeSection, setActiveSection] = useState<KeyboardSection>("hidden");
+  const [activeSection, setActiveSection] = useState<KeyboardSection>("landing");
 
   const keycapAnimationsRef = useRef<{ start: () => void; stop: () => void } | null>(null);
 
@@ -87,88 +87,65 @@ const AnimatedKeyboard = () => {
     splineApp.addEventListener("mouseHover", handleMouseHover);
   };
 
-  // --- Animation Setup Helpers ---
+  // --- Animation Setup (matches reference repo exactly) ---
+
+  const createSectionTimeline = (
+    triggerId: string,
+    targetSection: KeyboardSection,
+    prevSection: KeyboardSection,
+    start: string = "top 50%",
+    end: string = "bottom bottom"
+  ) => {
+    if (!splineApp) return;
+    const kbd = splineApp.findObjectByName("keyboard");
+    if (!kbd) return;
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: triggerId,
+        start,
+        end,
+        scrub: true,
+        onEnter: () => {
+          setActiveSection(targetSection);
+          const state = getKeyboardState({ section: targetSection, isMobile });
+          gsap.to(kbd.scale, { ...state.scale, duration: 1 });
+          gsap.to(kbd.position, { ...state.position, duration: 1 });
+          gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
+        },
+        onLeaveBack: () => {
+          setActiveSection(prevSection);
+          const state = getKeyboardState({ section: prevSection, isMobile });
+          gsap.to(kbd.scale, { ...state.scale, duration: 1 });
+          gsap.to(kbd.position, { ...state.position, duration: 1 });
+          gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
+        },
+      },
+    });
+  };
 
   const setupScrollAnimations = () => {
-    if (!splineApp || !splineContainer.current) {
-      console.log("[AnimatedKeyboard] setupScrollAnimations bail: app=", !!splineApp, "container=", !!splineContainer.current);
-      return;
-    }
+    if (!splineApp || !splineContainer.current) return;
     const kbd = splineApp.findObjectByName("keyboard");
     if (!kbd) {
-      console.log("[AnimatedKeyboard] setupScrollAnimations bail: keyboard NOT found");
+      console.log("[AnimatedKeyboard] keyboard object NOT found in scene");
       return;
     }
-    console.log("[AnimatedKeyboard] setupScrollAnimations: keyboard found, setting up triggers");
+    console.log("[AnimatedKeyboard] keyboard found, setting up scroll animations");
 
-    // Start at hidden state (very small scale, off-screen) — do NOT use kbd.visible
-    const hiddenState = getKeyboardState({ section: "hidden", isMobile });
-    const careerState = getKeyboardState({ section: "career", isMobile });
-    const workState = getKeyboardState({ section: "work", isMobile });
-    const techstackState = getKeyboardState({ section: "techstack", isMobile });
+    // Start visible at landing state (like reference repo hero)
+    const landingState = getKeyboardState({ section: "landing", isMobile });
+    gsap.set(kbd.scale, landingState.scale);
+    gsap.set(kbd.position, landingState.position);
+    gsap.set(kbd.rotation, landingState.rotation);
 
-    gsap.set(kbd.scale, hiddenState.scale);
-    gsap.set(kbd.position, hiddenState.position);
-    gsap.set(kbd.rotation, hiddenState.rotation);
-
-    // Career: hidden → career
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#career",
-        start: "top 80%",
-        end: "top 30%",
-        scrub: true,
-        onEnter: () => setActiveSection("career"),
-        onLeaveBack: () => setActiveSection("hidden"),
-      },
-    })
-      .fromTo(kbd.scale, hiddenState.scale, careerState.scale, 0)
-      .fromTo(kbd.position, hiddenState.position, careerState.position, 0)
-      .fromTo(kbd.rotation, hiddenState.rotation, careerState.rotation, 0);
-
-    // Work: career → work
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#work",
-        start: "top 80%",
-        end: "top 30%",
-        scrub: true,
-        onEnter: () => setActiveSection("work"),
-        onLeaveBack: () => setActiveSection("career"),
-      },
-    })
-      .fromTo(kbd.scale, careerState.scale, workState.scale, 0)
-      .fromTo(kbd.position, careerState.position, workState.position, 0)
-      .fromTo(kbd.rotation, careerState.rotation, workState.rotation, 0);
-
-    // TechStack: work → techstack
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#techstack",
-        start: "top 60%",
-        end: "top 20%",
-        scrub: true,
-        onEnter: () => setActiveSection("techstack"),
-        onLeaveBack: () => setActiveSection("work"),
-      },
-    })
-      .fromTo(kbd.scale, workState.scale, techstackState.scale, 0)
-      .fromTo(kbd.position, workState.position, techstackState.position, 0)
-      .fromTo(kbd.rotation, workState.rotation, techstackState.rotation, 0);
-
-    // Contact: techstack → hidden
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: "#contact",
-        start: "top 70%",
-        end: "top 30%",
-        scrub: true,
-        onEnter: () => setActiveSection("hidden"),
-        onLeaveBack: () => setActiveSection("techstack"),
-      },
-    })
-      .fromTo(kbd.scale, techstackState.scale, hiddenState.scale, 0)
-      .fromTo(kbd.position, techstackState.position, hiddenState.position, 0);
+    // Section transitions — keyboard visible throughout
+    createSectionTimeline("#about", "about", "landing");
+    createSectionTimeline(".whatIDO", "whatido", "about", "top 70%");
+    createSectionTimeline("#career", "career", "whatido", "top 70%");
+    createSectionTimeline("#work", "work", "career", "top 70%");
+    createSectionTimeline("#techstack", "techstack", "work", "top 50%");
+    createSectionTimeline("#contact", "contact", "techstack", "top 30%");
   };
 
   const getKeycapsAnimation = () => {
@@ -287,7 +264,7 @@ const AnimatedKeyboard = () => {
         splineApp.setVariable("desc", "");
       }
 
-      if (activeSection === "career") {
+      if (activeSection === "landing") {
         rotateKeyboard?.restart();
       } else {
         rotateKeyboard?.pause();
@@ -303,7 +280,6 @@ const AnimatedKeyboard = () => {
     };
   }, [activeSection, splineApp]);
 
-  // Update Spline variables when a skill is selected
   useEffect(() => {
     if (!selectedSkill || !splineApp) return;
     splineApp.setVariable("heading", selectedSkill.label);
@@ -311,24 +287,21 @@ const AnimatedKeyboard = () => {
   }, [selectedSkill, splineApp]);
 
   return (
-    <div className="fixed inset-0 z-[5] pointer-events-none">
-      <Suspense fallback={null}>
-        <Spline
-          className="w-full h-full"
-          ref={splineContainer}
-          style={{ pointerEvents: activeSection === "techstack" ? "auto" : "none" }}
-          onLoad={(app: Application) => {
-            console.log("[AnimatedKeyboard] Spline loaded");
-            const kbd = app.findObjectByName("keyboard");
-            console.log("[AnimatedKeyboard] keyboard object:", kbd ? "FOUND" : "NOT FOUND");
-            const allObjects = app.getAllObjects();
-            console.log("[AnimatedKeyboard] all objects:", allObjects.map(o => o.name));
-            setSplineApp(app);
-          }}
-          scene="/models/skills-keyboard.spline"
-        />
-      </Suspense>
-    </div>
+    <Suspense fallback={null}>
+      <Spline
+        className="w-full h-full fixed"
+        ref={splineContainer}
+        style={{ pointerEvents: activeSection === "techstack" ? "auto" : "none" }}
+        onLoad={(app: Application) => {
+          console.log("[AnimatedKeyboard] Spline loaded");
+          const kbd = app.findObjectByName("keyboard");
+          console.log("[AnimatedKeyboard] keyboard:", kbd ? "FOUND" : "NOT FOUND");
+          console.log("[AnimatedKeyboard] objects:", app.getAllObjects().map(o => o.name));
+          setSplineApp(app);
+        }}
+        scene="/models/skills-keyboard.spline"
+      />
+    </Suspense>
   );
 };
 
