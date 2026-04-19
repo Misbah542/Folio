@@ -4,8 +4,8 @@ const Career = () => {
   return (
     <div className="career-section section-container">
       <div className="career-container">
-        <div className="career-watermark section-watermark section-watermark-violet">03</div>
-        <span className="section-label section-label-muted">[ Experience ]</span>
+        <div className="career-watermark section-watermark">03</div>
+        <span className="section-label">[ Experience ]</span>
         <h2>
           My career <span>&amp;</span>
           <br /> experience
