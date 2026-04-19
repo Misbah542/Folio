@@ -6,7 +6,11 @@
   position: relative;
   z-index: 2;
   background-color: var(--bg-dark);
-  border-top: 1px solid var(--border-dark);
+}
+
+.contact-container {
+  position: relative;
+  width: 100%;
 }
 
 .contact-watermark {
