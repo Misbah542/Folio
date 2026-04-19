@@ -84,6 +84,9 @@
   text-transform: uppercase;
   line-height: 1.4;
   white-space: nowrap;
+  width: 120px;
+  flex-shrink: 0;
+  text-align: left;
 }
 
 /* Role */
