@@ -5,21 +5,23 @@ import * as THREE from 'three';
 
 interface TechCubeProps {
   url: string;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
 }
 
-const TechCube: React.FC<TechCubeProps> = ({ url }) => {
+const TechCube: React.FC<TechCubeProps> = ({ url, position = [0, 0, 0], rotation = [0, 0, 0] }) => {
   const groupRef = useRef<THREE.Group>(null);
   const texture = useTexture(url);
 
   useFrame((state) => {
     if (!groupRef.current) return;
-    // Oscillating rotation
-    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
-    groupRef.current.rotation.x = Math.cos(state.clock.elapsedTime * 0.5) * 0.2;
+    // Oscillating rotation added to base rotation
+    groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2 + rotation[1];
+    groupRef.current.rotation.x = Math.cos(state.clock.elapsedTime * 0.5) * 0.2 + rotation[0];
   });
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} position={position}>
       {/* Glass Cuboid */}
       <mesh>
         <boxGeometry args={[1, 1, 0.5]} />
