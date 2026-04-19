@@ -13,6 +13,15 @@ export default function AnimatedKeyboard() {
   const splineContainer = useRef<HTMLDivElement>(null);
   const [splineApp, setSplineApp] = useState<Application>();
   const [activeSection, setActiveSection] = useState<Section | null>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Delay loading the heavy Spline engine by 1.5 seconds so text and initial animations can finish first
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShouldLoad(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Expose pointer events ONLY when in techstack section so it doesn't block scrolling above
   const isInteractive = activeSection === "techstack";
@@ -40,17 +49,25 @@ export default function AnimatedKeyboard() {
             setActiveSection(targetSection);
             kbd.visible = true;
             const state = getKeyboardState({ section: targetSection, isMobile });
-            gsap.to(kbd.scale, { ...state.scale, duration: 1 });
-            gsap.to(kbd.position, { ...state.position, duration: 1 });
-            gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
+            gsap.to(kbd.scale, { ...state.scale, duration: 1, overwrite: "auto" });
+            gsap.to(kbd.position, { ...state.position, duration: 1, overwrite: "auto" });
+            gsap.to(kbd.rotation, { ...state.rotation, duration: 1, overwrite: "auto" });
+          },
+          onEnterBack: () => {
+            setActiveSection(targetSection);
+            kbd.visible = true;
+            const state = getKeyboardState({ section: targetSection, isMobile });
+            gsap.to(kbd.scale, { ...state.scale, duration: 1, overwrite: "auto" });
+            gsap.to(kbd.position, { ...state.position, duration: 1, overwrite: "auto" });
+            gsap.to(kbd.rotation, { ...state.rotation, duration: 1, overwrite: "auto" });
           },
           onLeaveBack: () => {
             if (prevSection) {
               setActiveSection(prevSection);
               const state = getKeyboardState({ section: prevSection, isMobile });
-              gsap.to(kbd.scale, { ...state.scale, duration: 1 });
-              gsap.to(kbd.position, { ...state.position, duration: 1 });
-              gsap.to(kbd.rotation, { ...state.rotation, duration: 1 });
+              gsap.to(kbd.scale, { ...state.scale, duration: 1, overwrite: "auto" });
+              gsap.to(kbd.position, { ...state.position, duration: 1, overwrite: "auto" });
+              gsap.to(kbd.rotation, { ...state.rotation, duration: 1, overwrite: "auto" });
             } else {
               setActiveSection(null);
               kbd.visible = false;
@@ -62,16 +79,31 @@ export default function AnimatedKeyboard() {
 
     const kbd = splineApp.findObjectByName("keyboard");
     if (kbd) {
-      kbd.visible = false; // Hidden initially
       createSectionTimeline("#career", "career", null);
       createSectionTimeline("#work", "work", "career", "top 70%");
       createSectionTimeline("#techstack", "techstack", "work", "top 30%");
+      
+      // Force ScrollTrigger to evaluate the current scroll position immediately
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+        const careerEl = document.querySelector("#career");
+        if (careerEl) {
+          const rect = careerEl.getBoundingClientRect();
+          if (rect.top > window.innerHeight / 2) {
+            kbd.visible = false;
+          } else {
+            kbd.visible = true;
+          }
+        }
+      }, 100);
     }
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [splineApp, isMobile]);
+
+  if (!shouldLoad) return null;
 
   return (
     <div 
