@@ -48,7 +48,7 @@ export function initialFX() {
 
 function LoopText(texts: SplitText[]) {
   var tl = gsap.timeline({ repeat: -1 });
-  const delay = 7;
+  const delay = 14;
 
   texts.forEach((_, i) => {
     const nextIndex = (i + 1) % texts.length;

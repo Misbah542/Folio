@@ -26,6 +26,7 @@
 .work-container {
   margin: auto;
   position: relative;
+  width: 100%;
 }
 
 .work-watermark {
@@ -48,13 +49,16 @@
 .carousel-track {
   display: flex;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
 }
 
 .carousel-slide {
-  min-width: 100%;
-  flex-shrink: 0;
+  width: 100%;
+  flex: 0 0 100%;
   box-sizing: border-box;
   padding: 80px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .carousel-content {
@@ -62,6 +66,7 @@
   align-items: center;
   gap: 80px;
   width: 100%;
+  max-width: 100%;
 }
 
 .carousel-info {
@@ -136,6 +141,7 @@
   border: 1px solid var(--border-dark);
   padding: 40px;
   background: rgba(255, 255, 255, 0.02);
+  max-width: 50%;
 }
 
 /* ── Navigation Arrows ── */
@@ -241,7 +247,7 @@
 @media only screen and (max-width: 1025px) {
   .work-section { padding: 80px 0; }
   .carousel-content { flex-direction: column; gap: 40px; align-items: flex-start; }
-  .carousel-image-wrapper { width: 100%; }
+  .carousel-image-wrapper { width: 100%; max-width: 100%; }
   .carousel-arrow { top: auto; bottom: -60px; }
   .carousel-arrow-left { right: auto; left: 0; }
   .carousel-arrow-right { right: auto; left: 100px; }

@@ -7,7 +7,6 @@
   left: 50%;
   transform: translateX(-50%);
 }
-
 .social-icons {
   position: absolute;
   left: -20px;
@@ -18,27 +17,22 @@
   z-index: 999;
   padding: 10px;
 }
-
+.social-icons:hover {
+  transition: 0.3s;
+}
 .social-icons a:hover {
   color: var(--accentColor);
 }
-
 .social-icons span {
   width: 50px;
   height: 50px;
   position: relative;
   display: flex;
-  background-color: var(--border-dark);
+  background-color: var(--borderColor);
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-  transition: background 0.3s;
 }
-
-.icons-section.nav-on-light .social-icons span {
-  background-color: var(--border-light);
-}
-
 .social-icons a {
   --siLeft: 50%;
   --siTop: 50%;
@@ -49,18 +43,9 @@
   display: flex;
   font-size: 23px;
   will-change: left, top;
-  transition: transform 0.3s ease-out, color 0.3s;
-  color: var(--text-light);
+  transition: transform 0.3s ease-out;
+  color: var(--textColor);
 }
-
-.icons-section.nav-on-light .social-icons a {
-  color: var(--text-dark);
-}
-
-.icons-section.nav-on-light .social-icons a:hover {
-  color: var(--accentColor);
-}
-
 .resume-button {
   position: absolute;
   z-index: 99;
@@ -74,7 +59,7 @@
   font-size: 14px;
   line-height: 15px;
   font-weight: 600;
-  color: var(--text-light);
+  color: var(--textColor);
   cursor: pointer;
   transition: 0.5s;
   transform-origin: left bottom;
@@ -83,22 +68,26 @@
   padding: 12px 25px;
   border-radius: 100px;
 }
-
 .resume-button:hover {
   background-color: var(--accentColorSecondary);
   color: #fff;
 }
-
-.icons-section.nav-on-light .resume-button {
-  background-color: var(--accentColorSecondary);
-  color: var(--text-light);
+div.resume-button span {
+  color: inherit;
+  font-size: 17px;
+  margin-top: -1px;
+  display: flex;
+  align-items: center;
 }
-
-.icons-section.nav-on-light .resume-button:hover {
-  background-color: var(--accentColor);
-  color: var(--text-dark);
+.check-line {
+  position: fixed;
+  top: 655px;
+  left: 0;
+  height: 1px;
+  background-color: var(--borderColor);
+  width: 100%;
+  z-index: 99999;
 }
-
 @media only screen and (min-width: 900px) {
   .social-icons {
     display: flex;
@@ -108,11 +97,14 @@
     font-size: 28px;
   }
 }
-
 @media only screen and (min-width: 768px) {
   .resume-button {
     transform: none;
     font-size: 20px;
     line-height: 20px;
+  }
+  div.resume-button span {
+    font-size: 23px;
+    margin-top: -1.5px;
   }
 }
