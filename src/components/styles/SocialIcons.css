@@ -97,6 +97,15 @@ div.resume-button span {
     font-size: 28px;
   }
 }
+
+/* Bottom bar layout when scrolled to contact section */
+.social-icons.bottom-bar {
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: row;
+  bottom: 20px;
+  gap: 12px;
+}
 @media only screen and (min-width: 768px) {
   .resume-button {
     transform: none;

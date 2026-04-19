@@ -59,29 +59,49 @@ const SocialIcons = () => {
       };
     });
 
-    // Animate social icons below when reaching contact section
-    const iconsSection = document.querySelector(".icons-section") as HTMLElement;
-    if (iconsSection) {
+    // Slide social icons from vertical sidebar → horizontal bottom bar at contact
+    const socialIcons = document.querySelector(".social-icons") as HTMLElement;
+    const resumeBtn = document.querySelector(".resume-button") as HTMLElement;
+
+    if (socialIcons) {
       ScrollTrigger.create({
         trigger: "#contact",
         start: "top 50%",
-        end: "top 20%",
-        scrub: true,
         onEnter: () => {
-          gsap.to(iconsSection, {
-            y: 100,
+          // Slide column down, switch layout, slide row up
+          gsap.to(socialIcons, {
+            y: 30,
             opacity: 0,
-            duration: 0.5,
-            ease: "power2.inOut",
+            duration: 0.3,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.add("bottom-bar");
+              gsap.fromTo(
+                socialIcons,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+              );
+            },
           });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 0, pointerEvents: "none", duration: 0.3 });
         },
         onLeaveBack: () => {
-          gsap.to(iconsSection, {
-            y: 0,
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.inOut",
+          // Slide row down, switch layout back, slide column up
+          gsap.to(socialIcons, {
+            y: 30,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.in",
+            onComplete: () => {
+              socialIcons.classList.remove("bottom-bar");
+              gsap.fromTo(
+                socialIcons,
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }
+              );
+            },
           });
+          if (resumeBtn) gsap.to(resumeBtn, { opacity: 1, pointerEvents: "auto", duration: 0.3 });
         },
       });
     }
