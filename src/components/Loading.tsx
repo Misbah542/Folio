@@ -4,89 +4,93 @@ import { useLoading } from "../context/LoadingProvider";
 
 import Marquee from "react-fast-marquee";
 
+/** Boot log lines, each revealed once the loader passes its threshold. */
+const BOOT_LINES: [number, string][] = [
+  [4, "init  · renderer  … ok"],
+  [22, "build · android-bot rig … ok"],
+  [45, "load  · environment map … ok"],
+  [66, "bind  · pointer + scroll … ok"],
+  [84, "warm  · shaders … ok"],
+  [99, "boot  · complete"],
+];
+
 const Loading = ({ percent }: { percent: number }) => {
   const { setIsLoading } = useLoading();
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
+  useEffect(() => {
+    if (percent < 100) return;
+    const a = setTimeout(() => {
       setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
+      const b = setTimeout(() => setIsLoaded(true), 1000);
+      return () => clearTimeout(b);
     }, 600);
-  }
+    return () => clearTimeout(a);
+  }, [percent]);
 
   useEffect(() => {
+    if (!isLoaded) return;
     import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
-        setClicked(true);
-        setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
-          }
-          setIsLoading(false);
-        }, 900);
-      }
+      setClicked(true);
+      setTimeout(() => {
+        if (module.initialFX) module.initialFX();
+        setIsLoading(false);
+      }, 900);
     });
   }, [isLoaded]);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const { currentTarget: target } = e;
-    const rect = target.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    target.style.setProperty("--mouse-x", `${x}px`);
-    target.style.setProperty("--mouse-y", `${y}px`);
-  }
-
   return (
-    <>
-      <div className="loading-header">
+    <div className={`loading-screen ${clicked ? "loading-clicked" : ""}`}>
+      <div className="loading-top">
         <a href="/#" className="loader-title" data-cursor="disable">
           MH
         </a>
-        <div className={`loaderGame ${clicked && "loader-out"}`}>
-          <div className="loaderGame-container">
-            <div className="loaderGame-in">
-              {[...Array(27)].map((_, index) => (
-                <div className="loaderGame-line" key={index}></div>
-              ))}
-            </div>
-            <div className="loaderGame-ball"></div>
-          </div>
+        <span className="loading-tag">Misbah ul Haque · Portfolio</span>
+      </div>
+
+      <div className="loading-core">
+        <div className="loading-log">
+          {BOOT_LINES.map(([at, text]) => (
+            <span
+              className={`loading-log-line ${percent >= at ? "is-on" : ""}`}
+              key={text}
+            >
+              <i>&gt;</i> {text}
+            </span>
+          ))}
+        </div>
+
+        <div className={`loading-readout ${loaded ? "loading-complete" : ""}`}>
+          <span className="loading-state">
+            {loaded ? "System ready" : "Booting"}
+          </span>
+          <span className="loading-percent">
+            {String(Math.min(percent, 100)).padStart(3, "0")}
+            <i>%</i>
+          </span>
+        </div>
+
+        <div className="loading-rail">
+          <div
+            className="loading-rail-fill"
+            style={{ width: `${Math.min(percent, 100)}%` }}
+          />
         </div>
       </div>
-      <div className="loading-screen">
-        <div className="loading-marquee">
-          <Marquee>
-            <span> Android Developer</span> <span>Software Engineer</span>
-            <span> Android Developer</span> <span>Software Engineer</span>
-          </Marquee>
-        </div>
-        <div
-          className={`loading-wrap ${clicked && "loading-clicked"}`}
-          onMouseMove={(e) => handleMouseMove(e)}
-        >
-          <div className="loading-hover"></div>
-          <div className={`loading-button ${loaded && "loading-complete"}`}>
-            <div className="loading-container">
-              <div className="loading-content">
-                <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
-                </div>
-              </div>
-              <div className="loading-box"></div>
-            </div>
-            <div className="loading-content2">
-              <span>Welcome</span>
-            </div>
-          </div>
-        </div>
+
+      <div className="loading-marquee">
+        <Marquee speed={38} gradient={false}>
+          <span>Android</span>
+          <span>Kotlin</span>
+          <span>Jetpack Compose</span>
+          <span>Android TV</span>
+          <span>Go</span>
+          <span>Performance</span>
+        </Marquee>
       </div>
-    </>
+    </div>
   );
 };
 

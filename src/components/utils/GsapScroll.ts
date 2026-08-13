@@ -36,14 +36,19 @@ export function setCharTimeline(
       invalidateOnRefresh: true,
     },
   });
-  let screenLight: any, monitor: any;
+  let screenLight: any;
+  // Every part of the monitor rises and fades in together; the emissive glow
+  // card in front of it (screenlight) follows a beat later.
+  const monitorMaterials: any[] = [];
+  const monitorPositions: any[] = [];
   character?.children.forEach((object: any) => {
     if (object.name === "Plane004") {
       object.children.forEach((child: any) => {
         child.material.transparent = true;
         child.material.opacity = 0;
+        monitorMaterials.push(child.material);
+        monitorPositions.push(child.position);
         if (child.material.name === "Material.018") {
-          monitor = child;
           child.material.color.set("#FFFFFF");
         }
       });
@@ -89,7 +94,7 @@ export function setCharTimeline(
         )
         .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0)
         .to(neckBone!.rotation, { x: 0.6, delay: 2, duration: 3 }, 0)
-        .to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0)
+        .to(monitorMaterials, { opacity: 1, duration: 0.8, delay: 3.2 }, 0)
         .to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0)
         .fromTo(
           ".what-box-in",
@@ -98,7 +103,7 @@ export function setCharTimeline(
           0
         )
         .fromTo(
-          monitor.position,
+          monitorPositions,
           { y: -10, z: 2 },
           { y: 0, z: 0, delay: 1.5, duration: 3 },
           0
@@ -144,11 +149,14 @@ export function setAllTimeline() {
       invalidateOnRefresh: true,
     },
   });
+  // The fades resolve early in the scrub: the career list is long, so a
+  // fade spread over the whole trigger range would leave it dim for most of
+  // the scroll — especially on narrow screens where the section is tallest.
   careerTimeline
     .fromTo(
       ".career-section",
       { opacity: 0 },
-      { opacity: 1, duration: 0.5 },
+      { opacity: 1, duration: 0.12 },
       0
     )
     .fromTo(
@@ -167,7 +175,7 @@ export function setAllTimeline() {
     .fromTo(
       ".career-info-box",
       { opacity: 0 },
-      { opacity: 1, stagger: 0.1, duration: 0.5 },
+      { opacity: 1, stagger: 0.05, duration: 0.2 },
       0
     )
     .fromTo(
@@ -182,10 +190,12 @@ export function setAllTimeline() {
     );
 
   if (window.innerWidth > 1024) {
+    // Gentle parallax only — the career list is tall, so a large shift would
+    // push its last entry over the work section below.
     careerTimeline.fromTo(
       ".career-section",
       { y: 0 },
-      { y: "20%", duration: 0.5, delay: 0.2 },
+      { y: "6%", duration: 0.5, delay: 0.2 },
       0
     );
   } else {

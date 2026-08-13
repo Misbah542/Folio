@@ -1,6 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import ScrollSmoother from "../lib/gsap/ScrollSmoother";
 import "./styles/Navbar.css";
@@ -8,7 +7,17 @@ import "./styles/Navbar.css";
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
+const LINKS = [
+  { id: "about", label: "About", index: "01" },
+  { id: "career", label: "Career", index: "03" },
+  { id: "work", label: "Work", index: "04" },
+  { id: "contact", label: "Contact", index: "06" },
+];
+
 const Navbar = () => {
+  const [active, setActive] = useState<string>("");
+  const [docked, setDocked] = useState(false);
+
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -42,31 +51,51 @@ const Navbar = () => {
       ScrollSmoother.refresh(true);
     });
 
-    return () => {};
+    // Dock state + active section marker.
+    const dockTrigger = ScrollTrigger.create({
+      start: 60,
+      end: "max",
+      onToggle: (self) => setDocked(self.isActive),
+    });
+
+    const sectionTriggers = LINKS.map(({ id }) =>
+      ScrollTrigger.create({
+        trigger: `#${id}`,
+        start: "top 55%",
+        end: "bottom 45%",
+        onToggle: (self) => self.isActive && setActive(id),
+      })
+    );
+
+    return () => {
+      dockTrigger.kill();
+      sectionTriggers.forEach((t) => t.kill());
+    };
   }, []);
+
   return (
     <>
-      <div className="header">
+      <div className={`header ${docked ? "header-docked" : ""}`}>
         <a href="/#" className="navbar-title" data-cursor="disable">
-          MH
+          <span className="navbar-mark">MH</span>
+          <span className="navbar-name">Misbah ul Haque</span>
         </a>
+
         <ul>
-          <li>
-            <a data-href="#about" href="#about">
-              <HoverLinks text="ABOUT" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#work" href="#work">
-              <HoverLinks text="WORK" />
-            </a>
-          </li>
-          <li>
-            <a data-href="#contact" href="#contact">
-              <HoverLinks text="CONTACT" />
-            </a>
-          </li>
+          {LINKS.map(({ id, label, index }) => (
+            <li key={id} className={active === id ? "nav-active" : ""}>
+              <a data-href={`#${id}`} href={`#${id}`} data-cursor="disable">
+                <span className="nav-index">{index}</span>
+                <span className="nav-label">{label}</span>
+              </a>
+            </li>
+          ))}
         </ul>
+
+        <div className="navbar-status">
+          <span className="pulse-dot" />
+          <span>Open to work</span>
+        </div>
       </div>
 
       <div className="landing-circle1"></div>

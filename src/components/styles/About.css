@@ -1,108 +1,106 @@
 .about-section {
-  position: relative; /* needed for absolute watermark */
-  opacity: 0; /* Hidden initially, GSAP will fade in */
+  position: relative;
   width: 100%;
-  padding: 120px 0;
-  background-color: transparent;
-  color: var(--text-light);
+  padding: clamp(90px, 14vh, 190px) 0;
+  opacity: 0; /* GSAP fades this in as the landing scrolls away */
+  color: var(--text);
 }
 
 .about-me {
-  padding: 50px 0;
-  padding-bottom: 0;
-  width: 500px;
-  max-width: calc(100% - 15px);
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 560px;
 }
 
 .about-heading {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 72px;
-  font-weight: 700;
-  color: var(--text-light);
-  line-height: 1;
-  margin: 0 0 24px 0;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6vw, 96px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 26px;
+}
+
+.about-heading em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
 }
 
 .about-rule {
   border: none;
-  border-top: 1px solid var(--border-dark);
-  margin: 0 0 24px 0;
+  border-top: 1px solid var(--line);
+  margin: 0 0 26px;
 }
 
-.about-me p {
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.75;
-  letter-spacing: 0.3px;
-  font-family: "Space Grotesk", sans-serif;
-  color: var(--text-light);
-  max-width: 55ch;
-  margin: 0 0 24px 0;
+.about-me .para {
+  margin: 0 0 20px;
+  max-width: 52ch;
 }
 
-.about-stats {
+/* Key/value strip — reads like a spec sheet */
+.about-facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 34px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.about-fact {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding-bottom: 50px;
+  align-items: baseline;
+  gap: 16px;
+  padding: 13px 2px;
+  border-bottom: 1px solid var(--line);
 }
 
-.stat-pill {
-  display: inline-block;
-  background-color: var(--bg-dark);
-  color: var(--text-light);
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  padding: 6px 18px;
-  border-radius: 100px;
+.about-fact dt {
+  flex: none;
+  width: 88px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--faint);
 }
 
-@media only screen and (min-width: 600px) {
-  .about-section { justify-content: center; }
+.about-fact dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--text);
 }
 
-@media only screen and (min-width: 768px) {
-  .about-me {
-    width: 500px;
-    max-width: calc(100% - 70px);
-    transform: translateY(0%);
+/* GSAP only fades this section in on desktop, so below that breakpoint it
+   has to start visible. */
+@media only screen and (max-width: 1024px) {
+  .about-section {
+    opacity: 1;
   }
-  .about-section { opacity: 1; }
 }
 
 @media only screen and (min-width: 1025px) {
   .about-section {
-    width: 100%;
     max-width: 1920px;
     padding: 0;
   }
 
   .about-container {
+    position: relative;
     display: flex;
     align-items: center;
     height: 100%;
-    position: relative;
+    min-height: var(--vh);
   }
 
   .about-me {
-    padding: 0;
-    width: 42%;
-    margin-left: auto; /* Push the content to the right without moving the container */
-  }
-
-  .about-me p {
-    font-size: 1.1vw;
-    line-height: 1.75;
-  }
-}
-
-@media only screen and (min-width: 1950px) {
-  .about-me p {
-    font-size: 1.2rem;
-    line-height: 1.75;
+    width: 46%;
+    max-width: 620px;
+    margin-left: auto; /* sits to the right of the bot */
   }
 }

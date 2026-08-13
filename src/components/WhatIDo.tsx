@@ -2,6 +2,37 @@ import { useEffect, useRef } from "react";
 import "./styles/WhatIDo.css";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+const CARDS = [
+  {
+    index: "01",
+    title: "Android at scale",
+    sub: "Kotlin and Compose, shipped to millions",
+    body: "Feature work end-to-end on OTT apps — multi-profile platforms, auth flows and engagement SDKs, built on Compose, Hilt, Paging 3 and Coroutines.",
+    tags: ["Kotlin", "Jetpack Compose", "Coroutines", "Dagger Hilt", "Paging 3"],
+  },
+  {
+    index: "02",
+    title: "TV & playback",
+    sub: "Leanback, ExoPlayer, ten-foot UI",
+    body: "Player skins, UpNext and continue-watching surfaces rebuilt for Android TV, Google TV, FireStick and set-top boxes, where every frame is budgeted.",
+    tags: ["Android TV", "Leanback", "ExoPlayer", "Google TV", "Set-top box"],
+  },
+  {
+    index: "03",
+    title: "Go services",
+    sub: "The BFF behind the app",
+    body: "Proto and API contracts, middleware and BFF endpoints in Go — owning the round trip instead of stopping at the client boundary.",
+    tags: ["Go", "gRPC", "Microservices", "REST", "GraphQL"],
+  },
+  {
+    index: "04",
+    title: "Performance",
+    sub: "Startup, latency, crash-free rate",
+    body: "Profiling cold start, trimming response latency and holding a 99.9% crash-free rate through IPL, the Olympics and World Cup traffic peaks.",
+    tags: ["Profiler", "Startup", "Caching", "Crashlytics", "R8"],
+  },
+];
+
 const WhatIDo = () => {
   const containerRef = useRef<(HTMLDivElement | null)[]>([]);
   const setRef = (el: HTMLDivElement | null, index: number) => {
@@ -33,112 +64,43 @@ const WhatIDo = () => {
         <div className="what-container">
           <div className="what-flex">
             <div className="what-box">
-              <span className="section-label what-section-label">
-                [ What I Do ]
-              </span>
+              <span className="section-label">What I do</span>
               <h2 className="title">
-                W<span className="hat-h2">HAT</span>
-                <div>
-                  I<span className="do-h2"> DO</span>
-                </div>
+                Four
+                <div>fronts</div>
               </h2>
+              <p className="what-lede">
+                One product surface rarely ends where the app does. These are the
+                four places my work usually lands.
+              </p>
             </div>
+
             <div className="what-box">
               <div className="what-box-in">
-                <div
-                  className="what-content what-noTouch"
-                  ref={(el) => setRef(el, 0)}
-                >
-                  <div className="what-corner"></div>
-                  <div className="what-content-in">
-                    <h3>ANDROID APP DEVELOPMENT</h3>
-                    <h4>Building robust apps with Kotlin</h4>
-                    <p>
-                      Specializing in creating high-performance Android
-                      applications for Mobile and TV platforms, focusing on
-                      scalability and user experience.
-                    </p>
-                    <h5>Skillset &amp; tools</h5>
-                    <div className="what-content-flex">
-                      <div className="what-tags">Kotlin</div>
-                      <div className="what-tags">Coroutines</div>
-                      <div className="what-tags">Dagger Hilt</div>
-                      <div className="what-tags">Android SDK</div>
-                      <div className="what-tags">Gradle</div>
+                {CARDS.map((card, i) => (
+                  <div
+                    className="what-content what-noTouch"
+                    key={card.index}
+                    ref={(el) => setRef(el, i)}
+                  >
+                    <div className="what-corner"></div>
+                    <div className="what-content-in">
+                      <span className="what-index">{card.index}</span>
+                      <h3>{card.title}</h3>
+                      <h4>{card.sub}</h4>
+                      <p>{card.body}</p>
+                      <h5>Stack</h5>
+                      <div className="what-content-flex">
+                        {card.tags.map((tag) => (
+                          <div className="what-tags" key={tag}>
+                            {tag}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="what-arrow"></div>
                     </div>
-                    <div className="what-arrow"></div>
                   </div>
-                </div>
-                <div
-                  className="what-content what-noTouch"
-                  ref={(el) => setRef(el, 1)}
-                >
-                  <div className="what-corner"></div>
-                  <div className="what-content-in">
-                    <h3>MODERN UI/UX</h3>
-                    <h4>Crafting beautiful interfaces with Jetpack Compose</h4>
-                    <p>
-                      Expertise in building declarative UIs with Jetpack Compose,
-                      Material Design 3, and custom animations for immersive
-                      digital experiences.
-                    </p>
-                    <h5>Skillset &amp; tools</h5>
-                    <div className="what-content-flex">
-                      <div className="what-tags">Jetpack Compose</div>
-                      <div className="what-tags">Material 3</div>
-                      <div className="what-tags">Animations</div>
-                      <div className="what-tags">Responsive Design</div>
-                    </div>
-                    <div className="what-arrow"></div>
-                  </div>
-                </div>
-                <div
-                  className="what-content what-noTouch"
-                  ref={(el) => setRef(el, 2)}
-                >
-                  <div className="what-corner"></div>
-                  <div className="what-content-in">
-                    <h3>PERFORMANCE OPTIMIZATION</h3>
-                    <h4>Ensuring smooth performance and low memory footprint</h4>
-                    <p>
-                      Optimizing app startup, reducing memory usage, and improving
-                      frame rates to deliver a lightning-fast experience for
-                      millions of users.
-                    </p>
-                    <h5>Skillset &amp; tools</h5>
-                    <div className="what-content-flex">
-                      <div className="what-tags">Profiling</div>
-                      <div className="what-tags">LeakCanary</div>
-                      <div className="what-tags">Benchmarking</div>
-                      <div className="what-tags">R8/ProGuard</div>
-                    </div>
-                    <div className="what-arrow"></div>
-                  </div>
-                </div>
-                <div
-                  className="what-content what-noTouch"
-                  ref={(el) => setRef(el, 3)}
-                >
-                  <div className="what-corner"></div>
-                  <div className="what-content-in">
-                    <h3>ARCHITECTURE</h3>
-                    <h4>Scalable solutions with MVVM/MVI</h4>
-                    <p>
-                      Architecting robust systems using modern patterns like MVVM
-                      and MVI, ensuring code maintainability and testability.
-                    </p>
-                    <h5>Skillset &amp; tools</h5>
-                    <div className="what-content-flex">
-                      <div className="what-tags">MVVM</div>
-                      <div className="what-tags">MVI</div>
-                      <div className="what-tags">Clean Architecture</div>
-                      <div className="what-tags">Flow</div>
-                      <div className="what-tags">Room</div>
-                      <div className="what-tags">Retrofit</div>
-                    </div>
-                    <div className="what-arrow"></div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
