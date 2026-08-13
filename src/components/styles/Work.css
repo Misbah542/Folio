@@ -1,261 +1,119 @@
 .work-section {
   position: relative;
-  z-index: 1;
-  opacity: 0;
-  background-color: transparent;
-  padding: 120px 0;
+  z-index: 2;
   width: 100%;
+  padding: clamp(80px, 12vh, 160px) 0;
+  opacity: 0; /* GSAP reveals on scroll */
 }
 
-.work-section h2 {
-  font-size: 72px;
-  font-weight: 700;
-  margin-top: 16px;
-  margin-bottom: 50px;
-  color: var(--text-light);
-  font-family: "Bricolage Grotesque", sans-serif;
+.work-heading {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6.6vw, 108px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 clamp(40px, 7vh, 80px);
 }
 
-.work-section h2 > span {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 400;
-  color: var(--accentColor);
+.work-heading em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
 }
 
-.work-container {
-  margin: auto;
-  position: relative;
-  width: 100%;
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 18px;
 }
 
-.work-watermark {
-  top: 60px;
-}
-
-/* ── Carousel ── */
-.carousel-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.carousel-track-container {
-  overflow: hidden;
-  width: 100%;
-  border-top: 1px solid var(--border-dark);
-  border-bottom: 1px solid var(--border-dark);
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  width: 100%;
-}
-
-.carousel-slide {
-  width: 100%;
-  flex: 0 0 100%;
-  box-sizing: border-box;
-  padding: 80px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.carousel-content {
-  display: flex;
-  align-items: center;
-  gap: 80px;
-  width: 100%;
-  max-width: 100%;
-}
-
-.carousel-info {
-  flex: 1;
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-}
-
-.carousel-number h3 {
-  font-size: 100px;
-  line-height: 1;
-  margin: 0;
-  font-weight: 700;
-  color: var(--accentColor);
-  opacity: 0.15;
-  font-family: "Bricolage Grotesque", sans-serif;
-}
-
-.carousel-details {
+.work-box {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  padding: 26px 24px 24px;
+  transition: border-color 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.carousel-details h4 {
-  font-size: 42px;
-  font-weight: 700;
-  margin: 0;
-  color: var(--text-light);
-  font-family: "Bricolage Grotesque", sans-serif;
+.work-box:hover {
+  border-color: rgba(61, 220, 132, 0.34);
+  transform: translateY(-4px);
 }
 
-.carousel-category {
-  font-weight: 500;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--muted-dark);
-  margin: 0;
-  font-size: 12px;
-  font-family: "Space Grotesk", sans-serif;
-}
-
-.carousel-tools {
-  margin-top: 32px;
-}
-
-.carousel-tools .tools-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--muted-dark);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-  font-family: "Space Grotesk", sans-serif;
-}
-
-.carousel-tools p {
-  font-weight: 400;
-  color: var(--text-light);
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.carousel-image-wrapper {
-  flex: 1.2;
+.work-box-head {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--border-dark);
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.02);
-  max-width: 50%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
 }
 
-/* ── Navigation Arrows ── */
-.carousel-arrow {
-  position: absolute;
-  top: -95px;
-  z-index: 10;
+.work-box-index {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.work-box-category {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+  text-align: right;
+}
+
+.work-box-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 2.6vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 22px 0 0;
+}
+
+.work-box-title svg {
+  font-size: 0.62em;
+  color: var(--accent);
+  transition: transform 0.3s ease;
+}
+
+.work-box:hover .work-box-title svg {
+  transform: translate(3px, -3px);
+}
+
+.work-box-blurb {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--muted);
+  margin: 13px 0 0;
+}
+
+.work-box-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+/* The GitHub card is deliberately lighter than the project cards */
+.work-box-link {
+  justify-content: center;
   background: transparent;
-  border: none;
-  color: var(--muted-dark);
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 12px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  padding: 10px;
+  border-style: dashed;
 }
 
-.carousel-arrow:hover {
-  color: var(--accentColor);
-}
-
-.carousel-arrow-left {
-  right: 120px;
-}
-
-.carousel-arrow-right {
-  right: 0;
-}
-
-/* ── Progress Bar ── */
-.carousel-progress {
-  width: 100%;
-  height: 1px;
-  background: var(--border-dark);
-  margin-top: 40px;
-  position: relative;
-}
-
-.carousel-progress-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: var(--accentColor);
-  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ── Work Image ── */
-.work-image {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.work-image-in {
-  position: relative;
-}
-
-.work-link {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  background-color: var(--accentColor);
-  color: var(--bg-dark);
-  width: 50px;
-  border-radius: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.work-image-in:hover .work-link {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.work-image img {
-  max-width: 100%;
-  max-height: 500px;
-  filter: grayscale(1);
-  transition: filter 0.5s ease;
-}
-
-.work-image-in:hover img {
-  filter: grayscale(0);
-}
-
-/* ── Responsive ── */
-@media only screen and (max-width: 1200px) {
-  .carousel-content { gap: 40px; }
-  .carousel-details h4 { font-size: 32px; }
-  .carousel-number h3 { font-size: 70px; }
-  .carousel-image-wrapper { padding: 20px; }
-}
-
-@media only screen and (max-width: 1025px) {
-  .work-section { padding: 80px 0; }
-  .carousel-content { flex-direction: column; gap: 40px; align-items: flex-start; }
-  .carousel-image-wrapper { width: 100%; max-width: 100%; }
-  .carousel-arrow { top: auto; bottom: -60px; }
-  .carousel-arrow-left { right: auto; left: 0; }
-  .carousel-arrow-right { right: auto; left: 100px; }
-  .carousel-progress { margin-top: 80px; }
-}
-
-@media only screen and (max-width: 768px) {
-  .work-section h2 { font-size: 42px; }
-  .carousel-details h4 { font-size: 28px; }
-  .carousel-slide { padding: 40px 0; }
-  .carousel-number h3 { font-size: 50px; }
+.work-box-link .work-box-title {
+  margin-top: 12px;
 }

@@ -12,13 +12,10 @@ export function initialFX() {
     delay: 1,
   });
 
-  var landingText = new SplitText(
-    [".landing-info h3", ".landing-intro h2", ".landing-intro h1"],
-    {
-      type: "chars,lines",
-      linesClass: "split-line",
-    }
-  );
+  var landingText = new SplitText([".landing-intro h1"], {
+    type: "chars,lines",
+    linesClass: "split-line",
+  });
   gsap.fromTo(
     landingText.chars,
     { opacity: 0, y: 80, filter: "blur(5px)" },
@@ -30,6 +27,33 @@ export function initialFX() {
       y: 0,
       stagger: 0.025,
       delay: 0.3,
+    }
+  );
+
+  // Supporting furniture rises after the name has landed.
+  gsap.fromTo(
+    [".landing-label", ".landing-rule", ".landing-blurb"],
+    { opacity: 0, y: 24 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.9,
+      ease: "power3.out",
+      stagger: 0.09,
+      delay: 0.5,
+    }
+  );
+
+  gsap.fromTo(
+    [".landing-metric", ".landing-scroll"],
+    { opacity: 0, y: 18 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.08,
+      delay: 1.1,
     }
   );
 

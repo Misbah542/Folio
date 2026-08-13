@@ -1,29 +1,32 @@
+/* Section shell: a wide content column with a persistent left rail that
+   carries the section index and the hairline running down the page. */
+
 .section-container {
-  width: 1300px;
+  position: relative;
+  width: min(1440px, calc(100% - var(--gutter) * 2));
   margin: 0 auto;
+  padding-left: clamp(0px, 4vw, 84px);
 }
-.title,
-.para {
-  font-kerning: none;
-  -webkit-text-rendering: optimizeSpeed;
-  text-rendering: optimizeSpeed;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+
+.section-container::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--line) 12%,
+    var(--line) 88%,
+    transparent
+  );
 }
-@media only screen and (max-width: 1600px) {
-  .section-container {
-    width: 1200px;
-    max-width: calc(100% - 160px);
-  }
-}
-@media only screen and (max-width: 1400px) {
-  .section-container {
-    width: 900px;
-  }
-}
+
 @media only screen and (max-width: 900px) {
   .section-container {
-    width: 500px;
-    max-width: var(--cWidth);
+    width: calc(100% - 40px);
+    padding-left: 22px;
   }
 }

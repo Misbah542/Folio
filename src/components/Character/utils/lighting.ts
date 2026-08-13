@@ -13,10 +13,18 @@ const setLighting = (scene: THREE.Scene) => {
   directionalLight.shadow.camera.far = 50;
   scene.add(directionalLight);
 
+  // Sits between the monitor and the bot's face, so the screen appears to be
+  // what is lighting it once the "what I do" timeline switches the screen on.
   const pointLight = new THREE.PointLight(0x22d3ee, 0, 100, 3);
-  pointLight.position.set(3, 12, 4);
+  pointLight.position.set(3.0, 10.4, 2.1);
   pointLight.castShadow = true;
   scene.add(pointLight);
+
+  // Soft front key so the bot still reads as a solid object before the screen
+  // comes on. Fades in with everything else.
+  const keyLight = new THREE.DirectionalLight(0xf2fff8, 0);
+  keyLight.position.set(2.5, 6, 10);
+  scene.add(keyLight);
 
   new RGBELoader()
     .setPath("/models/")
@@ -44,6 +52,11 @@ const setLighting = (scene: THREE.Scene) => {
     });
     gsap.to(directionalLight, {
       intensity: 1,
+      duration: duration,
+      ease: ease,
+    });
+    gsap.to(keyLight, {
+      intensity: 1.15,
       duration: duration,
       ease: ease,
     });

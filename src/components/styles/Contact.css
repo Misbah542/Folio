@@ -1,10 +1,10 @@
 .contact-section {
-  width: 100%;
-  opacity: 0;
-  padding: 120px 0 80px 0;
   position: relative;
   z-index: 2;
-  background-color: var(--bg-dark);
+  width: 100%;
+  padding: clamp(90px, 14vh, 180px) 0 130px;
+  opacity: 0; /* GSAP fades this in on scroll */
+  background-color: var(--ink);
 }
 
 .contact-container {
@@ -12,118 +12,123 @@
   width: 100%;
 }
 
-.contact-watermark {
-  top: 60px;
-}
-
 .contact-heading {
-  font-size: 72px;
-  font-weight: 700;
-  margin: 16px 0 60px 0;
-  font-family: "Bricolage Grotesque", sans-serif;
-  color: var(--text-light);
-  line-height: 1;
-}
-
-.contact-flex {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-.contact-box h4 {
-  font-weight: 500;
-  margin: 0 0 24px 0;
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 8vw, 130px);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: var(--muted-dark);
-  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  margin: 0 0 clamp(36px, 6vh, 64px);
 }
 
-.contact-links,
-.contact-social-links {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.contact-heading em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
 }
 
-.contact-links a,
-.contact-phone,
-.contact-social-links a {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 20px;
-  color: var(--text-light);
-  transition: color 0.3s;
-  display: flex;
+/* Big mailto slab */
+.contact-cta {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  padding: 17px 26px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: rgba(61, 220, 132, 0.07);
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.4vw, 17px);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.link-arrow {
-  color: var(--accentColor);
+.contact-cta:hover {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.contact-cta svg {
+  font-size: 1.15em;
   transition: transform 0.3s ease;
 }
 
-.contact-links a:hover,
-.contact-social-links a:hover {
-  color: var(--accentColor);
-}
-
-.contact-links a:hover .link-arrow {
-  transform: translateX(5px);
-}
-
-.social-icon {
-  color: var(--accentColor);
-  font-size: 18px;
-  transition: transform 0.3s ease;
-}
-
-.contact-social-links a:hover .social-icon {
+.contact-cta:hover svg {
   transform: translate(3px, -3px);
 }
 
-.contact-credit {
-  text-align: right;
-  justify-content: flex-end;
+/* Channel table */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+  margin: clamp(46px, 8vh, 84px) 0 0;
+  border-top: 1px solid var(--line);
 }
 
-.contact-box h2 {
-  font-weight: 700;
-  font-size: 28px;
-  margin: 0 0 16px 0;
-  font-family: "Bricolage Grotesque", sans-serif;
-  color: var(--text-light);
-  line-height: 1.2;
+.contact-channel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 20px 22px 0;
+  border-bottom: 1px solid var(--line);
+  transition: padding-left 0.3s ease, background 0.3s ease;
 }
 
-.contact-box h2 > span {
-  color: var(--accentColor);
+.contact-channel:hover {
+  padding-left: 14px;
+  background: rgba(233, 239, 234, 0.02);
 }
 
-.contact-copyright {
-  font-size: 12px;
-  font-weight: 400;
+.contact-channel-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.contact-channel-value {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  color: var(--muted-dark);
-  font-family: "Space Grotesk", sans-serif;
-  letter-spacing: 1px;
+  gap: 9px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  transition: color 0.3s ease;
 }
 
-@media only screen and (max-width: 1024px) {
-  .contact-heading { font-size: 50px; }
-  .contact-box h2 { font-size: 22px; }
-  .contact-flex { flex-direction: column; gap: 60px; }
-  .contact-credit { text-align: left; justify-content: flex-start; }
-  .contact-copyright { justify-content: flex-start; }
+.contact-channel:hover .contact-channel-value {
+  color: var(--accent);
 }
 
-@media only screen and (max-width: 600px) {
-  .contact-section { padding-top: 80px; }
-  .contact-heading { font-size: 40px; }
-  .contact-links a, .contact-phone, .contact-social-links a { font-size: 18px; }
+/* Footer line */
+.contact-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: clamp(48px, 8vh, 90px);
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.contact-sign b {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.contact-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }

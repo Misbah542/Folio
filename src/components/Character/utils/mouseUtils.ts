@@ -75,8 +75,10 @@ export const handleHeadRotation = (
     }
   } else {
     if (window.innerWidth > 1024) {
+      // Past the landing section the bot stops tracking the pointer and turns
+      // towards the monitor, which sits on its right.
       headBone.rotation.x = lerp(headBone.rotation.x, -0.4, 0.03);
-      headBone.rotation.y = lerp(headBone.rotation.y, -0.3, 0.03);
+      headBone.rotation.y = lerp(headBone.rotation.y, 0.3, 0.03);
     }
   }
 };

@@ -1,150 +1,84 @@
-import { useState, useCallback } from "react";
 import "./styles/Work.css";
-import WorkImage from "./WorkImage";
+import { MdArrowOutward } from "react-icons/md";
 
-const projects = [
+type Project = {
+  index: string;
+  title: string;
+  category: string;
+  blurb: string;
+  tools: string[];
+  link?: string;
+};
+
+const projects: Project[] = [
   {
-    title: "Tetris Game",
-    category: "Mobile Game",
-    tools: "MVVM, Kotlin Compose, LiveData, Coroutines",
-    image: "/images/placeholder.webp",
-    link: "#",
+    index: "01",
+    title: "Tetris",
+    category: "Android game · Compose",
+    blurb:
+      "A full Tetris built on MVVM and Kotlin Compose — real-time piece movement, collision detection and scoring, with LiveData and Coroutines keeping game state smooth across devices.",
+    tools: ["Kotlin", "Jetpack Compose", "MVVM", "LiveData", "Coroutines"],
   },
   {
-    title: "SplitTrip App",
-    category: "Travel & Utility",
-    tools: "Kotlin, Jetpack Compose, Placeholder Tools",
-    image: "/images/placeholder.webp",
-    link: "#",
+    index: "02",
+    title: "SplitTrip",
+    category: "Travel & utility",
+    blurb:
+      "A trip-expense companion for splitting costs across a group, built as a Compose-first Android app with an offline-capable local store.",
+    tools: ["Kotlin", "Jetpack Compose", "Room", "Material 3"],
   },
 ];
 
 const Work = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-
-  const minSwipeDistance = 50;
-
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (isAnimating) return;
-      setIsAnimating(true);
-      setCurrentIndex(index);
-      setTimeout(() => setIsAnimating(false), 500);
-    },
-    [isAnimating]
-  );
-
-  const goToPrev = useCallback(() => {
-    const newIndex = currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
-    goToSlide(newIndex);
-  }, [currentIndex, goToSlide]);
-
-  const goToNext = useCallback(() => {
-    const newIndex = currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
-    goToSlide(newIndex);
-  }, [currentIndex, goToSlide]);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      goToNext();
-    } else if (isRightSwipe) {
-      goToPrev();
-    }
-  };
-
   return (
-    <div
-      className="work-section"
-      id="work"
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
-    >
+    <div className="work-section" id="work">
       <div className="section-container">
         <div className="work-watermark section-watermark">04</div>
         <div className="work-container">
-          <span className="section-label">[ Projects ]</span>
-          <h2>
-            My <span>Projects</span>
+          <span className="section-label">Side projects</span>
+          <h2 className="work-heading">
+            Built for
+            <br />
+            <em>the fun of it</em>
           </h2>
 
-          <div className="carousel-wrapper">
-            <button
-              className="carousel-arrow carousel-arrow-left"
-              onClick={goToPrev}
-              aria-label="Previous project"
+          <div className="work-grid">
+            {projects.map((project) => (
+              <article className="work-box panel" key={project.title}>
+                <header className="work-box-head">
+                  <span className="work-box-index">{project.index}</span>
+                  <span className="work-box-category">{project.category}</span>
+                </header>
+
+                <h3 className="work-box-title">{project.title}</h3>
+                <p className="work-box-blurb">{project.blurb}</p>
+
+                <div className="work-box-tools">
+                  {project.tools.map((tool) => (
+                    <span className="chip" key={tool}>
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            ))}
+
+            <a
+              className="work-box work-box-link panel"
+              href="https://github.com/Misbah542"
+              target="_blank"
+              rel="noreferrer"
               data-cursor="disable"
             >
-              ← PREV
-            </button>
-            <button
-              className="carousel-arrow carousel-arrow-right"
-              onClick={goToNext}
-              aria-label="Next project"
-              data-cursor="disable"
-            >
-              NEXT →
-            </button>
-
-            <div className="carousel-track-container">
-              <div
-                className="carousel-track"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-              >
-                {projects.map((project, index) => (
-                  <div className="carousel-slide" key={index}>
-                    <div className="carousel-content">
-                      <div className="carousel-info">
-                        <div className="carousel-number">
-                          <h3>0{index + 1}</h3>
-                        </div>
-                        <div className="carousel-details">
-                          <h4>{project.title}</h4>
-                          <p className="carousel-category">{project.category}</p>
-                          <div className="carousel-tools">
-                            <span className="tools-label">Tools &amp; Features</span>
-                            <p>{project.tools}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="carousel-image-wrapper">
-                        <WorkImage
-                          image={project.image}
-                          alt={project.title}
-                          link={project.link}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="carousel-progress">
-              <div
-                className="carousel-progress-fill"
-                style={{
-                  width: `${((currentIndex + 1) / projects.length) * 100}%`,
-                }}
-              />
-            </div>
+              <span className="work-box-index">+</span>
+              <h3 className="work-box-title">
+                More on GitHub
+                <MdArrowOutward />
+              </h3>
+              <p className="work-box-blurb">
+                Experiments, samples and the rest of the shelf.
+              </p>
+            </a>
           </div>
         </div>
       </div>
