@@ -72,7 +72,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 470px;
-  height: 400px;
+  height: 540px;
   margin-left: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -82,13 +82,13 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Rows grow to share the panel, so an open row takes its 40% out of the
+/* Rows grow to share the panel, so an open row takes its share out of the
    others instead of pushing the last one past the clipped bottom edge. */
 .what-content {
   position: relative;
-  flex: 1 1 25%;
+  flex: 1 1 20%;
   min-height: 0;
-  padding: 20px 26px;
+  padding: 18px 26px;
   border-bottom: 1px solid var(--line);
   transition: flex 0.55s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
 }
@@ -188,7 +188,7 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  flex: 0 0 40%;
+  flex: 0 0 36%;
   background: rgba(61, 220, 132, 0.05);
 }
 
@@ -223,7 +223,7 @@
 }
 
 .what-sibling {
-  flex: 1 1 20%;
+  flex: 1 1 16%;
 }
 
 /* ── Responsive ────────────────────────────────────────────────────── */

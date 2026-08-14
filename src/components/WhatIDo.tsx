@@ -23,6 +23,12 @@ const CARDS = [
   },
   {
     index: "04",
+    title: "The server half",
+    sub: "BFF services, middleware and proto contracts in Go",
+    tags: ["Go", "gRPC", "Microservices"],
+  },
+  {
+    index: "05",
     title: "Hold under load",
     sub: "50M+ concurrent, 99.9% crash-free",
     tags: ["Profiler", "Crashlytics", "Mux"],
@@ -62,11 +68,11 @@ const WhatIDo = () => {
             <div className="what-box">
               <span className="section-label">What I do</span>
               <h2 className="title">
-                Four
+                Five
                 <div>fronts</div>
               </h2>
               <p className="what-lede">
-                The four places my work usually lands.
+                The five places my work usually lands.
               </p>
             </div>
 
