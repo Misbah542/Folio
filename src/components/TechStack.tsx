@@ -90,7 +90,9 @@ const TechStack = () => {
                   <li
                     className="ts-item"
                     key={tech.name}
-                    style={{ "--tech": tech.color } as CSSProperties}
+                    style={
+                      { "--tech": tech.color ?? domain.hue } as CSSProperties
+                    }
                   >
                     <i className="ts-item-dot" />
                     <span className="ts-item-name">{tech.name}</span>

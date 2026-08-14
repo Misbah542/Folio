@@ -5,27 +5,27 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const CARDS = [
   {
     index: "01",
-    title: "Android at scale",
-    sub: "Kotlin and Compose, shipped to millions",
-    tags: ["Kotlin", "Compose", "Coroutines"],
+    title: "Own the feature",
+    sub: "Contract to rollout, not just the screen",
+    tags: ["Kotlin", "Compose", "Retrofit"],
   },
   {
     index: "02",
-    title: "TV & playback",
-    sub: "Leanback, ExoPlayer, ten-foot UI",
-    tags: ["Android TV", "ExoPlayer", "Leanback"],
+    title: "The ten-foot screen",
+    sub: "Player skins and TV navigation, frame by frame",
+    tags: ["Leanback", "ExoPlayer", "Android TV"],
   },
   {
     index: "03",
-    title: "Go services",
-    sub: "The BFF behind the app",
-    tags: ["Go", "gRPC", "REST"],
+    title: "Frameworks to build on",
+    sub: "A shared UI layer instead of duplicated view logic",
+    tags: ["MVVM", "Dagger Hilt", "Paging 3"],
   },
   {
     index: "04",
-    title: "Performance",
-    sub: "Startup, latency, crash-free rate",
-    tags: ["Profiler", "Caching", "Crashlytics"],
+    title: "Hold under load",
+    sub: "50M+ concurrent, 99.9% crash-free",
+    tags: ["Profiler", "Crashlytics", "Mux"],
   },
 ];
 

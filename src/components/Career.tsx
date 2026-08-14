@@ -47,14 +47,6 @@ const ROLES: Role[] = [
     ],
     tags: ["Leanback", "ExoPlayer", "MVVM", "RxJava"],
   },
-  {
-    period: "Aug 2018 — May 2022",
-    title: "B.Tech, Electronics & Communication",
-    org: "PES University",
-    product: "RR Campus · Minor in Computer Science",
-    points: [],
-    tags: [],
-  },
 ];
 
 const Career = () => {

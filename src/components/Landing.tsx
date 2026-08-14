@@ -16,9 +16,7 @@ const Landing = ({ children }: PropsWithChildren) => {
             <span className="pulse-dot" />
             Android &amp; Go Engineer — Bengaluru, IN
           </span>
-          <h1 className="landing-name">
-            Misbah <span>ul Haque</span>
-          </h1>
+          <h1 className="landing-name">Misbah</h1>
           <hr className="landing-rule" />
           <p className="landing-blurb">
             I build Android apps that survive prime time — Mobile, TV and the Go
