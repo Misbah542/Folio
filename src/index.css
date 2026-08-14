@@ -328,35 +328,7 @@ h6 {
   }
 }
 
-/* ── Tech stack section ─────────────────────────────────────────────── */
-
-.techstack {
-  position: relative;
-  width: 100%;
-  min-height: 92vh;
-  padding: clamp(90px, 12vh, 170px) 0;
-  overflow: clip;
-}
-
-.techstack-head {
-  max-width: 640px;
-}
-
-.techstack h2 {
-  font-size: clamp(40px, 6.6vw, 104px);
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-
-.techstack-note {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  color: var(--faint);
-  margin: 0 0 clamp(40px, 7vh, 90px);
-  max-width: 46ch;
-  line-height: 1.7;
-}
+/* Tech stack styles live in components/styles/TechStack.css */
 
 @media screen and (min-width: 768px) {
   body {

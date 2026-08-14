@@ -71,8 +71,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 520px;
-  height: 560px;
+  max-width: 470px;
+  height: 400px;
   margin-left: auto;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -82,14 +82,15 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
+/* Rows grow to share the panel, so an open row takes its 40% out of the
+   others instead of pushing the last one past the clipped bottom edge. */
 .what-content {
   position: relative;
-  flex: 0 0 25%;
-  min-height: 25%;
+  flex: 1 1 25%;
+  min-height: 0;
   padding: 20px 26px;
   border-bottom: 1px solid var(--line);
-  transition: flex-basis 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-    min-height 0.55s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+  transition: flex 0.55s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
 }
 
 .what-content:last-child {
@@ -139,12 +140,12 @@
   font-weight: 400;
   letter-spacing: 0.08em;
   color: var(--faint);
-  margin: 7px 0 0;
+  margin: 9px 0 0;
 }
 
-/* Body + stack only exist visually while the row is open */
-.what-content p,
-.what-content h5,
+/* Collapsed rows carry only the index and the title — the qualifying line
+   and the stack are the payoff for opening one. */
+.what-content h4,
 .what-content-flex {
   opacity: 0;
   transform: translateY(6px);
@@ -152,30 +153,11 @@
   pointer-events: none;
 }
 
-.what-content p {
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 13.5px;
-  line-height: 1.72;
-  color: var(--muted);
-  margin: 15px 0 0;
-  max-width: 44ch;
-}
-
-.what-content h5 {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin: 17px 0 9px;
-}
-
 .what-content-flex {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: 14px;
 }
 
 .what-tags {
@@ -206,8 +188,7 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  flex: 0 0 55%;
-  min-height: 55%;
+  flex: 0 0 40%;
   background: rgba(61, 220, 132, 0.05);
 }
 
@@ -226,11 +207,9 @@
   color: var(--accent);
 }
 
-.what-noTouch:hover p,
-.what-noTouch:hover h5,
+.what-noTouch:hover h4,
 .what-noTouch:hover .what-content-flex,
-.what-content-active p,
-.what-content-active h5,
+.what-content-active h4,
 .what-content-active .what-content-flex {
   opacity: 1;
   transform: translateY(0);
@@ -244,8 +223,7 @@
 }
 
 .what-sibling {
-  flex: 0 0 15%;
-  min-height: 15%;
+  flex: 1 1 20%;
 }
 
 /* ── Responsive ────────────────────────────────────────────────────── */
@@ -287,8 +265,7 @@
   }
 
   /* No hover on touch — everything stays expanded and readable. */
-  .what-content p,
-  .what-content h5,
+  .what-content h4,
   .what-content-flex {
     opacity: 1;
     transform: none;

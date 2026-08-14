@@ -7,29 +7,25 @@ const CARDS = [
     index: "01",
     title: "Android at scale",
     sub: "Kotlin and Compose, shipped to millions",
-    body: "Feature work end-to-end on OTT apps — multi-profile platforms, auth flows and engagement SDKs, built on Compose, Hilt, Paging 3 and Coroutines.",
-    tags: ["Kotlin", "Jetpack Compose", "Coroutines", "Dagger Hilt", "Paging 3"],
+    tags: ["Kotlin", "Compose", "Coroutines"],
   },
   {
     index: "02",
     title: "TV & playback",
     sub: "Leanback, ExoPlayer, ten-foot UI",
-    body: "Player skins, UpNext and continue-watching surfaces rebuilt for Android TV, Google TV, FireStick and set-top boxes, where every frame is budgeted.",
-    tags: ["Android TV", "Leanback", "ExoPlayer", "Google TV", "Set-top box"],
+    tags: ["Android TV", "ExoPlayer", "Leanback"],
   },
   {
     index: "03",
     title: "Go services",
     sub: "The BFF behind the app",
-    body: "Proto and API contracts, middleware and BFF endpoints in Go — owning the round trip instead of stopping at the client boundary.",
-    tags: ["Go", "gRPC", "Microservices", "REST", "GraphQL"],
+    tags: ["Go", "gRPC", "REST"],
   },
   {
     index: "04",
     title: "Performance",
     sub: "Startup, latency, crash-free rate",
-    body: "Profiling cold start, trimming response latency and holding a 99.9% crash-free rate through IPL, the Olympics and World Cup traffic peaks.",
-    tags: ["Profiler", "Startup", "Caching", "Crashlytics", "R8"],
+    tags: ["Profiler", "Caching", "Crashlytics"],
   },
 ];
 
@@ -70,8 +66,7 @@ const WhatIDo = () => {
                 <div>fronts</div>
               </h2>
               <p className="what-lede">
-                One product surface rarely ends where the app does. These are the
-                four places my work usually lands.
+                The four places my work usually lands.
               </p>
             </div>
 
@@ -88,8 +83,6 @@ const WhatIDo = () => {
                       <span className="what-index">{card.index}</span>
                       <h3>{card.title}</h3>
                       <h4>{card.sub}</h4>
-                      <p>{card.body}</p>
-                      <h5>Stack</h5>
                       <div className="what-content-flex">
                         {card.tags.map((tag) => (
                           <div className="what-tags" key={tag}>

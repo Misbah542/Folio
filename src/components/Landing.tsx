@@ -17,9 +17,7 @@ const Landing = ({ children }: PropsWithChildren) => {
             Android &amp; Go Engineer — Bengaluru, IN
           </span>
           <h1 className="landing-name">
-            MISBAH
-            <br />
-            <span>UL HAQUE</span>
+            Misbah <span>ul Haque</span>
           </h1>
           <hr className="landing-rule" />
           <p className="landing-blurb">

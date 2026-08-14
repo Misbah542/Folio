@@ -38,12 +38,16 @@
   margin-bottom: 20px;
 }
 
+/* One line, always: the size tracks the viewport so "Misbah ul Haque" never
+   has to wrap, and nowrap keeps SplitText from breaking it mid-name. */
 .landing-intro h1 {
   font-family: var(--font-display);
-  font-size: clamp(38px, 5.4vw, 82px);
+  font-size: clamp(20px, 2.8vw, 38px);
   font-weight: 800;
-  line-height: 0.86;
-  letter-spacing: -0.045em;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--text);
   margin: 0;
   text-shadow: 0 6px 34px rgba(0, 0, 0, 0.85);
@@ -301,6 +305,7 @@ h2.landing-info-h2 {
     top: 50%;
     left: 0;
     right: auto;
+    max-width: 400px;
     transform: translateY(-52%);
   }
 

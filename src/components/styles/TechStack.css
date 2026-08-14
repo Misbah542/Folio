@@ -1,0 +1,265 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Tech stack — "racks"
+   A spec-sheet readout rather than a logo wall: four domain rows, each a
+   mono label against a wrapped set of cells that pick up the tech's own
+   hue on hover via the --tech custom property set per item.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.techstack {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: clamp(90px, 12vh, 170px) 0;
+}
+
+/* ── Heading + readout ──────────────────────────────────────────────── */
+
+.ts-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: clamp(46px, 7vh, 86px);
+}
+
+.ts-title {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6.4vw, 100px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+}
+
+.ts-title em {
+  font-style: normal;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+}
+
+.ts-readout {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.ts-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.ts-stat + .ts-stat {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.ts-stat b {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ts-stat-live {
+  color: var(--accent);
+}
+
+/* ── Racks ──────────────────────────────────────────────────────────── */
+
+.ts-racks {
+  position: relative;
+  z-index: 2;
+}
+
+.ts-rack {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(180px, 22%) 1fr;
+  gap: clamp(24px, 4vw, 64px);
+  padding: clamp(26px, 4vh, 44px) 0;
+}
+
+/* Hairline drawn as its own element so GSAP can wipe it in from the left */
+.ts-rack-rule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+}
+
+.ts-rack:last-child::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+}
+
+.ts-rack-head {
+  position: relative;
+}
+
+.ts-rack-index {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.ts-rack-head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 1.7vw, 27px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 0 9px;
+}
+
+.ts-rack-head p {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+  margin: 0;
+  max-width: 22ch;
+}
+
+/* ── Item cells ─────────────────────────────────────────────────────── */
+
+.ts-rack-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ts-item {
+  --tech: var(--accent);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: rgba(233, 239, 234, 0.02);
+  cursor: default;
+  transition: border-color 0.28s ease, background 0.28s ease,
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The tech's hue only appears as a wash on hover — at rest the row stays
+   monochrome so the group reads as one block rather than confetti. */
+.ts-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--tech);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  pointer-events: none;
+}
+
+.ts-item-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tech);
+  opacity: 0.55;
+  flex: none;
+  transition: opacity 0.28s ease, box-shadow 0.28s ease;
+}
+
+.ts-item-name {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.28s ease;
+}
+
+@media (hover: hover) {
+  .ts-item:hover {
+    border-color: var(--tech);
+    transform: translateY(-2px);
+  }
+
+  .ts-item:hover::before {
+    opacity: 0.09;
+  }
+
+  .ts-item:hover .ts-item-dot {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--tech);
+  }
+
+  .ts-item:hover .ts-item-name {
+    color: var(--text);
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+
+@media only screen and (max-width: 900px) {
+  .ts-rack {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .ts-rack-head p {
+    max-width: none;
+  }
+
+  .ts-readout {
+    gap: 14px;
+  }
+
+  .ts-stat + .ts-stat {
+    padding-left: 14px;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .ts-head {
+    align-items: flex-start;
+  }
+
+  .ts-item {
+    padding: 9px 13px 9px 11px;
+  }
+
+  .ts-item-name {
+    font-size: 11px;
+  }
+}

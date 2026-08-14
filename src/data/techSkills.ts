@@ -1,54 +1,71 @@
 export type TechSkill = {
   name: string;
-  icon: string;
+  /** Brand hue, used as the per-item accent. Kept light enough to read on ink. */
   color: string;
 };
 
-const devicon = (path: string) =>
-  `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${path}`;
+export type TechDomain = {
+  index: string;
+  name: string;
+  /** One mono line under the domain title — what this group is actually for. */
+  note: string;
+  items: TechSkill[];
+};
 
-/** Mirrors the key-skills section of the résumé, Android-first. */
-export const TECH_SKILLS: TechSkill[] = [
-  // Languages
-  { name: "Kotlin", icon: devicon("kotlin/kotlin-original.svg"), color: "#7F52FF" },
-  { name: "Java", icon: devicon("java/java-original.svg"), color: "#E76F00" },
-  { name: "Go", icon: devicon("go/go-original-wordmark.svg"), color: "#00ADD8" },
-
-  // Android
-  { name: "Android", icon: devicon("android/android-original.svg"), color: "#3DDC84" },
+/** The résumé's key skills, grouped by where they sit in the stack. */
+export const TECH_DOMAINS: TechDomain[] = [
   {
-    name: "Jetpack Compose",
-    icon: devicon("jetpackcompose/jetpackcompose-original.svg"),
-    color: "#4285F4",
+    index: "01",
+    name: "Languages",
+    note: "What I write in",
+    items: [
+      { name: "Kotlin", color: "#A78BFA" },
+      { name: "Java", color: "#F0A868" },
+      { name: "Go", color: "#4FD3E8" },
+    ],
   },
   {
-    name: "Android Studio",
-    icon: devicon("androidstudio/androidstudio-original.svg"),
-    color: "#3DDC84",
+    index: "02",
+    name: "Android",
+    note: "Phone, tablet, TV",
+    items: [
+      { name: "Jetpack Compose", color: "#6FA8FF" },
+      { name: "Coroutines", color: "#B79CFF" },
+      { name: "Dagger Hilt", color: "#7FC4FF" },
+      { name: "Paging 3", color: "#5CCFC0" },
+      { name: "ExoPlayer", color: "#FF9770" },
+      { name: "Android TV", color: "#3DDC84" },
+      { name: "Material Design", color: "#63C6F5" },
+    ],
   },
-  { name: "Gradle", icon: devicon("gradle/gradle-original.svg"), color: "#02303A" },
   {
-    name: "Material Design",
-    icon: devicon("materialui/materialui-original.svg"),
-    color: "#0081CB",
+    index: "03",
+    name: "Services & data",
+    note: "The round trip",
+    items: [
+      { name: "gRPC", color: "#4FC3CE" },
+      { name: "REST", color: "#9FB0B8" },
+      { name: "GraphQL", color: "#F062B0" },
+      { name: "SQLite", color: "#6FB6DE" },
+      { name: "Firebase", color: "#FFCA28" },
+    ],
   },
-
-  // Data & APIs
-  { name: "SQLite", icon: devicon("sqlite/sqlite-original.svg"), color: "#003B57" },
-  { name: "GraphQL", icon: devicon("graphql/graphql-plain.svg"), color: "#E10098" },
-  { name: "Postman", icon: devicon("postman/postman-original.svg"), color: "#FF6C37" },
-
-  // Platform & ops
-  { name: "Firebase", icon: devicon("firebase/firebase-plain.svg"), color: "#FFCA28" },
-  { name: "Git", icon: devicon("git/git-original.svg"), color: "#F05032" },
-  { name: "GitHub", icon: devicon("github/github-original.svg"), color: "#FFFFFF" },
   {
-    name: "GitHub Actions",
-    icon: devicon("githubactions/githubactions-original.svg"),
-    color: "#2088FF",
+    index: "04",
+    name: "Build & ops",
+    note: "Shipping and uptime",
+    items: [
+      { name: "Gradle", color: "#6FD8C4" },
+      { name: "Android Studio", color: "#3DDC84" },
+      { name: "GitHub Actions", color: "#5C9DFF" },
+      { name: "Git", color: "#F0705A" },
+      { name: "Crashlytics", color: "#FFA867" },
+      { name: "Linux", color: "#FCC624" },
+    ],
   },
-  { name: "GitLab", icon: devicon("gitlab/gitlab-original.svg"), color: "#FC6D26" },
-  { name: "Bitbucket", icon: devicon("bitbucket/bitbucket-original.svg"), color: "#0052CC" },
-  { name: "Jira", icon: devicon("jira/jira-original.svg"), color: "#0052CC" },
-  { name: "Linux", icon: devicon("linux/linux-original.svg"), color: "#FCC624" },
 ];
+
+export const TECH_COUNT = TECH_DOMAINS.reduce(
+  (total, domain) => total + domain.items.length,
+  0
+);
